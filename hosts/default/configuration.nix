@@ -135,6 +135,7 @@
     git
     kmod
     zip
+    web-ext
   ];
 
   # list currently installed packages in /etc/current-system-packages
