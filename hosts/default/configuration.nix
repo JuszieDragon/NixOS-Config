@@ -134,6 +134,7 @@
     plex-media-player
     git
     kmod
+    zip
   ];
 
   # list currently installed packages in /etc/current-system-packages

@@ -44,7 +44,6 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    zsh-powerlevel10k
     meslo-lgs-nf
     fira-code
   ];
@@ -84,6 +83,11 @@
   };
 
   programs = {
+    git = {
+      enable = true;
+      userName = "JustinHJJohnson";
+      userEmail = "justin.h.j.johnson@gmail.com";
+    };
   };
 
   # Let Home Manager install and manage itself.
