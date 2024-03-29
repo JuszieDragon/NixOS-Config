@@ -16,6 +16,7 @@
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/spotify.nix
     ../../modules/nixos/solaar.nix
+    ../../modules/nixos/dev.nix
   ];
 
   # Bootloader.
@@ -135,7 +136,6 @@
     git
     kmod
     zip
-    web-ext
   ];
 
   # list currently installed packages in /etc/current-system-packages
