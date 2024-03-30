@@ -13,6 +13,8 @@
     #../../modules/home-manager/firefox.nix
     ../../modules/home-manager/vscode.nix
     ../../modules/home-manager/zsh.nix
+    ../../modules/home-manager/hyprland.nix
+    ../../modules/home-manager/waybar.nix
     #./firefox-new.nix
   ];
 

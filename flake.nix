@@ -15,6 +15,7 @@
     };
 
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs = {
