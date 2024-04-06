@@ -18,6 +18,7 @@
     ../../modules/nixos/solaar.nix
     ../../modules/nixos/dev.nix
     ../../modules/nixos/hyprland.nix
+    ../../modules/nixos/media.nix
   ];
 
   # Bootloader.
@@ -77,11 +78,12 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
+  # Enable sound with pipewire
   # https://askubuntu.com/questions/1247911/steelseries-arctis-pro-wireless-on-stereo-very-quiet
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
+  security.polkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -129,11 +131,13 @@
     lshw
     ethtool
     btop
-    nvtop
-    plex-media-player
+    nvtopPackages.full
     git
     kmod
     zip
+    unzip
+    killall
+    gparted
   ];
 
   # list currently installed packages in /etc/current-system-packages

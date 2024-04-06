@@ -28,7 +28,11 @@
       specialArgs = {inherit inputs;};
       modules = [
         ./hosts/default/configuration.nix
-        home-manager.nixosModules.default
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+        }
       ];
     };
   };

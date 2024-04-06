@@ -46,6 +46,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+    font-awesome
     meslo-lgs-nf
     fira-code
   ];

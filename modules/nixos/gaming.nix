@@ -6,6 +6,7 @@
   environment.systemPackages = with pkgs; [
     steam
     protonup-qt
+    protontricks
     gamescope
     gamemode
     steamtinkerlaunch
@@ -14,9 +15,11 @@
     # other setup info here https://gist.github.com/jakehamilton/632edeb9d170a2aedc9984a0363523d3
     mangohud # to enable with steamtinkerlaunch goto Game Menu (on the bottom) and scroll to Tool Options
     gpu-screen-recorder
-    #linuxKernel.packages.linux_zen.xone
     libnotify
+    #itch #currently has a broken dependency
   ];
+
+  hardware.xone.enable = true;
 
   programs = {
     steam = {
