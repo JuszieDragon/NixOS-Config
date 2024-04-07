@@ -2,7 +2,16 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  reloadedDesktopItem = pkgs.makeDesktopItem {
+    name = "Reloaded-II URL Handler";
+    exec = "protontricks-launch --appid 2161700 /home/justin/Modding/Persona/Reloaded-II.exe --download %U";
+    icon = "applications-games";
+    startupNotify = false;
+    terminal = "false";
+    mimetypes = ["x-scheme-handler/r2"];
+  };
+in {
   environment.systemPackages = with pkgs; [
     steam
     protonup-qt
@@ -16,6 +25,7 @@
     mangohud # to enable with steamtinkerlaunch goto Game Menu (on the bottom) and scroll to Tool Options
     gpu-screen-recorder
     libnotify
+    bottles
     #itch #currently has a broken dependency
   ];
 
@@ -38,6 +48,13 @@
           end = "notify-send -a 'Gamemode' 'Optimizations deactivated'";
         };
       };
+    };
+  };
+
+  xdg.mime = {
+    enable = true;
+    addedAssociations = {
+      "x-scheme-handler/r2" = ["reloaded-ii-url.desktop"];
     };
   };
 
