@@ -123,9 +123,7 @@
     pciutils
     #piper
     #libratbag
-    firefox-devedition
     discord
-    #vscodium
     pavucontrol
     alsa-utils
     lshw
@@ -138,6 +136,7 @@
     unzip
     killall
     gparted
+    bitwarden-cli
   ];
 
   # list currently installed packages in /etc/current-system-packages

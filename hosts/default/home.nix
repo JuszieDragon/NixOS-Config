@@ -10,13 +10,19 @@
   home.homeDirectory = "/home/justin";
 
   imports = with inputs; [
-    #../../modules/home-manager/firefox.nix
+    ../../modules/home-manager/firefox.nix
     ../../modules/home-manager/vscode.nix
     ../../modules/home-manager/zsh.nix
     ../../modules/home-manager/hyprland.nix
     ../../modules/home-manager/waybar.nix
     #./firefox-new.nix
   ];
+
+  nixpkgs.config = {
+    allowUnfree = true;
+    # Workaround for https://github.com/nix-community/home-manager/issues/2942
+    allowUnfreePredicate = _: true;
+  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

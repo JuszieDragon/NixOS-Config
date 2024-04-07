@@ -5,61 +5,59 @@
 }: {
   programs.firefox = {
     enable = true;
+    package = pkgs.firefox-devedition-bin;
 
-    profiles.justin = {
-      settings = {
-        "media.hardwaremediakeys.enabled" = false;
-        "xpinstall.signatures.required" = false;
-      };
+    profiles = {
+      dev-edition-default = {
+        id = 0;
+        name = "dev-edition-default";
+        isDefault = true;
+        settings = {
+          "media.hardwaremediakeys.enabled" = false;
+          "xpinstall.signatures.required" = false;
+        };
 
-      search.engines = {
-        "Nix Packages" = {
-          urls = [
-            {
-              template = "https://search.nixos.org/packages";
-              params = [
+        search = {
+          force = true;
+          engines = {
+            "Nix Packages" = {
+              urls = [
                 {
-                  name = "type";
-                  value = "packages";
-                }
-                {
-                  name = "query";
-                  value = "{searchTerms}";
+                  template = "https://search.nixos.org/packages";
+                  params = [
+                    {
+                      name = "type";
+                      value = "packages";
+                    }
+                    {
+                      name = "query";
+                      value = "{searchTerms}";
+                    }
+                  ];
                 }
               ];
-            }
-          ];
 
-          icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-          definedAliases = ["@np"];
-        };
-        "ProtonDB" = {
-          urls = [
-            {
-              template = "https://www.protondb.com/search";
-              params = [
+              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              definedAliases = ["@np"];
+            };
+            "ProtonDB" = {
+              urls = [
                 {
-                  name = "q";
-                  value = "{searchTerms}";
+                  template = "https://www.protondb.com/search";
+                  params = [
+                    {
+                      name = "q";
+                      value = "{searchTerms}";
+                    }
+                  ];
                 }
               ];
-            }
-          ];
 
-          definedAliases = ["@pdb"];
+              definedAliases = ["@pdb"];
+            };
+          };
         };
       };
-      search.force = true;
-
-      extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
-        bitwarden
-        honey
-        ublock-origin
-        return-youtube-dislikes
-        windscribe
-        translate-web-pages
-        image-search-options
-      ];
     };
   };
 }

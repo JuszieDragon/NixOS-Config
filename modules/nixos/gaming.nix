@@ -41,5 +41,13 @@
     };
   };
 
-  #hardware.xone.enable = true;
+  #might be able to setup reloaded one click with this
+  /*
+  xdg.mimeApps.defaultApplications = {
+  "text/html" = [ "firefox.desktop" ];
+  "text/xml" = [ "firefox.desktop" ];
+  "x-scheme-handler/http" = [ "firefox.desktop" ];
+  "x-scheme-handler/https" = [ "firefox.desktop" ];
+  };
+  */
 }
