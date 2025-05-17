@@ -10,6 +10,10 @@
       ./hardware-configuration.nix
       ./../../modules/nixos/shares.nix
       ./../../modules/nixos/vscode-server.nix
+      ./../../modules/nixos/hello-world-web.nix
+      ./../../modules/nixos/caddy.nix
+      ./../../modules/nixos/nixarr.nix
+      ./../../modules/nixos/git.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -18,7 +22,7 @@
 
   boot.loader.grub.device = "/dev/sda";
 
-  networking.hostName = "nixos-server"; # Define your hostname.
+  networking.hostName = "night-city"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
@@ -38,43 +42,16 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-
-  
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  # hardware.pulseaudio.enable = true;
-  # OR
-  # services.pipewire = {
-  #   enable = true;
-  #   pulse.enable = true;
-  # };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.libinput.enable = true;
-
-  users.groups.docker = { gid = 1001; };
-  users.groups.server = { gid = 1002; };
-
-  users.users.docker = {
-    isSystemUser = true;
-    uid = 995;
-    group = "docker";
+  users.groups = {
+    home-lab = {};
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.justinj0 = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "server" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "server" "home-lab" ];
     packages = with pkgs; [
       tree
     ];

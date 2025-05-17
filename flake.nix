@@ -14,36 +14,55 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
-    hyprland.url = "github:hyprwm/Hyprland";
     aagl = {
       url = "github:ezKEa/aagl-gtk-on-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprland.url = "github:hyprwm/Hyprland";
+    nixarr.url = "github:rasmus-kirk/nixarr";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
   outputs = {
     self,
     nixpkgs,
+    nixarr,
     home-manager,
     aagl,
+    vscode-server,
     ...
   } @ inputs: {
-    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs;};
-      modules = [
-        {
-          imports = [aagl.nixosModules.default];
-          nix.settings = aagl.nixConfig; # Set up Cachix
-          programs.honkers-railway-launcher.enable = true;
-        }
-        ./hosts/default/configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-        }
-      ];
+    nixosConfigurations = {
+      desktop = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          {
+            imports = [aagl.nixosModules.default];
+            nix.settings = aagl.nixConfig; # Set up Cachix
+            programs.honkers-railway-launcher.enable = true;
+          }
+          ./hosts/desktop/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+          }
+        ];
+      };
+
+      night-city = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        modules = [
+          ./hosts/night-city/configuration.nix
+          nixarr.nixosModules.default
+          vscode-server.nixosModules.default
+        ];
+
+        specialArgs = { inherit inputs; };
+      };
     };
   };
 }
