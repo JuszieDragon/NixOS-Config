@@ -18,6 +18,11 @@
       url = "github:ezKEa/aagl-gtk-on-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    
+    agenix = {
+	    url = "github:ryantm/agenix";
+	    inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hyprland.url = "github:hyprwm/Hyprland";
     nixarr.url = "github:rasmus-kirk/nixarr";
@@ -32,6 +37,7 @@
     home-manager,
     aagl,
     vscode-server,
+    agenix,
     ...
   } @ inputs: {
     nixosConfigurations = {
@@ -57,6 +63,7 @@
 
         modules = [
           ./hosts/night-city/configuration.nix
+	        agenix.nixosModules.default
           nixarr.nixosModules.default
           vscode-server.nixosModules.default
         ];

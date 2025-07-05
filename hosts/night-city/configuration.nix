@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports =
@@ -10,11 +10,13 @@
       ./hardware-configuration.nix
       ./../../modules/nixos/shares.nix
       ./../../modules/nixos/vscode-server.nix
-      ./../../modules/nixos/hello-world-web.nix
       ./../../modules/nixos/caddy.nix
       ./../../modules/nixos/nixarr.nix
       ./../../modules/nixos/git.nix
+      ./../../modules/nixos/unifi.nix
     ];
+
+  nixpkgs.config.allowUnfree = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -74,7 +76,10 @@
 
   programs = {
     tmux.enable = true;
-    neovim.enable = true;
+    neovim = {
+    	enable = true;
+	    defaultEditor = true;
+    };
   };
 
   # List packages installed in system profile. To search, run:
@@ -90,6 +95,8 @@
     jq
     gh
     vimPlugins.LazyVim
+    inputs.agenix.packages."${system}".default
+    bat
   ];
 
   virtualisation.docker.enable = true;
