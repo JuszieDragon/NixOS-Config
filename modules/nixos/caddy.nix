@@ -2,47 +2,49 @@
   config,
   inputs,
   pkgs,
+  lib,
   ...
-}: {
-    networking.firewall.allowedTCPPorts = [ 80 443 ];
+}: 
 
-    #TODO pass the secret root path in so it's only defined once
-    age.secrets.caddy = {
-    	file = inputs.self + /secrets/caddy.age;
-	    owner = "caddy";
-	    group = "caddy";
-    };
+with lib;
 
-    services.caddy = {
-        enable = true;
+let cfg = config.modules.caddy;
 
-        package = pkgs.caddy.withPlugins {
-            plugins = [ "github.com/caddy-dns/porkbun@v0.3.1" ];
-            hash = "sha256-sa+L2YoTM1ZfhfowoCZwmggrUsqw0NmGWRK45TevxFo=";
+in {
+    options.modules.caddy.enable = mkEnableOption "Setup Caddy reverse proxy";
+
+    config = mkIf cfg.enable {
+        networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+        #TODO pass the secret root path in so it's only defined once
+        age.secrets.caddy = {
+            file = inputs.self + /secrets/caddy.age;
+            owner = "caddy";
+            group = "caddy";
         };
 
-	    environmentFile = config.age.secrets.caddy.path;
+        services.caddy = {
+            enable = true;
 
-        globalConfig = ''    
-            acme_dns porkbun {
-                api_key {env.api_key}
-                api_secret_key {env.api_secret_key} 
-            }
-        '';
-        
-        virtualHosts = {
-            "dragon.luxe".extraConfig = ''
-                respond "There is nothing here."
+            package = pkgs.caddy.withPlugins {
+                plugins = [ "github.com/caddy-dns/porkbun@v0.3.1" ];
+                hash = "sha256-sa+L2YoTM1ZfhfowoCZwmggrUsqw0NmGWRK45TevxFo=";
+            };
+
+            environmentFile = config.age.secrets.caddy.path;
+
+            globalConfig = ''    
+                acme_dns porkbun {
+                    api_key {env.api_key}
+                    api_secret_key {env.api_secret_key} 
+                }
             '';
-            "jellyfin.dragon.luxe".extraConfig = ''
-                reverse_proxy 192.168.1.100:8096
-            '';
-            "radarr.dragon.luxe".extraConfig = ''
-               reverse_proxy 192.168.1.100:7878
-            '';
-            "sonarr.dragon.luxe".extraConfig = ''
-                reverse_proxy 192.168.1.100:8989
-            '';
+
+            virtualHosts = {
+                "dragon.luxe".extraConfig = ''
+                    respond "There is nothing here."
+                '';
+            };
         };
     };
 }

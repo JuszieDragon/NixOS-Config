@@ -49,6 +49,10 @@
         #jellyseerr.enable = true;
     };
 
+    services.caddy.virtualHosts."jellyfin.dragon.luxe".extraConfig = ''
+        reverse_proxy 192.168.1.100:8096
+    '';
+
     #nixpkgs.overlays = with pkgs; [
     #(
     #  final: prev:

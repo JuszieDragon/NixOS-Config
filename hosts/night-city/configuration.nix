@@ -4,17 +4,20 @@
 
 { config, lib, pkgs, inputs, ... }:
 
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./../../modules/nixos/shares.nix
-      ./../../modules/nixos/vscode-server.nix
-      ./../../modules/nixos/caddy.nix
-      ./../../modules/nixos/nixarr.nix
-      ./../../modules/nixos/git.nix
-      ./../../modules/nixos/unifi.nix
-    ];
+let 
+  modulesRoot = ./../../modules/nixos;
+
+  moduleImports = map (module: modulesRoot + module) [
+    /shares.nix
+    /vscode-server.nix
+    /caddy.nix
+    /nixarr.nix
+    /git.nix
+    /unifi.nix
+  ];
+
+in {
+  imports = [ ./hardware-configuration.nix ] ++ moduleImports;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -100,6 +103,8 @@
   ];
 
   virtualisation.docker.enable = true;
+
+  modules.caddy.enable = false;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
