@@ -35,8 +35,8 @@ in {
 
             globalConfig = ''    
                 acme_dns porkbun {
-                    api_key {env.api_key}
-                    api_secret_key {env.api_secret_key} 
+                    api_key {$API_KEY}
+                    api_secret_key {$API_SECRET_KEY} 
                 }
             '';
 
