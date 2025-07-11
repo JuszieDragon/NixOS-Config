@@ -5,7 +5,8 @@
 { config, lib, pkgs, inputs, ... }:
 
 let 
-  modulesRoot = ./../../modules/nixos;
+  modulesRoot = ../../modules/nixos;
+  containersRoot = ../../containers;
 
   moduleImports = map (module: modulesRoot + module) [
     /caddy.nix
@@ -17,8 +18,14 @@ let
     /vscode-server.nix
   ];
 
+  containerImports = map (container: containersRoot + container) [
+    /openspeedtest.nix
+  ];
+
+  wrapAlias = command: ''f() { '' + command + ''; unset -f f; }; f'';
+
 in {
-  imports = [ ./hardware-configuration.nix ] ++ moduleImports;
+  imports = [ ./hardware-configuration.nix ] ++ moduleImports ++ containerImports;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -64,9 +71,10 @@ in {
   };
 
   programs.bash.shellAliases = {
-    rebuild = "sudo nixos-rebuild -I nixos-config=/home/justinj0/NixOS-Config/hosts/nixos-server/configuration.nix switch";
+    rebuild = "sudo nixos-rebuild switch --flake";
     nconf = "nvim ~/NixOS-Config/hosts/nixos-server/configuration.nix";
     lg = "lazygit";
+    jctl = wrapAlias "sudo journalctl -u $1 -b 0";
     
     tnmoni = "tmux new -s monifactory 'cd /srv/minecraft/Monifactory && ./run.sh'";
     tamoni = "tmux attach -t monifactory";
@@ -103,9 +111,10 @@ in {
     bat
   ];
 
-  virtualisation.docker.enable = true;
+  virtualisation.podman.enable = true;
 
   modules.caddy.enable = true;
+  modules.openspeedtest.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
