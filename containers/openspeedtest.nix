@@ -16,9 +16,9 @@ in {
   config = mkIf cfg.enable {
     virtualisation.oci-containers.containers = {
       openspeedtest = {
-	      image = "openspeedtest/latest";
-	      ports = ["3000:3000"];
-	    };
+        image = "openspeedtest/latest";
+        ports = ["3000:3000"];
+      };
     };
   };
 }

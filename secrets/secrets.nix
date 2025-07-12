@@ -11,6 +11,7 @@ let
 
 in {
   "caddy.age".publicKeys = keys;
-  "test.age".publicKeys= keys;
+  "romm.age".publicKeys = keys;
+  "romm-db.age".publicKeys = keys;
 }
 
