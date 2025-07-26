@@ -1,7 +1,1 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
-  services.vscode-server.enable = true;
-}
+{ config, pkgs, ... }: { services.vscode-server.enable = true; }

@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-let 
+let
   modulesRoot = ../../modules/nixos;
   containersRoot = ../../containers;
 
@@ -16,11 +16,12 @@ let
   ];
 
   containerImports = map (container: containersRoot + container) [
+    /grimoire.nix
     /openspeedtest.nix
     /romm.nix
   ];
 
-  wrapAlias = command: ''f() { '' + command + ''; unset -f f; }; f'';
+  wrapAlias = command: "f() { " + command + "; unset -f f; }; f";
 
 in {
   imports = [ ./hardware-configuration.nix ] ++ moduleImports ++ containerImports;
@@ -42,26 +43,23 @@ in {
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  users.groups = {
-    home-lab = {};
-  };
+  users.groups = { home-lab = { }; };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.justinj0 = {
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" "server" "home-lab" "media" ];
-    packages = with pkgs; [
-      tree
-    ];
+    packages = with pkgs; [ tree ];
   };
 
   programs.bash.shellAliases = {
     rebuild = "sudo nixos-rebuild switch --flake";
     nconf = "nvim ~/NixOS-Config/hosts/nixos-server/configuration.nix";
     lg = "lazygit";
-    jctl = wrapAlias "sudo journalctl -u $1 -b 0";
+    jctl = wrapAlias "sudo journalctl -u $1.service -b 0";
+    jctlc = wrapAlias "sudo journalctl -u podman-$1.service -b 0";
     agee = wrapAlias "agenix -e $1 -i ~/.ssh/id_ed25519";
-    
+
     tnmoni = "tmux new -s monifactory 'cd /srv/minecraft/Monifactory && ./run.sh'";
     tamoni = "tmux attach -t monifactory";
     tndepth = "tmux new -s depth 'cd /srv/minecraft/Beyond-Depth && ./run.sh'";
@@ -75,8 +73,8 @@ in {
   programs = {
     tmux.enable = true;
     neovim = {
-    	enable = true;
-	    defaultEditor = true;
+      enable = true;
+      defaultEditor = true;
     };
   };
 
@@ -98,8 +96,17 @@ in {
 
   modules.podman.enable = true;
   modules.caddy.enable = true;
-  modules.openspeedtest.enable = true;
-  modules.romm.enable = true;
+  modules.openspeedtest = {
+    enable = true;
+    port = "3000";
+    reverseProxy = "internal";
+    subdomain = "speedtest";
+  };
+  modules.romm = {
+    enable = true;
+    port = "8282";
+    reverseProxy = "external";
+  };
 
   services.openssh.enable = true;
 
