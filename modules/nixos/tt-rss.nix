@@ -1,31 +1,38 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, catalog, ... }:
+
+with lib;
 
 let
-  hostName = "tt-rss.dragon.luxe";
+  cfg = config.modules.tt-rss;
+	hostName = "${cfg.subdomain or "tt-rss"}.${catalog.domain}";
 
-in  {
-  services.tt-rss = {
-		enable = true;
-		selfUrlPath = "https://${hostName}";
-    virtualHost = null;
-		themePackages = [ pkgs.tt-rss-theme-feedly ];
-  };
+in {
+	options.modules.tt-rss = catalog.defaultOptions;
 
-  services.caddy.virtualHosts.${hostName}.extraConfig = ''
-    root * ${config.services.tt-rss.root}/www
+	config = mkIf cfg.enable {
+		services.tt-rss = {
+			enable = true;
+			selfUrlPath = "https://${hostName}";
+  	  virtualHost = null;
+			themePackages = [ pkgs.tt-rss-theme-feedly ];
+  	};
 
-		php_fastcgi * unix/${config.services.phpfpm.pools.${config.services.tt-rss.pool}.socket} {
-			capture_stderr
-		}
+  	services.caddy.virtualHosts.${hostName}.extraConfig = ''
+    	root * ${config.services.tt-rss.root}/www
 
-		file_server {
-			browse
-		}
-  '';
+			php_fastcgi * unix/${config.services.phpfpm.pools.${config.services.tt-rss.pool}.socket} {
+				capture_stderr
+			}
 
-  # Workaround: Create PHP-FPM socket with Caddy user instead of non-existing nginx
-	services.phpfpm.pools."${config.services.tt-rss.pool}".settings = {
-		"listen.owner" = config.services.caddy.user;
-		"listen.group" = config.services.caddy.group;
+			file_server {
+				browse
+			}
+  	'';
+
+  	# Workaround: Create PHP-FPM socket with Caddy user instead of non-existing nginx
+		services.phpfpm.pools."${config.services.tt-rss.pool}".settings = {
+			"listen.owner" = config.services.caddy.user;
+			"listen.group" = config.services.caddy.group;
+		};
 	};
 }

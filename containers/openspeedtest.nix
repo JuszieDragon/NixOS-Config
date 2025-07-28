@@ -1,25 +1,11 @@
-{ config, inputs, pkgs, lib, ... }:
+{ config, inputs, pkgs, lib, catalog, ... }:
 
 with lib;
 
 let cfg = config.modules.openspeedtest;
 
 in {
-  options.modules.openspeedtest = {
-    enable = mkEnableOption "Run OpenSpeedTest";
-    port = mkOption {
-      type = types.str;
-      description = "Port to run service on";
-    };
-    reverseProxy = mkOption {
-      type = types.enum [ "internal" "external" ];
-      description = "Reverse proxy type, valid options are internal and external";
-    };
-    subdomain = mkOption {
-      type = types.str;
-      description = "Override for the subdomain name in the reverse proxy";
-    };
-  };
+  options.modules.openspeedtest = catalog.defaultOptions // catalog.subdomainOption;
 
   config = mkIf cfg.enable {
     virtualisation.oci-containers.containers = {

@@ -1,5 +1,20 @@
-{ config, pkgs, nixpkgs, ... }: {
-  nixarr = {
+{ config, pkgs, lib, nixpkgs, catalog, ... }: 
+
+with lib;
+
+let
+  cfg = config.modules;
+
+in {
+  options.modules = {
+    jellyfin = catalog.defaultOptions;
+    sonarr = catalog.defaultOptions;
+    radarr = catalog.defaultOptions;
+    prowlarr = catalog.defaultOptions;
+    transmission = catalog.defaultOptions;
+  };
+
+  config.nixarr = {
     enable = true;
     # These two values are also the default, but you can set them to whatever
     # else you want
@@ -14,37 +29,31 @@
       #wgConf = "./france_switzerland_1.conf";
     };
 
-    jellyfin = {
+    jellyfin = mkIf cfg.jellyfin.enable {
       enable = true;
-      # These options set up a nginx HTTPS reverse proxy, so you can access
-      # Jellyfin on your domain with HTTPS
-      #expose.https = {
-      #    enable = true;
-      #    domainName = "your.domain.com";
-      #    acmeMail = "your@email.com"; # Required for ACME-bot
-      #};
     };
 
-    transmission = {
+    transmission = mkIf cfg.transmission.enable {
       enable = true;
+      uiPort = strings.toInt cfg.transmission.port;
       #vpn.enable = true;
       #peerPort = 50000; # Set this to the port forwarded by your VPN
     };
 
-    # It is possible for this module to run the *Arrs through a VPN, but it
-    # is generally not recommended, as it can cause rate-limiting issues.
-    #bazarr.enable = true;
-    #lidarr.enable = true;
-    prowlarr = { enable = true; };
-    radarr.enable = true;
-    #readarr.enable = true;
-    sonarr.enable = true;
-    #jellyseerr.enable = true;
-  };
+    prowlarr = mkIf cfg.prowlarr.enable {
+      enable = true;
+      port = strings.toInt cfg.prowlarr.port;
+    };
 
-  services.caddy.virtualHosts."jellyfin.dragon.luxe".extraConfig = ''
-    reverse_proxy 192.168.1.100:8096
-  '';
+    radarr = mkIf cfg.radarr.enable {
+      enable = true;
+      port = strings.toInt cfg.radarr.port;
+    };
+
+    sonarr = mkIf cfg.sonarr.enable {
+      enable = true;
+    };
+  };
 
   #nixpkgs.overlays = with pkgs; [
   #(

@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, lib, ... }:
+{ config, inputs, pkgs, lib, catalog, ... }:
 
 with lib;
 
@@ -9,22 +9,11 @@ let
   dbUser = "romm-user";
 
 in {
-  options.modules.romm = {
-    enable = mkEnableOption "Run RomM";
-    port = mkOption {
-      type = types.str;
-      description = "Port to run service on";
-    };
-    reverseProxy = mkOption {
-      type = types.enum [ "internal" "external" ];
-      description = "Reverse proxy type, valid options are internal and external";
-    };
-  };
+  options.modules.romm = catalog.defaultOptions;
 
   config = mkIf cfg.enable {
     age.secrets = {
       romm = { file = inputs.self + /secrets/romm.age; };
-
       romm-db = { file = inputs.self + /secrets/romm-db.age; };
     };
 

@@ -91,11 +91,43 @@ in {
     vimPlugins.LazyVim
     inputs.agenix.packages."${system}".default
     bat
-    nixfmt
+    nixfmt-rfc-style
   ];
 
   modules.podman.enable = true;
   modules.caddy.enable = true;
+
+  modules.jellyfin = {
+    enable = true;
+    port = "8096";
+    reverseProxy = "external";
+  };
+  modules.radarr = {
+    enable = true;
+    port = "7878";
+    reverseProxy = "internal";
+  };
+  modules.sonarr = {
+    enable = true;
+    port = "8989";
+    reverseProxy = "internal";
+  };
+  modules.prowlarr = {
+    enable = true;
+    port = "9696";
+    reverseProxy = "internal";
+  };
+  modules.transmission = {
+    enable = true;
+    port = "9092";
+    reverseProxy = "internal";
+  };
+
+  modules.tt-rss = {
+    enable = true;
+    reverseProxy = "none";
+  };
+
   modules.openspeedtest = {
     enable = true;
     port = "3000";

@@ -39,7 +39,12 @@
     vscode-server,
     agenix,
     ...
-  } @ inputs: {
+  } @ inputs: 
+    with inputs;
+    let
+      catalog = import ./catalog.nix { inherit lib; };
+      lib = nixpkgs.lib;
+    in {
     nixosConfigurations = {
       desktop = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
@@ -68,7 +73,10 @@
           vscode-server.nixosModules.default
         ];
 
-        specialArgs = { inherit inputs; };
+        specialArgs = { 
+          inherit inputs;
+          inherit catalog;
+        };
       };
     };
   };

@@ -1,28 +1,28 @@
-{ config, inputs, pkgs, lib, ... }:
+{ config, inputs, pkgs, lib, catalog, ... }:
 
 with lib;
 
 let
   cfg = config.modules.caddy;
-  domain = "dragon.luxe";
-  servicesToProxyConf = filterAttrs (n: v: v ? reverseProxy && v ? port) config.modules;
+  
+  servicesToProxyConf = filterAttrs (n: v: v ? reverseProxy && v.reverseProxy != "none" && v ? port && v.enable == true) config.modules;
   #servicesToProxyConfTrace = mapAttrs' (n: v: nameValuePair (traceVal n) (traceVal v)) servicesToProxyConf;
 
   vHosts = mapAttrs' (service: sconf:
     nameValuePair 
     (
-      if sconf.reverseProxy == "external" || sconf.reverseProxy == "internal" then
-        if sconf ? subdomain then
-          "${sconf.subdomain}.${domain}"
-        else
-          "${service}.${domain}"
-      else throw "Invalid reverseProxy type: ${sconf.reverseProxy} for service: ${service}")
+      if sconf ? subdomain then
+        "${sconf.subdomain}.${catalog.domain}"
+      else
+        "${service}.${catalog.domain}"
+    )
     (
+      #TODO really need to figure out how to setup propagation_timeout with this setup
       if sconf.reverseProxy == "external" then {
         extraConfig = ''
           reverse_proxy localhost:${sconf.port}
         '';
-      } else if sconf.reverseProxy == "internal" then {
+      } else {
         extraConfig = ''
           @internal { remote_ip 192.168.0.0/22 }
           handle @internal {
@@ -30,9 +30,10 @@ let
           }
           respond "Go away" 403
         '';
-      } else throw "Invalid reverseProxy type: ${sconf.reverseProxy} for service: ${service}")
-    #) servicesToProxyConfTrace;
-    ) servicesToProxyConf;
+      }
+    )
+  #) servicesToProxyConfTrace;
+  ) servicesToProxyConf;
 
   #vHostsTrace = mapAttrs' (n: v: nameValuePair (traceVal n) (traceVal v)) vHosts;
 
