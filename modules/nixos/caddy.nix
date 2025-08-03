@@ -5,35 +5,45 @@ with lib;
 let
   cfg = config.modules.caddy;
   
-  servicesToProxyConf = filterAttrs (n: v: v ? reverseProxy && v.reverseProxy != "none" && v ? port && v.enable == true) config.modules;
-  #servicesToProxyConfTrace = mapAttrs' (n: v: nameValuePair (traceVal n) (traceVal v)) servicesToProxyConf;
+  servicesValidForProxy = service: filterAttrs (n: v: v ? reverseProxy && v.reverseProxy != "none" && v.enable == true) service;
+  servicesToProxyConf = mapAttrs (host: attr: 
+    attr // { services = mapAttrs (service: attrs: attrs // { ip = attr.ip; name = service; }) (servicesValidForProxy attr.services); }
+  ) catalog.hosts;
 
-  vHosts = mapAttrs' (service: sconf:
-    nameValuePair 
-    (
-      if sconf ? subdomain then
-        "${sconf.subdomain}.${catalog.domain}"
-      else
-        "${service}.${catalog.domain}"
-    )
-    (
-      #TODO really need to figure out how to setup propagation_timeout with this setup
-      if sconf.reverseProxy == "external" then {
-        extraConfig = ''
-          reverse_proxy localhost:${sconf.port}
-        '';
-      } else {
-        extraConfig = ''
-          @internal { remote_ip 192.168.0.0/22 }
-          handle @internal {
-            reverse_proxy localhost:${sconf.port}
-          }
-          respond "Go away" 403
-        '';
-      }
-    )
-  #) servicesToProxyConfTrace;
-  ) servicesToProxyConf;
+  #test = trace (builtins.toJSON servicesToProxyConf) servicesToProxyConf;
+  servicesToProxyList = collect (attr: attr ? enable) servicesToProxyConf;
+
+  vHosts = listToAttrs (
+    map (service: 
+      let 
+        port = if service ? port then ":${service.port}" else "";
+
+      in
+        nameValuePair 
+          (
+            if service ? subdomain then
+              "${service.subdomain}.${catalog.domain}"
+            else
+              "${service.name}.${catalog.domain}"
+          )
+          (
+            #TODO really need to figure out how to setup propagation_timeout with this setup
+            if service.reverseProxy == "external" then {
+              extraConfig = ''
+                reverse_proxy ${service.ip}${port}
+              '';
+            } else {
+              extraConfig = ''
+                @internal { remote_ip 192.168.0.0/22 }
+                handle @internal {
+                  reverse_proxy ${service.ip}${port}
+                }
+                respond "Go away" 403
+              '';
+            }
+          ) 
+    ) servicesToProxyList
+  );
 
   #vHostsTrace = mapAttrs' (n: v: nameValuePair (traceVal n) (traceVal v)) vHosts;
 
@@ -74,6 +84,7 @@ in {
 
       #virtualHosts = vHostsTrace;
       virtualHosts = vHosts;
+      #virtualHosts = test;
     };
   };
 }

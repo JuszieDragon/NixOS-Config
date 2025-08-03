@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = config.modules.romm;
+  cfg = catalog.hosts.${config.networking.hostName}.services.romm;
   configDir = "/data/docker/romm";
   dbName = "romm";
   dbUser = "romm-user";

@@ -2,7 +2,7 @@
 
 with lib;
 
-let cfg = config.modules.openspeedtest;
+let cfg = catalog.hosts.${config.networking.hostName}.services.openspeedtest;
 
 in {
   options.modules.openspeedtest = catalog.defaultOptions // catalog.subdomainOption;

@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = config.modules;
+  cfg = catalog.hosts.${config.networking.hostName}.services;
 
 in {
   options.modules = {
