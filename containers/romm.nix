@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = catalog.hosts.${config.networking.hostName}.services.romm;
+  cfg = catalog.services.romm;
   configDir = "/data/docker/romm";
   dbName = "romm";
   dbUser = "romm-user";
@@ -20,7 +20,7 @@ in {
     virtualisation.oci-containers.containers = {
       romm = {
         image = "rommapp/romm:latest";
-        ports = [ "${cfg.port}:8080" ];
+        ports = [ "${cfg.portString}:8080" ];
         environment = {
           DB_HOST = "romm-db";
           DB_NAME = dbName;

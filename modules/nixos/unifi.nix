@@ -3,5 +3,5 @@
   pkgs,
   ...
 }: { 
-    services.unifi.enable = true;
+  services.unifi.enable = true;
 }

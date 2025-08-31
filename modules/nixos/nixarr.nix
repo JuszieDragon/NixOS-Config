@@ -1,9 +1,9 @@
-{ config, pkgs, lib, nixpkgs, catalog, ... }: 
+{ config, inputs, pkgs, lib, nixpkgs, catalog, ... }: 
 
 with lib;
 
 let
-  cfg = catalog.hosts.${config.networking.hostName}.services;
+  cfg = catalog.services;
 
 in {
   options.modules = {
@@ -14,44 +14,59 @@ in {
     transmission = catalog.defaultOptions;
   };
 
-  config.nixarr = {
-    enable = true;
-    # These two values are also the default, but you can set them to whatever
-    # else you want
-    # WARNING: Do _not_ set them to `/home/user/whatever`, it will not work!
-    mediaDir = "/data/media";
-    stateDir = "/data/media/.state/nixarr";
-
-    vpn = {
-      #enable = true;
-      # WARNING: This file must _not_ be in the config git directory
-      # You can usually get this wireguard file from your VPN provider
-      #wgConf = "./france_switzerland_1.conf";
+  config = {
+    age.secrets.transmission = { 
+      file = inputs.self + /secrets/transmission.age; 
+      owner = "transmission";
+      group = "media";
+      mode = "700";
     };
 
-    jellyfin = mkIf cfg.jellyfin.enable {
+    services.deluge = {
       enable = true;
+      web.enable = true;
     };
 
-    transmission = mkIf cfg.transmission.enable {
+    nixarr = {
       enable = true;
-      uiPort = strings.toInt cfg.transmission.port;
-      #vpn.enable = true;
-      #peerPort = 50000; # Set this to the port forwarded by your VPN
-    };
+      # These two values are also the default, but you can set them to whatever
+      # else you want
+      # WARNING: Do _not_ set them to `/home/user/whatever`, it will not work!
+      mediaDir = "/data/media";
+      stateDir = "/data/media/.state/nixarr";
 
-    prowlarr = mkIf cfg.prowlarr.enable {
-      enable = true;
-      port = strings.toInt cfg.prowlarr.port;
-    };
+      vpn = {
+        #enable = true;
+        # WARNING: This file must _not_ be in the config git directory
+        # You can usually get this wireguard file from your VPN provider
+        #wgConf = "./france_switzerland_1.conf";
+      };
 
-    radarr = mkIf cfg.radarr.enable {
-      enable = true;
-      port = strings.toInt cfg.radarr.port;
-    };
+      jellyfin = mkIf cfg.jellyfin.enable {
+        enable = true;
+      };
 
-    sonarr = mkIf cfg.sonarr.enable {
-      enable = true;
+      transmission = mkIf cfg.transmission.enable {
+        enable = true;
+        uiPort = cfg.transmission.port;
+        credentialsFile = config.age.secrets.transmission.path;
+        #vpn.enable = true;
+        #peerPort = 50000; # Set this to the port forwarded by your VPN
+      };
+
+      prowlarr = mkIf cfg.prowlarr.enable {
+        enable = true;
+        port = cfg.prowlarr.port;
+      };
+
+      radarr = mkIf cfg.radarr.enable {
+        enable = true;
+        port = cfg.radarr.port;
+      };
+
+      sonarr = mkIf cfg.sonarr.enable {
+        enable = true;
+      };
     };
   };
 

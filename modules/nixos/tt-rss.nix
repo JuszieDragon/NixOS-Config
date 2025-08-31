@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = catalog.hosts.${config.networking.hostName}.services.tt-rss;
+	cfg = catalog.services.tt-rss;
 	hostName = "${cfg.subdomain or "tt-rss"}.${catalog.domain}";
 
 in {

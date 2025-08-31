@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, catalog, ... }:
 
 let
   modulesRoot = ../../modules/nixos;
@@ -16,7 +16,7 @@ let
   ];
 
   containerImports = map (container: containersRoot + container) [
-    /grimoire.nix
+    #/grimoire.nix
     /openspeedtest.nix
     /romm.nix
   ];
@@ -84,7 +84,6 @@ in {
     lazygit
     temurin-jre-bin
     btop
-    compose2nix
     nixd
     jq
     gh
@@ -94,10 +93,15 @@ in {
     nixfmt-rfc-style
   ];
 
-  modules.podman.enable = true;
-  modules.caddy.enable = true;
+  #modules = lib.mapAttrs' (service: config: lib.nameValuePair (service) (config)) (catalog.hosts.${config.networking.hostName}.services // localModules);
+  modules = {
+    podman.enable = true;
+    caddy.enable = true;
+  };
 
   services.openssh.enable = true;
+
+  age.identityPaths = [ "/home/justinj0/.ssh/id_ed25519" ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

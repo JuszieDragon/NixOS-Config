@@ -3,49 +3,36 @@
 with lib;
 
 let
-  cfg = config.modules.caddy;
+  cfg = catalog.services.caddy;
   
-  servicesValidForProxy = service: filterAttrs (n: v: v ? reverseProxy && v.reverseProxy != "none" && v.enable == true) service;
-  servicesToProxyConf = mapAttrs (host: attr: 
-    attr // { services = mapAttrs (service: attrs: attrs // { ip = attr.ip; name = service; }) (servicesValidForProxy attr.services); }
-  ) catalog.hosts;
+  servicesValidForProxy = services: filterAttrs (n: v: v ? reverseProxy && v.reverseProxy != "none" && v.enable == true) services;
 
-  #test = trace (builtins.toJSON servicesToProxyConf) servicesToProxyConf;
-  servicesToProxyList = collect (attr: attr ? enable) servicesToProxyConf;
-
-  vHosts = listToAttrs (
-    map (service: 
-      let 
-        port = if service ? port then ":${service.port}" else "";
-
-      in
-        nameValuePair 
-          (
-            if service ? subdomain then
-              "${service.subdomain}.${catalog.domain}"
-            else
-              "${service.name}.${catalog.domain}"
-          )
-          (
-            #TODO really need to figure out how to setup propagation_timeout with this setup
-            if service.reverseProxy == "external" then {
-              extraConfig = ''
-                reverse_proxy ${service.ip}${port}
-              '';
-            } else {
-              extraConfig = ''
-                @internal { remote_ip 192.168.0.0/22 }
-                handle @internal {
-                  reverse_proxy ${service.ip}${port}
-                }
-                respond "Go away" 403
-              '';
+  vHosts = mapAttrs' (serviceName: service:
+    nameValuePair
+    (
+      if service ? subdomain 
+        then "${service.subdomain}.${catalog.domain}"
+        else "${serviceName}.${catalog.domain}"
+    )
+    (
+      #TODO really need to figure out how to setup propagation_timeout with this setup
+      if service.reverseProxy == "external" then {
+        extraConfig = ''
+          reverse_proxy ${service.host.ip}:${service.portString}
+        '';
+      } else {
+        extraConfig = ''
+          @internal { remote_ip 192.168.0.0/22 }
+          handle @internal {
+            reverse_proxy ${service.host.ip}:${service.portString} {
+              header_up Host {upstream_hostport}
             }
-          ) 
-    ) servicesToProxyList
-  );
-
-  #vHostsTrace = mapAttrs' (n: v: nameValuePair (traceVal n) (traceVal v)) vHosts;
+          }
+          respond "Go away" 403
+        '';
+      }
+    )
+  ) (servicesValidForProxy catalog.services);
 
 in {
   options.modules.caddy.enable = mkEnableOption "Setup Caddy reverse proxy";

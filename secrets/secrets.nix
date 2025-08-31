@@ -13,5 +13,6 @@ in {
   "caddy.age".publicKeys = keys;
   "romm.age".publicKeys = keys;
   "romm-db.age".publicKeys = keys;
+  "transmission.age".publicKeys = keys;
 }
 

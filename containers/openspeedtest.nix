@@ -2,7 +2,7 @@
 
 with lib;
 
-let cfg = catalog.hosts.${config.networking.hostName}.services.openspeedtest;
+let cfg = catalog.services.openspeedtest;
 
 in {
   options.modules.openspeedtest = catalog.defaultOptions // catalog.subdomainOption;
@@ -11,7 +11,7 @@ in {
     virtualisation.oci-containers.containers = {
       openspeedtest = {
         image = "openspeedtest/latest";
-        ports = [ "${cfg.port}:3000" ];
+        ports = [ "${cfg.portString}:3000" ];
       };
     };
   };
