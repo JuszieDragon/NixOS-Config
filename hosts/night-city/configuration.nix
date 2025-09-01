@@ -19,6 +19,7 @@ let
     #/grimoire.nix
     /openspeedtest.nix
     /romm.nix
+    /sonarr-anime.nix
   ];
 
   wrapAlias = command: "f() { " + command + "; unset -f f; }; f";
