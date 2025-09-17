@@ -19,7 +19,8 @@ in {
 
     virtualisation.oci-containers.containers = {
       romm = {
-        image = "rommapp/romm:latest";
+        #TODO need to sort out mounting config.yml to get above this version
+        image = "rommapp/romm:4.0.1";
         ports = [ "${cfg.portString}:8080" ];
         environment = {
           DB_HOST = "romm-db";
