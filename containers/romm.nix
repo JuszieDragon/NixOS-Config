@@ -29,7 +29,7 @@ in {
         };
         environmentFiles = [ config.age.secrets.romm.path ];
         volumes = [
-          "/mnt/NAS/Files/RomM:/romm/library"
+          "/mnt/Roms:/romm/library"
           (configDir + "/resources:/romm/resources")
           (configDir + "/redis_data:/redis_data")
           (configDir + "/assets:/romm/assets")

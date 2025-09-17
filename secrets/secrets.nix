@@ -14,5 +14,6 @@ in {
   "romm.age".publicKeys = keys;
   "romm-db.age".publicKeys = keys;
   "transmission.age".publicKeys = keys;
+  "share.age".publicKeys = keys;
 }
 
