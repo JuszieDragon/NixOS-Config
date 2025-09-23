@@ -2,26 +2,28 @@
   description = "Nixos config flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    my-nixpkgs.url = "github:JuszieDragon/nixpkgs?ref=b7e3e3b423a29e9a8a1cad4dc8ed79925d21d78a";
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     aagl = {
       url = "github:ezKEa/aagl-gtk-on-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     
     agenix = {
 	    url = "github:ryantm/agenix";
-	    inputs.nixpkgs.follows = "nixpkgs";
+	    inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
@@ -32,21 +34,22 @@
 
   outputs = {
     self,
-    nixpkgs,
-    nixarr,
-    home-manager,
     aagl,
-    vscode-server,
     agenix,
+    home-manager,
+    my-nixpkgs,
+    nixpkgs-unstable,
+    nixarr,
+    vscode-server,
     ...
   } @ inputs: 
     with inputs;
     let
+      lib = nixpkgs-unstable.lib;
       catalog = import ./catalog.nix { inherit lib; };
-      lib = nixpkgs.lib;
     in {
     nixosConfigurations = {
-      desktop = nixpkgs.lib.nixosSystem {
+      desktop = nixpkgs-unstable.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
           {
@@ -63,19 +66,19 @@
         ];
       };
 
-      night-city = nixpkgs.lib.nixosSystem {
+      night-city = nixpkgs-unstable.lib.nixosSystem {
         system = "x86_64-linux";
 
         modules = [
-          ./hosts/night-city/configuration.nix
-	        agenix.nixosModules.default
+          agenix.nixosModules.default
           nixarr.nixosModules.default
           vscode-server.nixosModules.default
+          
+          ./hosts/night-city/configuration.nix
         ];
 
         specialArgs = { 
-          inherit inputs;
-          inherit catalog;
+          inherit inputs catalog;
         };
       };
     };

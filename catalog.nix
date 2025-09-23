@@ -67,7 +67,7 @@ rec {
       enable = true;
       host = hosts.night-city;
       port = 8096;
-      reverseProxy = "internal";
+      reverseProxy = "external";
     };
     radarr = {
       enable = true;
@@ -120,6 +120,12 @@ rec {
     caddy = {
       enable = true;
       host = hosts.night-city;
+    };
+    qbittorrent = {
+      enable = true;
+      host = hosts.night-city;
+      port = 8081;
+      reverseProxy = "internal";
     };
 
     truenas = {

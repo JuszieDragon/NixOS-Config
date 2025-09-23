@@ -17,7 +17,18 @@ in {
 
   age.secrets.share.file = inputs.self + /secrets/share.age; 
 
+  fileSystems."/mnt/qBittorrent" = {
+    device = "//192.168.1.1/Files/qBittorrent";
     fsType = "cifs";
+    options = sharedOptions ++ [
+      #TODO hardcode this uid in qbittorrent.nix or maybe in nixarr overlay for globals file
+      # https://github.com/rasmus-kirk/nixarr/blob/main/util/globals/default.nix
+      "uid=987"
+      #"uid=${toString users.users.qbittorrent.uid}"
+      "gid=${toString config.util-nixarr.globals.gids.media}"
+    ];
+  };
+
   fileSystems."/mnt/Roms" = {
     device = "//192.168.1.1/Files/RomM";
     fsType = "cifs";
