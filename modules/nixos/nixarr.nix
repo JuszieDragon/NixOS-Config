@@ -15,12 +15,7 @@ in {
   };
 
   config = {
-    age.secrets.transmission = { 
-      file = inputs.self + /secrets/transmission.age; 
-      owner = "transmission";
-      group = "media";
-      mode = "700";
-    };
+    age.secrets.vpn.file = inputs.self + /secrets/vpn.age;
 
     services.deluge = {
       enable = true;
@@ -36,26 +31,19 @@ in {
       stateDir = "/data/media/.state/nixarr";
 
       vpn = {
-        #enable = true;
+        enable = false;
         # WARNING: This file must _not_ be in the config git directory
         # You can usually get this wireguard file from your VPN provider
-        #wgConf = "./france_switzerland_1.conf";
+        wgConf = config.age.secrets.vpn.path;
       };
 
       jellyfin = mkIf cfg.jellyfin.enable {
         enable = true;
       };
 
-      transmission = mkIf cfg.transmission.enable {
-        enable = true;
-        uiPort = cfg.transmission.port;
-        credentialsFile = config.age.secrets.transmission.path;
-        #vpn.enable = true;
-        #peerPort = 50000; # Set this to the port forwarded by your VPN
-      };
-
       prowlarr = mkIf cfg.prowlarr.enable {
         enable = true;
+        vpn.enable = false;
         port = cfg.prowlarr.port;
       };
 

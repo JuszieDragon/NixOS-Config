@@ -2,7 +2,9 @@
 
 with lib;
 
-let cfg = catalog.services.sonarr-anime;
+let 
+  cfg = catalog.services.sonarr-anime;
+  util-nixarr = config.util-nixarr;
 
 in {
   options.modules.sonarr-anime = catalog.defaultOptions;
@@ -12,15 +14,30 @@ in {
       autoStart = true;
       hostAddress = cfg.host.ip;
       bindMounts = {
-        "/data/media/.state/sonarr-anime" = {
-          hostPath = "/data/media/.state/sonarr-anime";
+        "/data" = {
+          hostPath = "/data";
+          isReadOnly = false;
+        };
+        "/mnt/Plex/Anime" = {
+          hostPath = "/mnt/Plex/Anime";
           isReadOnly = false;
         };
       };
 
       config = { config, pkgs, lib, ... }: {
+        users = {
+          groups.media.gid = util-nixarr.globals.gids.media;
+          users.sonarr = {
+            isSystemUser = true;
+            uid = util-nixarr.globals.uids.sonarr;
+            group = "media";
+          };
+        };
+        
         services.sonarr = {
           enable = true;
+          user = "sonarr";
+          group = "media";
           settings.server.port = cfg.port;
           dataDir = "/data/media/.state/sonarr-anime";
         };

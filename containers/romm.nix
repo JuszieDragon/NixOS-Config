@@ -13,8 +13,8 @@ in {
 
   config = mkIf cfg.enable {
     age.secrets = {
-      romm = { file = inputs.self + /secrets/romm.age; };
-      romm-db = { file = inputs.self + /secrets/romm-db.age; };
+      romm.file = inputs.self + /secrets/romm.age;
+      romm-db.file = inputs.self + /secrets/romm-db.age;
     };
 
     virtualisation.oci-containers.containers = {

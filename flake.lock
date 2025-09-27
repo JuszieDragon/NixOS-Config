@@ -514,16 +514,15 @@
     },
     "my-nixpkgs": {
       "locked": {
-        "lastModified": 1758182470,
-        "narHash": "sha256-mLevm4i+7Dwp/cIhpJ0oXP1f3G1y9+hQ8sU4tC15hxg=",
+        "lastModified": 1758182509,
+        "narHash": "sha256-BtfIMKnF9qxR6n7/OyFWtS5oJGoHUqx5upN2Qjo2850=",
         "owner": "JuszieDragon",
         "repo": "nixpkgs",
-        "rev": "b7e3e3b423a29e9a8a1cad4dc8ed79925d21d78a",
+        "rev": "08486ae3cf8baf2ea4f13e7837ba70ce61362bb7",
         "type": "github"
       },
       "original": {
         "owner": "JuszieDragon",
-        "ref": "b7e3e3b423a29e9a8a1cad4dc8ed79925d21d78a",
         "repo": "nixpkgs",
         "type": "github"
       }

@@ -25,6 +25,7 @@ let
   wrapAlias = command: "f() { " + command + "; unset -f f; }; f";
 
 in {
+  #https://nixos.org/manual/nixos/stable/index.html#sec-replace-modules
   disabledModules = [ "services/torrent/qbittorrent.nix" ];
   
   imports = [ 
