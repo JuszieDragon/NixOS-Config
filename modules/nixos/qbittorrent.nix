@@ -68,12 +68,13 @@ in {
         };
       };
       categories = {
-        "TV Shows".save_path = "${mediaDir}/sonarr";
-        "Movies".save_path = "${mediaDir}/radarr";
         "Anime".save_path = "${mediaDir}/sonarr-anime";
+        "Doujinshi".save_path = "${mediaDir}/doujinshi";
         "Manga".save_path = "${mediaDir}/manga";
         "Misc".save_path = "${nasDir}/Misc";
+        "Movies".save_path = "${mediaDir}/radarr";
         "Seeding".save_path = "${nasDir}/Seeding";
+        "TV Shows".save_path = "${mediaDir}/sonarr";
       };
     };
   };

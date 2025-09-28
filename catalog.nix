@@ -127,6 +127,12 @@ rec {
       port = 8081;
       reverseProxy = "internal";
     };
+    komga = {
+      enable = true;
+      host = hosts.night-city;
+      port = 8082;
+      reverseProxy = "internal";
+    };
 
     truenas = {
       enable = true;

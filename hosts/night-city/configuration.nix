@@ -7,6 +7,7 @@ let
   moduleImports = map (module: modulesRoot + module) [
     /caddy.nix
     /git.nix
+    /komga.nix
     /nixarr.nix
     /podman.nix
     /qbittorrent.nix
@@ -99,6 +100,7 @@ in {
     inputs.agenix.packages."${system}".default
     bat
     nixfmt-rfc-style
+    steamcmd
   ];
 
   modules = {
@@ -106,7 +108,9 @@ in {
     caddy.enable = true;
   };
 
-  services.openssh.enable = true;
+  services = {
+    openssh.enable = true;
+  };
 
   age.identityPaths = [ "/home/justinj0/.ssh/id_ed25519" ];
 
