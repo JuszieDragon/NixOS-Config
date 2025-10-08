@@ -4,6 +4,8 @@ with lib;
 
 let
   cfg = catalog.services.romm;
+  hostName = config.networking.hostName;
+
   configDir = "/data/docker/romm";
   dbName = "romm";
   dbUser = "romm-user";
@@ -11,7 +13,7 @@ let
 in {
   options.modules.romm = catalog.defaultOptions;
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.isEnabled hostName) {
     age.secrets = {
       romm.file = inputs.self + /secrets/romm.age;
       romm-db.file = inputs.self + /secrets/romm-db.age;

@@ -4,13 +4,15 @@ with lib;
 
 let
   cfg = catalog.services.qbittorrent;
+  hostName = config.networking.hostName;
+
   mediaDir = "/data/media/torrents";
   nasDir = "/mnt/qBittorrent";
 
 in {
   options.modules.qbittorrent = catalog.defaultOptions;
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.isEnabled hostName) {
     users.users.qbittorrent = {
       isSystemUser = true;
       group = "media";

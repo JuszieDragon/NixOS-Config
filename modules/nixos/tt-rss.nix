@@ -4,20 +4,21 @@ with lib;
 
 let
 	cfg = catalog.services.tt-rss;
-	hostName = "${cfg.subdomain or "tt-rss"}.${catalog.domain}";
+	hostName = config.networking.hostName;
+	domainName = "${cfg.subdomain or "tt-rss"}.${catalog.domain}";
 
 in {
 	options.modules.tt-rss = catalog.defaultOptions;
 
-	config = mkIf cfg.enable {
+	config = mkIf (cfg.isEnabled hostName) {
 		services.tt-rss = {
 			enable = true;
-			selfUrlPath = "https://${hostName}";
+			selfUrlPath = "https://${domainName}";
   	  virtualHost = null;
 			themePackages = [ pkgs.tt-rss-theme-feedly ];
   	};
 
-  	services.caddy.virtualHosts.${hostName}.extraConfig = ''
+  	services.caddy.virtualHosts.${domainName}.extraConfig = ''
     	root * ${config.services.tt-rss.root}/www
 
 			php_fastcgi * unix/${config.services.phpfpm.pools.${config.services.tt-rss.pool}.socket} {

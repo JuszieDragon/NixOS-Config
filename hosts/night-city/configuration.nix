@@ -90,6 +90,7 @@ in {
   environment.systemPackages = with pkgs; [
     git
     unzip
+    zip
     lazygit
     temurin-jre-bin
     btop

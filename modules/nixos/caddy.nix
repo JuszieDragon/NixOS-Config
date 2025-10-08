@@ -4,6 +4,7 @@ with lib;
 
 let
   cfg = catalog.services.caddy;
+  hostName = config.networking.hostName;
   
   servicesValidForProxy = services: filterAttrs (n: v: v ? reverseProxy && v.reverseProxy != "none" && v.enable == true) services;
 
@@ -37,7 +38,7 @@ let
 in {
   options.modules.caddy.enable = mkEnableOption "Setup Caddy reverse proxy";
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.isEnabled hostName) {
     networking.firewall.allowedTCPPorts = [ 80 443 ];
 
     age.secrets.caddy = {

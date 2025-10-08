@@ -4,12 +4,13 @@ with lib;
 
 let 
   cfg = catalog.services.sonarr-anime;
+  hostName = config.networking.hostName;
   util-nixarr = config.util-nixarr;
 
 in {
   options.modules.sonarr-anime = catalog.defaultOptions;
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.isEnabled hostName) {
     containers.sonarr-anime = {
       autoStart = true;
       hostAddress = cfg.host.ip;

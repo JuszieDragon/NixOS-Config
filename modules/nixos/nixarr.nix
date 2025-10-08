@@ -4,6 +4,7 @@ with lib;
 
 let
   cfg = catalog.services;
+  hostName = config.networking.hostName;
 
 in {
   options.modules = {
@@ -16,11 +17,6 @@ in {
 
   config = {
     age.secrets.vpn.file = inputs.self + /secrets/vpn.age;
-
-    services.deluge = {
-      enable = true;
-      web.enable = true;
-    };
 
     nixarr = {
       enable = true;
@@ -37,22 +33,22 @@ in {
         wgConf = config.age.secrets.vpn.path;
       };
 
-      jellyfin = mkIf cfg.jellyfin.enable {
+      jellyfin = mkIf (cfg.jellyfin.isEnabled hostName) {
         enable = true;
       };
 
-      prowlarr = mkIf cfg.prowlarr.enable {
+      prowlarr = mkIf (cfg.prowlarr.isEnabled hostName) {
         enable = true;
         vpn.enable = false;
         port = cfg.prowlarr.port;
       };
 
-      radarr = mkIf cfg.radarr.enable {
+      radarr = mkIf (cfg.radarr.isEnabled hostName) {
         enable = true;
         port = cfg.radarr.port;
       };
 
-      sonarr = mkIf cfg.sonarr.enable {
+      sonarr = mkIf (cfg.sonarr.isEnabled hostName) {
         enable = true;
       };
     };

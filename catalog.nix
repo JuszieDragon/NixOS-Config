@@ -64,39 +64,33 @@ rec {
 
   servicesBase = {
     jellyfin = {
-      enable = true;
+      enable = false;
       host = hosts.night-city;
       port = 8096;
       reverseProxy = "external";
     };
     radarr = {
-      enable = true;
+      enable = false;
       host = hosts.night-city;
       port = 7878;
       reverseProxy = "internal";
     };
     sonarr = {
-      enable = true;
+      enable = false;
       host = hosts.night-city;
       port = 8989;
       reverseProxy = "internal";
     };
     sonarr-anime = {
-      enable = true;
+      enable = false;
       host = hosts.night-city;
       port = 8990;
       reverseProxy = "internal";
     };
     prowlarr = {
-      enable = true;
+      enable = false;
       host = hosts.night-city;
       port = 9696;
-      reverseProxy = "internal";
-    };
-    transmission = {
-      enable = true;
-      host = hosts.night-city;
-      port = 9092;
       reverseProxy = "internal";
     };
     tt-rss = {
@@ -112,7 +106,7 @@ rec {
       subdomain = "speedtest";
     };
     romm = {
-      enable = true;
+      enable = false	;
       host = hosts.night-city;
       port = 8282;
       reverseProxy = "internal";
@@ -122,13 +116,13 @@ rec {
       host = hosts.night-city;
     };
     qbittorrent = {
-      enable = true;
+      enable = false;
       host = hosts.night-city;
       port = 8081;
       reverseProxy = "internal";
     };
     komga = {
-      enable = true;
+      enable = false;
       host = hosts.night-city;
       port = 8082;
       reverseProxy = "internal";
@@ -176,9 +170,11 @@ rec {
   containers = {};
 
   services = mapAttrs (service: attrs:
-    attrs // { portString = if attrs ? port
-      then builtins.toString attrs.port
-      else ""; 
+    attrs // { 
+      portString = if attrs ? port
+        then builtins.toString attrs.port
+        else "";
+      isEnabled = host: attrs.enable == true && attrs.host == hosts.${host};
     }
   ) servicesBase;
 

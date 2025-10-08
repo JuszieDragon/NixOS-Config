@@ -3,12 +3,13 @@
 with lib;
 
 let
-	cfg = catalog.services.komga;
+  cfg = catalog.services.komga;
+  hostName = config.networking.hostName;
 
 in {
 	options.modules.komga = catalog.defaultOptions;
 
-	config = mkIf cfg.enable {
+	config = mkIf (cfg.isEnabled hostName) {
 		services.komga = {
 			enable = true;
 			settings.server.port = cfg.port;
