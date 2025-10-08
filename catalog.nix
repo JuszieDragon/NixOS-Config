@@ -32,6 +32,11 @@ rec {
       ip = "192.168.1.100";
     };
 
+    soul-matrix = {
+      isNixos = true;
+      ip = "192.168.1.1";
+    };
+
     truenas = {
       isNixos = false;
       ip = "192.168.1.1";

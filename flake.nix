@@ -81,6 +81,22 @@
           inherit inputs catalog;
         };
       };
+      
+      soul-matrix = nixpkgs-unstable.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        modules = [
+          agenix.nixosModules.default
+          nixarr.nixosModules.default
+          vscode-server.nixosModules.default
+          
+          ./hosts/soul-matrix/configuration.nix
+        ];
+
+        specialArgs = { 
+          inherit inputs catalog;
+        };
+      };
     };
   };
 }
