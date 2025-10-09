@@ -36,12 +36,7 @@ rec {
       isNixos = true;
       ip = "192.168.1.1";
     };
-
-    truenas = {
-      isNixos = false;
-      ip = "192.168.1.1";
-    };
-
+    
     home-assistant = {
       isNixos = false;
       ip = "192.168.1.3";
@@ -70,31 +65,31 @@ rec {
   servicesBase = {
     jellyfin = {
       enable = false;
-      host = hosts.night-city;
+      host = hosts.soul-matrix;
       port = 8096;
       reverseProxy = "external";
     };
     radarr = {
       enable = false;
-      host = hosts.night-city;
+      host = hosts.soul-matrix;
       port = 7878;
       reverseProxy = "internal";
     };
     sonarr = {
       enable = false;
-      host = hosts.night-city;
+      host = hosts.soul-matrix;
       port = 8989;
       reverseProxy = "internal";
     };
     sonarr-anime = {
       enable = false;
-      host = hosts.night-city;
+      host = hosts.soul-matrix;
       port = 8990;
       reverseProxy = "internal";
     };
     prowlarr = {
       enable = false;
-      host = hosts.night-city;
+      host = hosts.soul-matrix;
       port = 9696;
       reverseProxy = "internal";
     };
@@ -130,12 +125,6 @@ rec {
       enable = false;
       host = hosts.night-city;
       port = 8082;
-      reverseProxy = "internal";
-    };
-
-    truenas = {
-      enable = true;
-      host = hosts.truenas;
       reverseProxy = "internal";
     };
 

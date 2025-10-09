@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, catalog, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 let
   modulesRoot = ../../modules/nixos;
@@ -70,7 +70,7 @@ in {
     };
     bash.shellAliases = {
       rebuild = "sudo nixos-rebuild switch --flake";
-      nconf = "nvim /home/justinj0/NixOS-Config/hosts/nixos-server/configuration.nix";
+      nconf = "nvim /home/justinj0/nixos-config/hosts/nixos-server/configuration.nix";
       lg = "lazygit";
       jctl = wrapAlias "sudo journalctl -u $1.service -b 0";
       jctlc = wrapAlias "sudo journalctl -u podman-$1.service -b 0";
@@ -103,11 +103,6 @@ in {
     nixfmt-rfc-style
     steamcmd
   ];
-
-  modules = {
-    podman.enable = true;
-    caddy.enable = true;
-  };
 
   services = {
     openssh.enable = true;

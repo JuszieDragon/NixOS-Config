@@ -15,12 +15,12 @@ in {
       autoStart = true;
       hostAddress = cfg.host.ip;
       bindMounts = {
-        "/data" = {
-          hostPath = "/data";
+        "/state" = {
+          hostPath = "/state";
           isReadOnly = false;
         };
-        "/mnt/Plex/Anime" = {
-          hostPath = "/mnt/Plex/Anime";
+        "/media/Anime" = {
+          hostPath = "/media/Anime";
           isReadOnly = false;
         };
       };
@@ -40,7 +40,7 @@ in {
           user = "sonarr";
           group = "media";
           settings.server.port = cfg.port;
-          dataDir = "/data/media/.state/sonarr-anime";
+          dataDir = "/state/sonarr-anime";
         };
 
         system.stateVersion = "24.11";
