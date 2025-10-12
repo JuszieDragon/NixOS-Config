@@ -50,5 +50,12 @@ in {
         system.stateVersion = "24.11";
       };
     };
+
+    #make container wait for the network to be fully up before starting to prevent networking issues
+    #https://discourse.nixos.org/t/dns-in-declarative-container/1529/5
+    systemd.services."container@sonarr-anime" = {
+      wants = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+    };
   };
 }

@@ -21,6 +21,7 @@ in {
 
     services.qbittorrent = {
       enable = true;
+      user = "qbittorrent";
       group = "media";
       profileDir = stateDir;
       webuiPort = cfg.port;
@@ -30,8 +31,9 @@ in {
       serverConfig = {
         AutoRun = {
           enabled = true;
-          #TODO figure out to stop making the config generator drop escaped quotes
-          program = 'chmod -R 775 "%F/"';
+          #TODO figure out why qbittorrent doesn't have permission to chmod files it is supposed to own
+	  #https://github.com/qbittorrent/qBittorrent/issues/8016
+          program = "echo %F | xargs -I {} chmod -R 775 {}";
         };
         BitTorrent = {
           Session = {
