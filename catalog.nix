@@ -64,35 +64,48 @@ rec {
 
   servicesBase = {
     jellyfin = {
-      enable = false;
+      enable = true;
       host = hosts.soul-matrix;
       port = 8096;
       reverseProxy = "external";
     };
     radarr = {
-      enable = false;
+      enable = true;
       host = hosts.soul-matrix;
       port = 7878;
       reverseProxy = "internal";
     };
     sonarr = {
-      enable = false;
+      enable = true;
       host = hosts.soul-matrix;
       port = 8989;
       reverseProxy = "internal";
     };
     sonarr-anime = {
-      enable = false;
+      enable = true;
       host = hosts.soul-matrix;
       port = 8990;
       reverseProxy = "internal";
     };
     prowlarr = {
-      enable = false;
+      enable = true;
       host = hosts.soul-matrix;
       port = 9696;
       reverseProxy = "internal";
     };
+    qbittorrent = {
+      enable = true;
+      host = hosts.soul-matrix;
+      port = 8081;
+      reverseProxy = "internal";
+    };
+    komga = {
+      enable = true;
+      host = hosts.soul-matrix;
+      port = 8082;
+      reverseProxy = "internal";
+    };
+
     tt-rss = {
       enable = true;
       host = hosts.night-city;
@@ -106,7 +119,7 @@ rec {
       subdomain = "speedtest";
     };
     romm = {
-      enable = false	;
+      enable = false;
       host = hosts.night-city;
       port = 8282;
       reverseProxy = "internal";
@@ -114,18 +127,6 @@ rec {
     caddy = {
       enable = true;
       host = hosts.night-city;
-    };
-    qbittorrent = {
-      enable = false;
-      host = hosts.night-city;
-      port = 8081;
-      reverseProxy = "internal";
-    };
-    komga = {
-      enable = false;
-      host = hosts.night-city;
-      port = 8082;
-      reverseProxy = "internal";
     };
 
     home-assistant = {

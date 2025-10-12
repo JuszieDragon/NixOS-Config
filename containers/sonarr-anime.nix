@@ -19,14 +19,15 @@ in {
           hostPath = "/state";
           isReadOnly = false;
         };
-        "/media/Anime" = {
-          hostPath = "/media/Anime";
+        "/mnt/media" = {
+          hostPath = "/mnt/media";
           isReadOnly = false;
         };
       };
 
       config = { config, pkgs, lib, ... }: {
         users = {
+          #If have issue with media having wrong guid again use this https://superuser.com/questions/1736609
           groups.media.gid = util-nixarr.globals.gids.media;
           users.sonarr = {
             isSystemUser = true;
@@ -34,6 +35,9 @@ in {
             group = "media";
           };
         };
+
+        #TODO maybe consider doing actual networking
+        networking.firewall.enable = false;
         
         services.sonarr = {
           enable = true;

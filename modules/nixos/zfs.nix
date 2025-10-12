@@ -3,7 +3,7 @@
 {
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportRoot = false;
-  boot.zfs.extraPools = [ "media" ];
+  boot.zfs.extraPools = [ "media" "files" ];
 
   services.zfs.autoScrub.enable = true;
 

@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 { config, lib, pkgs, inputs, ... }:
 
 let
@@ -10,26 +6,26 @@ let
 
   moduleImports = map (module: modulesRoot + module) [
     /git.nix
-    #/komga.nix
-    #/nixarr.nix
+    /komga.nix
+    /nixarr.nix
     /podman.nix
-    #/qbittorrent.nix
+    /qbittorrent.nix
     /vscode-server.nix
     /zfs.nix
   ];
 
   containerImports = map (container: containersRoot + container) [
     #/openspeedtest.nix
-    #/sonarr-anime.nix
+    /sonarr-anime.nix
   ];
 
 in {
   #https://nixos.org/manual/nixos/stable/index.html#sec-replace-modules
-  #disabledModules = [ "services/torrent/qbittorrent.nix" ];
+  disabledModules = [ "services/torrent/qbittorrent.nix" ];
   
   imports = [ 
     ./hardware-configuration.nix
-    #"${inputs.my-nixpkgs}/nixos/modules/services/torrent/qbittorrent.nix"
+    "${inputs.my-nixpkgs}/nixos/modules/services/torrent/qbittorrent.nix"
   ] ++ moduleImports ++ containerImports;
 
   # Use the systemd-boot EFI boot loader.
@@ -45,15 +41,17 @@ in {
   networking = {
     hostId = "c97a8d58";
     hostName = "soul-matrix";
-    networkmanager.enable = true;
+    #TODO actual network security
     firewall.enable = false;
   };
 
   time.timeZone = "Hobart/Australia";
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   users.users.justin = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "media" ];
   };
 
   environment.systemPackages = with pkgs; [
@@ -63,9 +61,15 @@ in {
     tmux
     lazygit
     vimPlugins.LazyVim
+    zip
   ];
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "yes";
+    };
+  };
   
   age.identityPaths = [ "/home/justin/.ssh/id_ed25519" ];
 

@@ -6,8 +6,8 @@ let
   cfg = catalog.services.qbittorrent;
   hostName = config.networking.hostName;
 
-  mediaDir = "/data/media/torrents";
-  nasDir = "/mnt/qBittorrent";
+  dataDir = "/mnt/media/torrents";
+  stateDir = "/state";
 
 in {
   options.modules.qbittorrent = catalog.defaultOptions;
@@ -22,12 +22,17 @@ in {
     services.qbittorrent = {
       enable = true;
       group = "media";
-      profileDir = "/data/media/.state";
+      profileDir = stateDir;
       webuiPort = cfg.port;
       extraArgs = [
         "--confirm-legal-notice"
       ];
       serverConfig = {
+        AutoRun = {
+          enabled = true;
+          #TODO figure out to stop making the config generator drop escaped quotes
+          program = 'chmod -R 775 "%F/"';
+        };
         BitTorrent = {
           Session = {
             DisableAutoTMMByDefault = false;
@@ -42,9 +47,9 @@ in {
             MaxConnectionsPerTorrent = "-1";
             MaxUploads = "-1";
             MaxUploadsPerTorrent = "-1";
-            TempPath = "${mediaDir}/downloading";
+            TempPath = "${dataDir}/downloading";
             TempPathEnabled = true;
-            TorrentExportDirectory = "${nasDir}/torrent-files/";
+            TorrentExportDirectory = "${dataDir}/torrent-files/";
           };
         };
         LegalNotice = {
@@ -70,13 +75,13 @@ in {
         };
       };
       categories = {
-        "Anime".save_path = "${mediaDir}/sonarr-anime";
-        "Doujinshi".save_path = "${mediaDir}/doujinshi";
-        "Manga".save_path = "${mediaDir}/manga";
-        "Misc".save_path = "${nasDir}/Misc";
-        "Movies".save_path = "${mediaDir}/radarr";
-        "Seeding".save_path = "${nasDir}/Seeding";
-        "TV Shows".save_path = "${mediaDir}/sonarr";
+        "Anime".save_path = "${dataDir}/sonarr-anime";
+        "Doujinshi".save_path = "${dataDir}/doujinshi";
+        "Manga".save_path = "${dataDir}/manga";
+        "Misc".save_path = "${dataDir}/misc";
+        "Movies".save_path = "${dataDir}/radarr";
+        "Seeding".save_path = "${dataDir}/seeding";
+        "TV Shows".save_path = "${dataDir}/sonarr";
       };
     };
   };
