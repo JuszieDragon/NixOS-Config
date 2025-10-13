@@ -35,9 +35,6 @@ in {
             group = "media";
           };
         };
-
-        #TODO maybe consider doing actual networking
-        networking.firewall.enable = false;
         
         services.sonarr = {
           enable = true;

@@ -31,9 +31,10 @@ in {
       serverConfig = {
         AutoRun = {
           enabled = true;
-          #TODO figure out why qbittorrent doesn't have permission to chmod files it is supposed to own
-	  #https://github.com/qbittorrent/qBittorrent/issues/8016
-          program = "echo %F | xargs -I {} chmod -R 775 {}";
+          #TODO figure out how to stop escaped double quotes from being removed from the generated config file so I can use the below solution
+          #https://github.com/qbittorrent/qBittorrent/issues/8016
+          #This chmods the whole catagory folder, not great but it works
+          program = "chmod -R 775 %D";
         };
         BitTorrent = {
           Session = {

@@ -62,6 +62,7 @@ in {
     lazygit
     vimPlugins.LazyVim
     zip
+    pciutils
   ];
 
   services.openssh = {
