@@ -10,6 +10,7 @@ let
     /nixarr.nix
     /podman.nix
     /qbittorrent.nix
+    /samba.nix
     /vscode-server.nix
     /zfs.nix
   ];
