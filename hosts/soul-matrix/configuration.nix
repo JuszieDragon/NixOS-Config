@@ -52,7 +52,7 @@ in {
 
   users.users.justin = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "media" ];
+    extraGroups = [ "wheel" "media" "file_share" ];
   };
 
   environment.systemPackages = with pkgs; [

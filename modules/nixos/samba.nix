@@ -2,21 +2,33 @@
 { config, lib, pkgs, ... }:
 
 {
+  users = {
+    groups."file_share".gid = 2534;
+    users."file_share" = {
+      isSystemUser = true;
+      group = "file_share";
+      uid = 2534;
+    };
+  };
+  
   services = {
     samba = {
       enable = true;
-      #package = pkgs.samba4Full;
       openFirewall = true;
       settings = {
-      	global = {
-	  "server min protocol" = "SMB3_00";
-	};
-	"files" = {
-          path = "/mnt/files";
-          writable = "yes";
-	  browseable = "yes";
-	  validUsers = [ "justin" ];
-      	};
+        global = {
+          "server min protocol" = "SMB3_00";
+        };
+        "files" = {
+          "path" = "/mnt/files";
+          "writable" = "yes";
+          "browseable" = "yes";
+          "force user" = "file_share";
+          "force group" = "file_share";
+          "create mask" = "0775";
+          "directory mask" = "0775";
+          validUsers = [ "justin" ];
+        };
       };
     };
 
