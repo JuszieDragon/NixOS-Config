@@ -55,6 +55,12 @@ in {
     extraGroups = [ "wheel" "media" "file_share" ];
   };
 
+  programs = {
+    bash.shellAliases = {
+      fzip = "for i in */; do zip -r \"\${i%/}.zip\" \"$i\"; done";
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     neovim
     gh

@@ -27,10 +27,6 @@
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
-    "/backup" = {
-      device = "/dev/disk/by-label/BACKUP";
-      fsType = "ext4";
-    };
   };
 
   swapDevices = [ ];

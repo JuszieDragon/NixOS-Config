@@ -18,16 +18,27 @@
       settings = {
         global = {
           "server min protocol" = "SMB3_00";
+          "reset on zero vc" = "yes";
         };
-        "files" = {
+        "general" = {
           "path" = "/mnt/files";
           "writable" = "yes";
           "browseable" = "yes";
+          "read only" = "no";
           "force user" = "file_share";
           "force group" = "file_share";
-          "create mask" = "0775";
-          "directory mask" = "0775";
-          validUsers = [ "justin" ];
+          "force create mode" = "0775";
+          "force directory mode" = "0775";
+        };
+        "media" = {
+          "path" = "/mnt/media";
+          "writable" = "yes";
+          "browseable" = "yes";
+          "read only" = "no";
+          "force user" = "justin";
+          "force group" = "media";
+          "force create mode" = "0775";
+          "force directory mode" = "0775";
         };
       };
     };
