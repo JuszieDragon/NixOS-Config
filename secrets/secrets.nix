@@ -15,5 +15,6 @@ in {
   "romm-db.age".publicKeys = keys;
   "share.age".publicKeys = keys;
   "vpn.age".publicKeys = keys;
+  "yarr.age".publicKeys = keys;
 }
 

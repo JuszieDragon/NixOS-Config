@@ -7,31 +7,29 @@ let
   moduleImports = map (module: modulesRoot + module) [
     /caddy.nix
     /git.nix
-    /komga.nix
-    /nixarr.nix
     /podman.nix
-    /qbittorrent.nix
     /shares.nix
-    /tt-rss.nix
     /unifi.nix
     /vscode-server.nix
+    /yarr.nix
   ];
 
   containerImports = map (container: containersRoot + container) [
     /openspeedtest.nix
     /romm.nix
-    /sonarr-anime.nix
   ];
 
   wrapAlias = command: "f() { " + command + "; unset -f f; }; f";
 
 in {
   #https://nixos.org/manual/nixos/stable/index.html#sec-replace-modules
-  disabledModules = [ "services/torrent/qbittorrent.nix" ];
+  disabledModules = [ 
+    "services/misc/yarr.nix"
+  ];
   
   imports = [ 
     ./hardware-configuration.nix
-    "${inputs.my-nixpkgs}/nixos/modules/services/torrent/qbittorrent.nix" 
+    "${inputs.my-nixpkgs}/nixos/modules/services/misc/yarr.nix"
   ] ++ moduleImports ++ containerImports;
 
   nixpkgs.config.allowUnfree = true;
@@ -70,6 +68,7 @@ in {
     };
     bash.shellAliases = {
       rebuild = "sudo nixos-rebuild switch --flake";
+      rebuild-local = "rebuild --override-input my-nixpkgs ~/projects/nixpkgs";
       nconf = "nvim /home/justinj0/nixos-config/hosts/nixos-server/configuration.nix";
       lg = "lazygit";
       jctl = wrapAlias "sudo journalctl -u $1.service -b 0";
@@ -80,9 +79,9 @@ in {
       tamoni = "tmux attach -t monifactory";
       tndepth = "tmux new -s depth 'cd /srv/minecraft/Beyond-Depth && ./run.sh'";
       tadepth = "tmux attach -t depth";
-      tnminebot = "tmux new -s minebot 'nix-shell /home/justinj0/Projects/Mine-Bot/shell.nix --run \"python3 /home/justinj0/Projects/Mine-Bot/main.py\"'";
+      tnminebot = "tmux new -s minebot 'nix-shell /home/justinj0/projects/Mine-Bot/shell.nix --run \"python3 /home/justinj0/Projects/Mine-Bot/main.py\"'";
       taminebot = "tmux attach -t minebot";
-      tna2o4 = "tmux new -s a2o4 '/home/justinj0/Projects/A2O4-Server-RS/target/release/a2o4-server'";
+      tna2o4 = "tmux new -s a2o4 '/home/justinj0/projects/A2O4-Server-RS/target/release/a2o4-server'";
       taa2o4 = "tmux attach -t a2o4";
     };
   };
