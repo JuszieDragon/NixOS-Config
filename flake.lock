@@ -496,11 +496,11 @@
     },
     "my-nixpkgs": {
       "locked": {
-        "lastModified": 1761287978,
-        "narHash": "sha256-tQkpXSaylnCY7MFQPUaQwXRtO/G8bUeRl3QlkVx7E6c=",
+        "lastModified": 1761296974,
+        "narHash": "sha256-Yp7DBrZrHHdZ0BPcmlA+JTD/fWi7Ee8SOupZWS9pssc=",
         "owner": "JuszieDragon",
         "repo": "nixpkgs",
-        "rev": "c316a42f355d86945971057ddc5267abdd1ff381",
+        "rev": "78bee879907ef5903ed8df9c6ee3cdfcfd082565",
         "type": "github"
       },
       "original": {

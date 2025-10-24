@@ -105,12 +105,13 @@ rec {
       port = 8082;
       reverseProxy = "internal";
     };
-
-    tt-rss = {
+    yarr = {
       enable = true;
-      host = hosts.night-city;
-      reverseProxy = "none";
+      host = hosts.soul-matrix;
+      port = 7070;
+      reverseProxy = "external";
     };
+
     openspeedtest = {
       enable = true;
       host = hosts.night-city;

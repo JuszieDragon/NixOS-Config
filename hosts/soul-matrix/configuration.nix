@@ -12,6 +12,7 @@ let
     /qbittorrent.nix
     /samba.nix
     /vscode-server.nix
+    /yarr.nix
     /zfs.nix
   ];
 
@@ -22,11 +23,15 @@ let
 
 in {
   #https://nixos.org/manual/nixos/stable/index.html#sec-replace-modules
-  disabledModules = [ "services/torrent/qbittorrent.nix" ];
+  disabledModules = [
+    "services/torrent/qbittorrent.nix"
+    "services/misc/yarr.nix"
+  ];
   
   imports = [ 
     ./hardware-configuration.nix
     "${inputs.my-nixpkgs}/nixos/modules/services/torrent/qbittorrent.nix"
+    "${inputs.my-nixpkgs}/nixos/modules/services/misc/yarr.nix"
   ] ++ moduleImports ++ containerImports;
 
   # Use the systemd-boot EFI boot loader.
