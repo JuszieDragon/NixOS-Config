@@ -22,8 +22,8 @@
     };
     
     agenix = {
-	    url = "github:ryantm/agenix";
-	    inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
@@ -49,29 +49,11 @@
       catalog = import ./catalog.nix { inherit lib; };
     in {
     nixosConfigurations = {
-      desktop = nixpkgs-unstable.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-          {
-            imports = [aagl.nixosModules.default];
-            nix.settings = aagl.nixConfig; # Set up Cachix
-            programs.honkers-railway-launcher.enable = true;
-          }
-          ./hosts/desktop/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-          }
-        ];
-      };
-
       night-city = nixpkgs-unstable.lib.nixosSystem {
         system = "x86_64-linux";
 
         modules = [
           agenix.nixosModules.default
-          nixarr.nixosModules.default
           vscode-server.nixosModules.default
           
           ./hosts/night-city/configuration.nix

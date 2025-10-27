@@ -17,9 +17,17 @@ in {
 
   age.secrets.share.file = inputs.self + /secrets/share.age; 
 
-  fileSystems."/mnt/Roms" = {
-    device = "//192.168.1.1/general/RomM";
-    fsType = "cifs";
-    options = sharedOptions;
+  fileSystems = {
+    "/mnt/Roms" = {
+      device = "//192.168.1.1/general/RomM";
+      fsType = "cifs";
+      options = sharedOptions;
+    };
+
+    "/mnt/backups" = {
+      device = "//192.168.1.1/general/Backups";
+      fsType = "cifs";
+      options = sharedOptions;
+    };
   };
 }

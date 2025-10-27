@@ -11,7 +11,6 @@ let
     /shares.nix
     /unifi.nix
     /vscode-server.nix
-    /yarr.nix
   ];
 
   containerImports = map (container: containersRoot + container) [
@@ -22,15 +21,7 @@ let
   wrapAlias = command: "f() { " + command + "; unset -f f; }; f";
 
 in {
-  #https://nixos.org/manual/nixos/stable/index.html#sec-replace-modules
-  disabledModules = [ 
-    "services/misc/yarr.nix"
-  ];
-  
-  imports = [ 
-    ./hardware-configuration.nix
-    "${inputs.my-nixpkgs}/nixos/modules/services/misc/yarr.nix"
-  ] ++ moduleImports ++ containerImports;
+  imports = [ ./hardware-configuration.nix ] ++ moduleImports ++ containerImports;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -53,7 +44,7 @@ in {
 
   users = {
     groups = { home-lab = { }; };
-    users.justinj0 = {
+    users.justin = {
       isNormalUser = true;
       extraGroups = [ "wheel" "docker" "server" "home-lab" "media" ];
       packages = with pkgs; [ tree ];
@@ -104,10 +95,13 @@ in {
   ];
 
   services = {
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      settings.PermitRootLogin = "yes";
+    };
   };
 
-  age.identityPaths = [ "/home/justinj0/.ssh/id_ed25519" ];
+  age.identityPaths = [ "/home/justin/.ssh/id_ed25519" ];
 
   system.stateVersion = "24.11"; # Did you read the comment?
 }
