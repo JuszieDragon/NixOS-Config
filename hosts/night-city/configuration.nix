@@ -47,7 +47,7 @@ in {
     users.justin = {
       isNormalUser = true;
       extraGroups = [ "wheel" "docker" "server" "home-lab" "media" ];
-      packages = with pkgs; [ tree ];
+      shell = pkgs.zsh;
     };
   };
 
