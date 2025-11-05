@@ -58,24 +58,12 @@ in {
   users.users.justin = {
     isNormalUser = true;
     extraGroups = [ "wheel" "media" "file_share" ];
+    shell = pkgs.zsh;
   };
 
-  programs = {
-    bash.shellAliases = {
-      fzip = "for i in */; do zip -r \"\${i%/}.zip\" \"$i\"; done";
-    };
-  };
+  environment.systemPackages = with pkgs; [];
 
-  environment.systemPackages = with pkgs; [
-    neovim
-    gh
-    git
-    tmux
-    lazygit
-    vimPlugins.LazyVim
-    zip
-    pciutils
-  ];
+  programs.zsh.enable = true;
 
   services.openssh = {
     enable = true;

@@ -1,21 +1,25 @@
-{pkgs, ...}: {
-  programs.waybar = {
-    enable = true;
-    package = pkgs.waybar;
-    settings = {
-      mainBar = {
-        height = 20;
-        layer = "top";
-        modules-left = [];
-        modules-center = ["clock"];
-        modules-right = ["tray"];
-      };
+{ lib, pkgs, ... }: {
+  options.waybar.enable = lib.mkEnableOption "Enable Waybar";
+  
+  config = {  
+    programs.waybar = {
+      enable = true;
+      package = pkgs.waybar;
+      settings = {
+        mainBar = {
+          height = 20;
+          layer = "top";
+          modules-left = [];
+          modules-center = ["clock"];
+          modules-right = ["tray"];
+        };
 
-      "clock" = {
-        format = "{%a %o %b %r}";
-      };
-      "tray" = {
-        spacing = 30;
+        "clock" = {
+          format = "{%a %o %b %r}";
+        };
+        "tray" = {
+          spacing = 30;
+        };
       };
     };
   };

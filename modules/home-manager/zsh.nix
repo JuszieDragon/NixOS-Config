@@ -1,38 +1,56 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: {
-  home.sessionVariables = {
-    PYTHON_AUTO_VRUN = "true";
-  };
+{ inputs, lib, pkgs,... }: 
+let
+  wrapAlias = command: "f() { " + command + "; unset -f f; }; f";
 
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-
-    shellAliases = {
-      cpk = "cat /etc/current-system-packages";
-      nixosbuild = "sudo nixos-rebuild switch --flake ~/nixos#default";
-      fup = "nix flake update";
-      webbuildandload = "web-ext build -n a2o4.xpi --overwrite-dest && firefox-developer-edition web-ext-artifacts/a2o4.xpi";
-      img = "qimgv .";
-      setvol = "amixer -c S9 set 'PCM',1 69";
-    };
-
-    oh-my-zsh = {
+in {
+  options.zsh.enable = lib.mkEnableOption "Enable ZSH config";
+  config = {
+    programs.zsh = {
       enable = true;
-      theme = "robbyrussell";
-      plugins = [
-        "git"
-        "npm"
-        "history"
-        "node"
-        "rust"
-        "python"
-      ];
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+
+      shellAliases = {
+        cpk = "cat /etc/current-system-packages";
+        fup = "nix flake update";
+        webbuildandload = "web-ext build -n a2o4.xpi --overwrite-dest && firefox-developer-edition web-ext-artifacts/a2o4.xpi";
+        img = "qimgv .";
+        setvol = "amixer -c S9 set 'PCM',1 69";
+
+        rebuild = "sudo nixos-rebuild switch --flake";
+        rebuild-local = "rebuild --override-input my-nixpkgs ~/projects/nixpkgs";
+        nconf = "nvim ~/nixos-config/hosts/nixos-server/configuration.nix";
+        lg = "lazygit";
+        jctl = wrapAlias "sudo journalctl -u $1.service -b 0";
+        jctlc = wrapAlias "sudo journalctl -u podman-$1.service -b 0";
+        agee = wrapAlias "agenix -e $1 -i ~/.ssh/id_ed25519";
+
+        tnmoni = "tmux new -s monifactory 'cd /srv/minecraft/Monifactory && ./run.sh'";
+        tamoni = "tmux attach -t monifactory";
+        tndepth = "tmux new -s depth 'cd /srv/minecraft/Beyond-Depth && ./run.sh'";
+        tadepth = "tmux attach -t depth";
+        tnminebot = "tmux new -s minebot 'nix-shell ~/projects/Mine-Bot/shell.nix --run \"python3 ~/Projects/Mine-Bot/main.py\"'";
+        taminebot = "tmux attach -t minebot";
+        tna2o4 = "tmux new -s a2o4 '~/projects/A2O4-Server-RS/target/release/a2o4-server'";
+        taa2o4 = "tmux attach -t a2o4";
+        #zip each folder in current folder
+        fzip = "for i in */; do zip -r \"\${i%/}.zip\" \"$i\"; done";
+      };
+
+      oh-my-zsh = {
+        enable = true;
+        theme = "robbyrussell";
+        plugins = [
+          "git"
+          "npm"
+          "history"
+          "node"
+          "rust"
+          "python"
+        ];
+      };
     };
   };
+  
 }

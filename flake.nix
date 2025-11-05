@@ -47,37 +47,36 @@
     let
       lib = nixpkgs-unstable.lib;
       catalog = import ./catalog.nix { inherit lib; };
+      default-modules = system: [
+        agenix.nixosModules.default
+        nixarr.nixosModules.default
+        vscode-server.nixosModules.default
+
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.users."justin" = ./hosts/${system}/home.nix;
+          home-manager.extraSpecialArgs = { inherit inputs; };
+        }
+
+        ./hosts/${system}/configuration.nix
+      ];
     in {
     nixosConfigurations = {
       night-city = nixpkgs-unstable.lib.nixosSystem {
         system = "x86_64-linux";
 
-        modules = [
-          agenix.nixosModules.default
-          vscode-server.nixosModules.default
-          
-          ./hosts/night-city/configuration.nix
-        ];
+        modules = default-modules "night-city";
 
-        specialArgs = { 
-          inherit inputs catalog;
-        };
+        specialArgs = { inherit inputs catalog; };
       };
       
       soul-matrix = nixpkgs-unstable.lib.nixosSystem {
         system = "x86_64-linux";
 
-        modules = [
-          agenix.nixosModules.default
-          nixarr.nixosModules.default
-          vscode-server.nixosModules.default
-          
-          ./hosts/soul-matrix/configuration.nix
-        ];
+        modules = default-modules "soul-matrix";
 
-        specialArgs = { 
-          inherit inputs catalog;
-        };
+        specialArgs = { inherit inputs catalog; };
       };
     };
   };
