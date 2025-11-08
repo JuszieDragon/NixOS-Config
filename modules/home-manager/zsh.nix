@@ -18,13 +18,14 @@ in {
         img = "qimgv .";
         setvol = "amixer -c S9 set 'PCM',1 69";
 
-        rebuild = "sudo nixos-rebuild switch --flake";
+        rebuild = "nixos-rebuild switch --flake --sudo";
         rebuild-local = "rebuild --override-input my-nixpkgs ~/projects/nixpkgs";
         nconf = "nvim ~/nixos-config/hosts/nixos-server/configuration.nix";
         lg = "lazygit";
         jctl = wrapAlias "sudo journalctl -u $1.service -b 0";
         jctlc = wrapAlias "sudo journalctl -u podman-$1.service -b 0";
         agee = wrapAlias "agenix -e $1 -i ~/.ssh/id_ed25519";
+        szsh = "source ~/.zshrc";
 
         tnmoni = "tmux new -s monifactory 'cd /srv/minecraft/Monifactory && ./run.sh'";
         tamoni = "tmux attach -t monifactory";

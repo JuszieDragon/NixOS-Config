@@ -6,6 +6,11 @@
 
     my-nixpkgs.url = "github:JuszieDragon/nixpkgs/yarr";
 
+    dotfiles = {
+      url = "git+ssh://git@github.com/JuszieDragon/dotfiles.git";
+      flake = false;
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";

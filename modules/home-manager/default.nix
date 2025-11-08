@@ -1,4 +1,4 @@
-{ config, lib, inputs, pkgs, ... }: {
+{ config, dotfiles, lib, inputs, pkgs, ... }: {
   imports = [
     ./firefox.nix
     ./hyprland.nix
@@ -31,7 +31,7 @@
     oh-my-posh = {
       enable = true;
       enableZshIntegration = true;
-      useTheme = "nordtron";
+      configFile = "${inputs.dotfiles}/.config/oh-my-posh/my-theme.toml";
     };
     neovim = {
       enable = true;
