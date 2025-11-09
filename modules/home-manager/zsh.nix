@@ -20,6 +20,8 @@ in {
 
         rebuild = "sudo echo -n; nixos-rebuild switch --flake --sudo";
         rebuild-local = "rebuild --override-input my-nixpkgs ~/projects/nixpkgs";
+        update = "nix flake update";
+        update-dot = "nix flake update dotfiles";
         nconf = "nvim ~/nixos-config/hosts/nixos-server/configuration.nix";
         lg = "lazygit";
         jctl = wrapAlias "sudo journalctl -u $1.service -b 0";

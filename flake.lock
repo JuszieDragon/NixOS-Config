@@ -103,11 +103,11 @@
     "dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1762588420,
-        "narHash": "sha256-hwNiHDCP3w9BbAJN3cSSLviNUobUSGNyXCCZhkAGgUM=",
+        "lastModified": 1762658781,
+        "narHash": "sha256-B1B6UPXlwY8PfmeTA9TiB6U65lypdw96ZSQP04cCx5I=",
         "ref": "refs/heads/main",
-        "rev": "ac0461bfeb688b7222f720145381bc6bf721052a",
-        "revCount": 44,
+        "rev": "a12398b6bd7664c188f2b5466a5f65d7bc43d151",
+        "revCount": 45,
         "type": "git",
         "url": "ssh://git@github.com/JuszieDragon/dotfiles.git"
       },
