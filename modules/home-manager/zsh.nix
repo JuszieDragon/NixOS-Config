@@ -18,7 +18,7 @@ in {
         img = "qimgv .";
         setvol = "amixer -c S9 set 'PCM',1 69";
 
-        rebuild = "nixos-rebuild switch --flake --sudo";
+        rebuild = "sudo echo -n; nixos-rebuild switch --flake --sudo";
         rebuild-local = "rebuild --override-input my-nixpkgs ~/projects/nixpkgs";
         nconf = "nvim ~/nixos-config/hosts/nixos-server/configuration.nix";
         lg = "lazygit";
@@ -39,10 +39,33 @@ in {
         fzip = "for i in */; do zip -r \"\${i%/}.zip\" \"$i\"; done";
       };
 
+      plugins = [
+        {
+          name = "powerlevel10k";
+          src = pkgs.zsh-powerlevel10k;
+          file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+        }
+        {
+          name = "fzf-tab";
+          src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
+        }
+      ];
+
+      
+      initContent = '' 
+        source ${inputs.dotfiles}/.p10k.zsh
+        
+        # Completion styling
+        zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+        zstyle ':completion:*' list-colors "\$\{(s.:.)LS_COLORS\}"
+        zstyle ':completion:*' menu no
+        zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+        zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+      '';
+      
       oh-my-zsh = {
         enable = true;
-        theme = "robbyrussell";
-        plugins = [
+        plugins = [  
           "git"
           "npm"
           "history"
@@ -52,6 +75,10 @@ in {
         ];
       };
     };
+
+    programs.fzf = {
+      enable = true;
+      enableZshIntegration = true; # This handles key bindings and completion
+    };
   };
-  
 }

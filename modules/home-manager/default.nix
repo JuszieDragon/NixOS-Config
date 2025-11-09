@@ -28,11 +28,6 @@
   };
   
   programs = {
-    oh-my-posh = {
-      enable = true;
-      enableZshIntegration = true;
-      configFile = "${inputs.dotfiles}/.config/oh-my-posh/my-theme.toml";
-    };
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -46,6 +41,5 @@
       '';
     };
     tmux.enable = true;
-    #zsh.initContent = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
   };
 }
