@@ -1,9 +1,9 @@
 { config, dotfiles, lib, inputs, pkgs, ... }: {
   imports = [
-    ./firefox.nix
-    ./hyprland.nix
-    ./vscode.nix
-    ./waybar.nix
+    #./firefox.nix
+    #./hyprland.nix
+    #./vscode.nix
+    #./waybar.nix
     ./zsh.nix
   ];
   
@@ -28,6 +28,13 @@
   };
   
   programs = {
+    git = {
+      enable = true;
+      settings.user = {
+        name = "Juszie Dragon";
+        email = "justin.h.j.johnson@gmail.com";
+      };
+    };
     neovim = {
       enable = true;
       defaultEditor = true;

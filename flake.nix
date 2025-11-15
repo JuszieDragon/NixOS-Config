@@ -6,6 +6,12 @@
 
     my-nixpkgs.url = "github:JuszieDragon/nixpkgs/yarr";
 
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     dotfiles = {
       url = "git+ssh://git@github.com/JuszieDragon/dotfiles.git";
       flake = false;
@@ -43,6 +49,7 @@
     agenix,
     home-manager,
     my-nixpkgs,
+    nix-on-droid,
     nixpkgs-unstable,
     nixarr,
     vscode-server,
@@ -83,6 +90,14 @@
 
         specialArgs = { inherit inputs catalog; };
       };
+    };
+
+    nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
+      pkgs = import nixpkgs-unstable { system = "aarch64-linux"; };
+      
+      modules = [ ./hosts/comp/configuration.nix ];
+
+      extraSpecialArgs = { inherit inputs; };
     };
   };
 }
