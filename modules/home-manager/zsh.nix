@@ -20,6 +20,7 @@ in {
 
         rebuild = "sudo echo -n; nixos-rebuild switch --flake --sudo";
         rebuild-local = "rebuild --override-input my-nixpkgs ~/projects/nixpkgs";
+        rebuild-droid = "nix-on-droid switch --flake ~/nixos-config";
         update = "nix flake update";
         update-dot = "nix flake update dotfiles";
         nconf = "nvim ~/nixos-config/hosts/nixos-server/configuration.nix";
