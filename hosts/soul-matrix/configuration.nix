@@ -30,6 +30,8 @@ in {
   
   imports = [ 
     ./hardware-configuration.nix
+    ../default.nix
+
     "${inputs.my-nixpkgs}/nixos/modules/services/torrent/qbittorrent.nix"
     "${inputs.my-nixpkgs}/nixos/modules/services/misc/yarr.nix"
   ] ++ moduleImports ++ containerImports;
@@ -51,28 +53,9 @@ in {
     firewall.enable = false;
   };
 
-  time.timeZone = "Australia/Hobart";
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
   users.users.justin = {
-    isNormalUser = true;
     extraGroups = [ "wheel" "media" "file_share" ];
-    shell = pkgs.zsh;
   };
-
-  environment.systemPackages = with pkgs; [];
-
-  programs.zsh.enable = true;
-
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "yes";
-    };
-  };
-  
-  age.identityPaths = [ "/home/justin/.ssh/id_ed25519" ];
 
   system.stateVersion = "25.05"; # Did you read the comment?
 }

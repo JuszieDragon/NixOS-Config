@@ -21,7 +21,10 @@ let
   wrapAlias = command: "f() { " + command + "; unset -f f; }; f";
 
 in {
-  imports = [ ./hardware-configuration.nix ] ++ moduleImports ++ containerImports;
+  imports = [ 
+    ./hardware-configuration.nix
+    ../default.nix
+  ] ++ moduleImports ++ containerImports;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -38,16 +41,10 @@ in {
     firewall.enable = false;
   };
 
-  time.timeZone = "Australia/Hobart";
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
   users = {
     groups = { home-lab = { }; };
     users.justin = {
-      isNormalUser = true;
       extraGroups = [ "wheel" "docker" "server" "home-lab" "media" ];
-      shell = pkgs.zsh;
     };
   };
 
@@ -56,17 +53,6 @@ in {
     nixfmt-rfc-style
     steamcmd
   ];
-
-  programs.zsh.enable = true;
-
-  services = {
-    openssh = {
-      enable = true;
-      settings.PermitRootLogin = "yes";
-    };
-  };
-
-  age.identityPaths = [ "/home/justin/.ssh/id_ed25519" ];
 
   system.stateVersion = "24.11"; # Did you read the comment?
 }
