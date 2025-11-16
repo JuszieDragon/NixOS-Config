@@ -11,6 +11,7 @@ let
     /podman.nix
     /qbittorrent.nix
     /samba.nix
+    /scrutiny.nix
     /vscode-server.nix
     /yarr.nix
     /zfs.nix

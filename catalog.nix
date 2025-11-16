@@ -111,6 +111,12 @@ rec {
       port = 7070;
       reverseProxy = "external";
     };
+    scrutiny = {
+      enable = true;
+      host = hosts.soul-matrix;
+      port = 8083;
+      reverseProxy = "internal";
+    };
 
     openspeedtest = {
       enable = true;
