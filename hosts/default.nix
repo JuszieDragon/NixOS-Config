@@ -10,7 +10,7 @@
     ];
   };
 
-  time.timeZone = "Hobart/Australia";
+  time.timeZone = "Australia/Hobart";
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

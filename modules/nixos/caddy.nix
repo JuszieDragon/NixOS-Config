@@ -36,43 +36,34 @@ let
   ) (servicesValidForProxy catalog.services);
 
 in {
-  options.modules.caddy.enable = mkEnableOption "Setup Caddy reverse proxy";
+  #networking.firewall.allowedTCPPorts = [ 80 443 ];
 
-  config = mkIf (cfg.isEnabled hostName) {
-    networking.firewall.allowedTCPPorts = [ 80 443 ];
+  age.secrets.caddy = {
+    file = inputs.self + /secrets/caddy.age;
+    owner = "caddy";
+    group = "caddy";
+  };
 
-    age.secrets.caddy = {
-      file = inputs.self + /secrets/caddy.age;
-      owner = "caddy";
-      group = "caddy";
+  services.caddy = {
+    enable = cfg.isEnabled hostName;
+
+    package = pkgs.caddy.withPlugins {
+      plugins = [ "github.com/caddy-dns/porkbun@v0.3.1" ];
+      hash = "sha256-g/Nmi4X/qlqqjY/zoG90iyP5Y5fse6Akr8exG5Spf08=";
     };
 
-    services.caddy = {
-      enable = true;
+    environmentFile = config.age.secrets.caddy.path;
 
-      package = pkgs.caddy.withPlugins {
-        plugins = [ "github.com/caddy-dns/porkbun@v0.3.1" ];
-        hash = "sha256-g/Nmi4X/qlqqjY/zoG90iyP5Y5fse6Akr8exG5Spf08=";
-      };
-
-      environmentFile = config.age.secrets.caddy.path;
-
-      globalConfig = ''
-        acme_dns porkbun {
-          api_key {$API_KEY}
-          api_secret_key {$API_SECRET_KEY} 
-        }
-      '';
-
-      # virtualHosts = {
-      #     "dragon.luxe".extraConfig = ''
-      #         respond "There is nothing here."
-      #     '';
-      # };
+    globalConfig = ''
+      acme_dns porkbun {
+        api_key {$API_KEY}
+        api_secret_key {$API_SECRET_KEY} 
+      }
+    '';
 
       #virtualHosts = vHostsTrace;
       virtualHosts = vHosts;
       #virtualHosts = test;
-    };
   };
 }
+

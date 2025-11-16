@@ -32,3 +32,4 @@
     lxqt.lxqt-policykit
   ];
 }
+

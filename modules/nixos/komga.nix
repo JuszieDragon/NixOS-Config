@@ -7,14 +7,11 @@ let
   hostName = config.networking.hostName;
 
 in {
-  options.modules.komga = catalog.defaultOptions;
-
-  config = mkIf (cfg.isEnabled hostName) {
-    services.komga = {
-      enable = true;
-      settings.server.port = cfg.port;
-      stateDir = "/state/komga";
-      group = "media";
-    };
-  };
+  services.komga = {
+    enable = cfg.isEnabled hostName;
+    settings.server.port = cfg.port;
+    stateDir = "/state/komga";
+    group = "media";
+  }; 
 }
+

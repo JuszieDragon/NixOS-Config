@@ -5,27 +5,19 @@ with lib;
 rec {
   domain = "dragon.luxe";
   
-  defaultOptions = {
-    enable = mkEnableOption "Run service";
-    port = mkOption {
-      type = types.str;
-      description = "Port to run service on";
-    };
-    #TODO the type isn't evaluated unless the option is used in the module file, need to manually check this myself
-    reverseProxy = mkOption {
-      type = types.enum [ "internal" "external" "none" ];
-      description = "Reverse proxy type, valid options are internal, external and none";
-    };
-  };
+  /*
+    options:
+      host:
+        isNixos: is the host nixos or not? not used atm
+        ip: IP address to the host
+      services:
+        enable: if the service is enabled or not
+        host: Which host to run the service on TODO add multihost support
+        port: Which port to bind the service to
+        reverseProxy: What type of reverse proxy to use, options are: internal, external and none #TODO add local DNS server to handle internal instead of caddy
+        subdomain: Override the name used by the reverse proxy
+  */
 
-  subdomainOption = {
-    subdomain = mkOption {
-      type = types.str;
-      description = "Override for the subdomain name in the reverse proxy";
-      default = null;
-    };
-  };
-  
   hostsBase = {
     night-city = {
       isNixos = true;
@@ -148,7 +140,7 @@ rec {
       host = hosts.revachol;
       port = 8384;
       reverseProxy = "internal";
-      nameOverride = "syncthing";
+      subdomain = "syncthing";
     };
 
     tracen-syncthing = {
@@ -156,7 +148,7 @@ rec {
       host = hosts.tracen;
       port = 8082;
       reverseProxy = "internal";
-      nameOverride = "syncthing";
+      subdomain = "syncthing";
     };
 
     cabin-syncthing = {
@@ -164,7 +156,7 @@ rec {
       host = hosts.cabin;
       port = 8384;
       reverseProxy = "internal";
-      nameOverride = "syncthing";
+      subdomain = "syncthing";
     };
   };
 
@@ -180,5 +172,8 @@ rec {
     }
   ) servicesBase;
 
-  #test = trace (builtins.toJSON services) services;
+  portsUsed = concatMapAttrs (service: attrs: {
+    ${attrs.portString} = "${service} ${attrs.host.hostName}";
+  }) (filterAttrs (service: attrs: attrs ? port) services);
 }
+

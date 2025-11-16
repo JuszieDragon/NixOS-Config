@@ -12,3 +12,4 @@
         5353 # allow Spotify to discover more connect devices
     ];
 }
+

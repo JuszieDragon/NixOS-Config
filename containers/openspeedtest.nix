@@ -7,14 +7,11 @@ let
   hostName = config.networking.hostName;
 
 in {
-  options.modules.openspeedtest = catalog.defaultOptions // catalog.subdomainOption;
-
-  config = mkIf (cfg.isEnabled hostName) {
-    virtualisation.oci-containers.containers = {
-      openspeedtest = {
-        image = "openspeedtest/latest";
-        ports = [ "${cfg.portString}:3000" ];
-      };
+  virtualisation.oci-containers.containers = {
+    openspeedtest = mkIf (cfg.isEnabled hostName) {
+      image = "openspeedtest/latest";
+      ports = [ "${cfg.portString}:3000" ];
     };
   };
 }
+
