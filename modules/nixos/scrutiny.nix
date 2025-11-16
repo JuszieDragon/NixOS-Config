@@ -8,7 +8,10 @@ let
 in {
   services.scrutiny = {
     enable = cfg.isEnabled hostName;
-    settings.web.listen.port = cfg.port;
+    settings.web.listen = {
+      port = cfg.port;
+      host = cfg.host.ip; #TODO chenge this to work with multihost
+    };
   };
 }
 
