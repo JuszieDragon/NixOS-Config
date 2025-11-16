@@ -37,7 +37,7 @@ in {
       dependsOn = [ "romm-db" ];
     };
 
-    romm-db = {
+    romm-db = mkIf (cfg.isEnabled hostName) {
       image = "mariadb:latest";
       environment = {
         MARIADB_USER = dbUser;
