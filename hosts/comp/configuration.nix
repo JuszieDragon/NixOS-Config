@@ -29,9 +29,6 @@
     experimental-features = nix-command flakes
   '';
 
-  # Set your time zone
-  time.timeZone = "Australia/Hobart";
-
   user = {
     userName = lib.mkForce "justin";
     shell = "${pkgs.zsh}/bin/zsh";
