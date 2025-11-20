@@ -47,7 +47,12 @@
         filetype plugin indent on
       '';
     };
-    tmux.enable = true;
+    tmux = {
+      enable = true;
+      extraConfig = ''
+        source-file ${inputs.dotfiles}/.config/tmux/tmux.conf
+      '';
+    };
   };
 }
 
