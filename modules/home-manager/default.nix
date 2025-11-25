@@ -1,9 +1,5 @@
 { config, dotfiles, lib, inputs, pkgs, ... }: {
   imports = [
-    #./firefox.nix
-    #./hyprland.nix
-    #./vscode.nix
-    #./waybar.nix
     ./zsh.nix
   ];
   

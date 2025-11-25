@@ -1,4 +1,4 @@
-{ config, inputs, lib, pkgs, ... }:
+{ catalog, config, inputs, lib, pkgs, ... }:
 
 {
   # Simply install just the packages
@@ -36,6 +36,6 @@
 
   home-manager = {
     config = ./home.nix;
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs catalog; };
   };
 }

@@ -1,6 +1,9 @@
-{ inputs, lib, pkgs,... }: 
+{ catalog, inputs, lib, pkgs, ... }: 
 let
   wrapAlias = command: "f() { " + command + "; unset -f f; }; f";
+  hostSSHAliases = lib.mapAttrs (host: attrs:
+    "ssh ${attrs.ip}"
+  ) catalog.hostsBase;
 
 in {
   programs.zsh = {
@@ -39,8 +42,8 @@ in {
       taa2o4 = "tmux attach -t a2o4";
       #zip each folder in current folder
       fzip = "for i in */; do zip -r \"\${i%/}.zip\" \"$i\"; done";
-    };
-
+    } // hostSSHAliases;      
+    
     plugins = [
       {
         name = "powerlevel10k";

@@ -97,7 +97,7 @@
       
       modules = [ ./hosts/comp/configuration.nix ];
 
-      extraSpecialArgs = { inherit inputs; };
+      extraSpecialArgs = { inherit inputs catalog; };
     };
   };
 }
