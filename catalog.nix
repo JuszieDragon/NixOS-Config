@@ -97,6 +97,12 @@ rec {
       port = 8082;
       reverseProxy = "internal";
     };
+    yamtrack = {
+      enable = true;
+      host = hosts.soul-matrix;
+      port = 8084;
+      reverseProxy = "internal";
+    };
     yarr = {
       enable = true;
       host = hosts.soul-matrix;
@@ -168,10 +174,12 @@ rec {
       portString = if attrs ? port
         then builtins.toString attrs.port
         else "";
+      #TODO this might be able to directly grab the current hostname instead of having it passed in
       isEnabled = host: attrs.enable == true && attrs.host == hosts.${host};
     }
   ) servicesBase;
 
+  #TODO have this be grouped by host
   portsUsed = concatMapAttrs (service: attrs: {
     ${attrs.portString} = "${service} ${attrs.host.hostName}";
   }) (filterAttrs (service: attrs: attrs ? port) services);

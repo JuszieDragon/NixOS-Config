@@ -20,6 +20,7 @@ let
   containerImports = map (container: containersRoot + container) [
     #/openspeedtest.nix
     /sonarr-anime.nix
+    /yamtrack.nix
   ];
 
 in {
