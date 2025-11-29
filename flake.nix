@@ -68,7 +68,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.users."justin" = ./hosts/${system}/home.nix;
-          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.extraSpecialArgs = { inherit inputs catalog; };
         }
 
         ./hosts/${system}/configuration.nix
