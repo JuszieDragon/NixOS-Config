@@ -58,8 +58,8 @@
     with inputs;
     let
       lib = nixpkgs-unstable.lib;
-      catalog = import ./catalog.nix { inherit lib; };
-      default-modules = system: [
+      catalog-gen = host: import ./catalog.nix { inherit lib host; };
+      default-modules = system: catalog: [
         agenix.nixosModules.default
         nixarr.nixosModules.default
         vscode-server.nixosModules.default
@@ -75,24 +75,30 @@
       ];
     in {
     nixosConfigurations = {
-      night-city = nixpkgs-unstable.lib.nixosSystem {
+      night-city = let 
+        catalog = catalog-gen "night-city"; 
+      in nixpkgs-unstable.lib.nixosSystem {
         system = "x86_64-linux";
 
-        modules = default-modules "night-city";
+        modules = default-modules "night-city" catalog;
 
         specialArgs = { inherit inputs catalog; };
       };
       
-      soul-matrix = nixpkgs-unstable.lib.nixosSystem {
+      soul-matrix = let
+        catalog = catalog-gen "soul-matrix";
+      in nixpkgs-unstable.lib.nixosSystem {
         system = "x86_64-linux";
 
-        modules = default-modules "soul-matrix";
+        modules = default-modules "soul-matrix" catalog;
 
         specialArgs = { inherit inputs catalog; };
       };
     };
 
-    nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
+    nixOnDroidConfigurations.default = let
+      catalog = catalog-gen "yes";
+    in nix-on-droid.lib.nixOnDroidConfiguration {
       pkgs = import nixpkgs-unstable { system = "aarch64-linux"; };
       
       modules = [ ./hosts/comp/configuration.nix ];

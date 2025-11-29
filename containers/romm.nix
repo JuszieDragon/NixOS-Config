@@ -4,7 +4,6 @@ with lib;
 
 let
   cfg = catalog.services.romm;
-  hostName = config.networking.hostName;
 
   configDir = "/data/docker/romm";
   dbName = "romm";
@@ -16,8 +15,8 @@ in {
     romm-db.file = inputs.self + /secrets/romm-db.age;
   };
 
-  virtualisation.oci-containers.containers = {
-    romm = mkIf (cfg.isEnabled hostName) {
+  virtualisation.oci-containers.containers = mkIf cfg.isEnabled {
+    romm = {
       #TODO need to sort out mounting config.yml to get above this version
       image = "rommapp/romm:4.0.1";
       ports = [ "${cfg.portString}:8080" ];
@@ -37,7 +36,7 @@ in {
       dependsOn = [ "romm-db" ];
     };
 
-    romm-db = mkIf (cfg.isEnabled hostName) {
+    romm-db = {
       image = "mariadb:latest";
       environment = {
         MARIADB_USER = dbUser;

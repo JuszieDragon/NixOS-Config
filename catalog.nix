@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, host, ... }:
 
 with lib;
 
@@ -175,7 +175,7 @@ rec {
         then builtins.toString attrs.port
         else "";
       #TODO this might be able to directly grab the current hostname instead of having it passed in
-      isEnabled = host: attrs.enable == true && attrs.host == hosts.${host};
+      isEnabled = attrs.enable == true && attrs.host == hosts.${host};
     }
   ) servicesBase;
 

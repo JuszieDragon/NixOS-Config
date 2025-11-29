@@ -4,7 +4,6 @@ with lib;
 
 let
   cfg = catalog.services;
-  hostName = config.networking.hostName;
 
 in {
   age.secrets.vpn.file = inputs.self + /secrets/vpn.age;
@@ -25,22 +24,22 @@ in {
     };
 
     jellyfin = {
-      enable = cfg.jellyfin.isEnabled hostName;
+      enable = cfg.jellyfin.isEnabled;
     };
 
     prowlarr = {
-      enable = cfg.prowlarr.isEnabled hostName;
+      enable = cfg.prowlarr.isEnabled;
       vpn.enable = false;
       port = cfg.prowlarr.port;
     };
 
     radarr = {
-      enable = cfg.radarr.isEnabled hostName;
+      enable = cfg.radarr.isEnabled;
       port = cfg.radarr.port;
     };
 
     sonarr = {
-      enable = cfg.sonarr.isEnabled hostName;
+      enable = cfg.sonarr.isEnabled;
     };
   };
 }

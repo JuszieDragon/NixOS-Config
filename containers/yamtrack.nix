@@ -4,7 +4,6 @@ with lib;
 
 let
   cfg = catalog.services.yamtrack;
-  hostName = config.networking.hostName;
   configDir = "/state/yamtrack";
   id = 1936;
   idStr = toString id;
@@ -19,7 +18,7 @@ in {
     };
   };
         
-  virtualisation.oci-containers.containers = mkIf (cfg.isEnabled hostName) {
+  virtualisation.oci-containers.containers = mkIf cfg.isEnabled {
     yamtrack = {
       image = "ghcr.io/fuzzygrim/yamtrack:0.24.8";
       ports = [ "${cfg.portString}:8000" ];
@@ -27,6 +26,7 @@ in {
         PUID = "${idStr}";
         PGID = "${idStr}";
         REDIS_URL = "redis://yamtrack-redis:6379";
+        URLS = "https://yamtrack.dragon.luxe";
         TZ = "Australia/Hobart";
       };
       dependsOn = [ "yamtrack-redis" ];
@@ -40,3 +40,4 @@ in {
     };
   };
 }
+

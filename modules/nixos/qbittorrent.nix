@@ -4,7 +4,6 @@ with lib;
 
 let
   cfg = catalog.services.qbittorrent;
-  hostName = config.networking.hostName;
 
   dataDir = "/mnt/media/torrents";
   stateDir = "/state";
@@ -17,7 +16,7 @@ in rec {
   };
 
   services.qbittorrent = {
-    enable = cfg.isEnabled hostName;
+    enable = cfg.isEnabled;
     user = "qbittorrent";
     group = "media";
     profileDir = stateDir;

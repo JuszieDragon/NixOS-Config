@@ -4,11 +4,10 @@ with lib;
 
 let
   cfg = catalog.services.komga;
-  hostName = config.networking.hostName;
 
 in {
   services.komga = {
-    enable = cfg.isEnabled hostName;
+    enable = cfg.isEnabled;
     settings.server.port = cfg.port;
     stateDir = "/state/komga";
     group = "media";

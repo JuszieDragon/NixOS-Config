@@ -4,7 +4,6 @@ with lib;
 
 let
   cfg = catalog.services.caddy;
-  hostName = config.networking.hostName;
   
   servicesValidForProxy = services: filterAttrs (n: v: v ? reverseProxy && v.reverseProxy != "none" && v.enable == true) services;
 
@@ -45,7 +44,7 @@ in {
   };
 
   services.caddy = {
-    enable = cfg.isEnabled hostName;
+    enable = cfg.isEnabled;
 
     package = pkgs.caddy.withPlugins {
       plugins = [ "github.com/caddy-dns/porkbun@v0.3.1" ];
