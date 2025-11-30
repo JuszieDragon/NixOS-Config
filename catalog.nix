@@ -179,9 +179,8 @@ rec {
     }
   ) servicesBase;
 
-  #TODO have this be grouped by host
   portsUsed = concatMapAttrs (service: attrs: {
-    ${attrs.portString} = "${service} ${attrs.host.hostName}";
-  }) (filterAttrs (service: attrs: attrs ? port) services);
+    ${attrs.portString} = "${service}";
+  }) (filterAttrs (service: attrs: attrs ? port && attrs.host == hosts.${host}) services);
 }
 

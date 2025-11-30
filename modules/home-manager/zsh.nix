@@ -24,7 +24,7 @@ in {
       rebuild-droid = "nix-on-droid switch --flake ~/nixos-config";
       update = "nix flake update";
       update-dot = "nix flake update dotfiles";
-      used-ports = "nix eval --file ~/nixos-config/catalog.nix portsUsed --arg lib 'import <nixpkgs/lib>' --json | jq '.'";
+      used-ports = wrapAlias "nix eval --file ~/nixos-config/catalog.nix portsUsed --arg lib 'import <nixpkgs/lib>' --argstr host $1 --json";
 
       lg = "lazygit";
       jctl = wrapAlias "sudo journalctl -u $1.service -b 0";
