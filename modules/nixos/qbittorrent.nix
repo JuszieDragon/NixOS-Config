@@ -76,6 +76,7 @@ in rec {
     categories = {
       "Anime".save_path = "${dataDir}/sonarr-anime";
       "Doujinshi".save_path = "${dataDir}/doujinshi";
+      "Games".save_path = "${dataDir}/games";
       "Manga".save_path = "${dataDir}/manga";
       "Misc".save_path = "${dataDir}/misc";
       "Movies".save_path = "${dataDir}/radarr";
