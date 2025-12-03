@@ -115,6 +115,12 @@ rec {
       port = 8083;
       reverseProxy = "internal";
     };
+    kaneo = {
+      enable = true;
+      host = hosts.soul-matrix;
+      port = 5173;
+      reverseProxy = "internal";
+    };
 
     openspeedtest = {
       enable = true;

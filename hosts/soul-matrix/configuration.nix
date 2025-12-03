@@ -18,6 +18,7 @@ let
   ];
 
   containerImports = map (container: containersRoot + container) [
+    /kaneo.nix
     #/openspeedtest.nix
     /sonarr-anime.nix
     /yamtrack.nix
