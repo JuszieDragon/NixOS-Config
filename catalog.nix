@@ -121,6 +121,19 @@ rec {
       port = 5173;
       reverseProxy = "internal";
     };
+    #TODO maybe setup dependent services under kaneo object for DRY
+    kaneo-api = {
+      enable = servicesBase.kaneo.enable;
+      host = servicesBase.kaneo.host;
+      port = 1337;
+      reverseProxy = "internal";
+    };
+    kaneo-db = {
+      enable = servicesBase.kaneo.enable;
+      host = servicesBase.kaneo.host;
+      port = 5432;
+      reverseProxy = "none";
+    };
 
     openspeedtest = {
       enable = true;

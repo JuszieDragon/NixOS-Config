@@ -6,19 +6,19 @@ let
   cfg = catalog.services.kaneo;
   configDir = "/state/kaneo";
   env = {
-    KANEO_CLIENT_URL = "http://localhost:${cfg.portString}";
-    KANEO_API_URL = "http://localhost:1337";
+    KANEO_CLIENT_URL = "https://kaneo.dragon.luxe";
+    KANEO_API_URL = "https://kaneo-api.dragon.luxe";
 
     DATABASE_URL = "postgresql://kaneo:Qywter101@kaneo-db:5432/kaneo";
     POSTGRES_DB = "kaneo";
     POSTGRES_USER = "kaneo";
     POSTGRES_PASSWORD = "Qywter101";
 
-    CORS_ORIGINS="http://localhost:${cfg.portString}";
+    CORS_ORIGINS="https://kaneo.dragon.luxe";
   };
   id = 1825;
   idStr = toString id;
-  version = "2.0.3";
+  version = "2.0.4";
 
 in {
   users = {
