@@ -7,6 +7,7 @@ let
   moduleImports = map (module: modulesRoot + module) [
     /git.nix
     /komga.nix
+    /navidrome.nix
     /nixarr.nix
     /podman.nix
     /qbittorrent.nix

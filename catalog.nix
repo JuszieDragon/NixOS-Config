@@ -134,6 +134,12 @@ rec {
       port = 5432;
       reverseProxy = "none";
     };
+    navidrome = {
+      enable = true;
+      host = hosts.soul-matrix;
+      port = 4553;
+      reverseProxy = "external";
+    };
 
     openspeedtest = {
       enable = true;

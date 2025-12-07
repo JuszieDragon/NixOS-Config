@@ -79,6 +79,7 @@ in rec {
       "Games".save_path = "${dataDir}/games";
       "Manga".save_path = "${dataDir}/manga";
       "Misc".save_path = "${dataDir}/misc";
+      "Music".save_path = "${dataDir}/music";
       "Movies".save_path = "${dataDir}/radarr";
       "Seeding".save_path = "${dataDir}/seeding";
       "TV Shows".save_path = "${dataDir}/sonarr";
