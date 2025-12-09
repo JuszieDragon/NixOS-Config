@@ -5,16 +5,16 @@ with lib;
 let
   cfg = catalog.services.kaneo;
   configDir = "/state/kaneo";
-  env = {
+  env = rec {
     KANEO_CLIENT_URL = "https://kaneo.dragon.luxe";
     KANEO_API_URL = "https://kaneo-api.dragon.luxe";
 
-    DATABASE_URL = "postgresql://kaneo:Qywter101@kaneo-db:5432/kaneo";
+    DATABASE_URL = "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@kaneo-db:5432/kaneo";
     POSTGRES_DB = "kaneo";
     POSTGRES_USER = "kaneo";
     POSTGRES_PASSWORD = "Qywter101";
 
-    CORS_ORIGINS="https://kaneo.dragon.luxe";
+    CORS_ORIGINS="${KANEO_CLIENT_URL}";
   };
   id = 1825;
   idStr = toString id;
