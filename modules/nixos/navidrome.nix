@@ -14,8 +14,8 @@ in lib.mkIf cfg.isEnabled {
       Address = "0.0.0.0";
       Port = cfg.port;
       MusicFolder = "/mnt/media/music";
-      DataDir = "/state/navidrome/data";
-      CacheDir = "/state/navidrome/cache";
+      DataFolder = "/state/navidrome/data";
+      CacheFolder = "/state/navidrome/cache";
       CoverJpegQuality = 100;
     };
     group = "media";
