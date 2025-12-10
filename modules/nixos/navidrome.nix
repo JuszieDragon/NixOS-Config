@@ -16,7 +16,7 @@ in lib.mkIf cfg.isEnabled {
       MusicFolder = "/mnt/media/music";
       DataDir = "/state/navidrome/data";
       CacheDir = "/state/navidrome/cache";
-      CoverJPGQuality = 100;
+      CoverJpegQuality = 100;
     };
     group = "media";
   };
