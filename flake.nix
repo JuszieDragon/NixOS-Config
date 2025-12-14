@@ -94,6 +94,16 @@
 
         specialArgs = { inherit inputs catalog; };
       };
+
+      last-defence-academy = let 
+        catalog = catalog-gen "last-defence-academy"; 
+      in nixpkgs-unstable.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        modules = default-modules "last-defence-academy" catalog;
+
+        specialArgs = { inherit inputs catalog; };
+      };
     };
 
     nixOnDroidConfigurations.default = let
