@@ -48,7 +48,8 @@ in {
     kaneo-db = {
       image = "postgres:16-alpine";
       ports = [ "5432:5432" ];
-      environment = env // { REDIS_ARGS = "--user ${idStr}:${idStr}"; };
+      user = "${idStr}:${idStr}";
+      environment = env;
       volumes = [ (configDir + ":/var/lib/postgresql/data") ];
     };
   };
