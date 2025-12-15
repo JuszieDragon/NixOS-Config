@@ -20,22 +20,23 @@ in {
         
   virtualisation.oci-containers.containers = mkIf cfg.isEnabled {
     yamtrack = {
-      image = "ghcr.io/fuzzygrim/yamtrack:0.24.8";
+      image = "ghcr.io/fuzzygrim/yamtrack:0.24.9";
       ports = [ "${cfg.portString}:8000" ];
       environment = {
         PUID = "${idStr}";
         PGID = "${idStr}";
         REDIS_URL = "redis://yamtrack-redis:6379";
         URLS = "https://yamtrack.dragon.luxe";
+        ADMIN_ENABLED = "True";
         TZ = "Australia/Hobart";
       };
       dependsOn = [ "yamtrack-redis" ];
-      volumes = [ (configDir + "/core:/yamtrack.db") ];
+      volumes = [ (configDir + "/core:/yamtrack/db") ];
     };
 
     yamtrack-redis = {
       image = "redis:8-alpine";
-      environment = { REDIS_ARGS = "--user ${idStr}:${idStr}"; };
+      user = "${idStr}:${idStr}";
       volumes = [ (configDir + "/redis:/data") ];
     };
   };
