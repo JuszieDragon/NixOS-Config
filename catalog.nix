@@ -140,6 +140,12 @@ rec {
       port = 4553;
       reverseProxy = "external";
     };
+    beets-flask = {
+      enable = true;
+      host = hosts.soul-matrix;
+      port = 5001;
+      reverseProxy = "internal";
+    };
 
     openspeedtest = {
       enable = true;

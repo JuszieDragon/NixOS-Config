@@ -1,0 +1,56 @@
+# ------------------------------------------------------------------------------------ #
+#                                   BEETS GUI CONFIG                                   #
+# ------------------------------------------------------------------------------------ #
+# Example file, this file was automatically copied to /config/beets-flask/config.yaml.
+# Feel free to edit this file to customize the gui configuration.
+# Especially the `folders` section in the `inbox` section are important to set up your inbox
+# folders. You can add as many folders as you like, but don't forget to volume-map them in
+# your docker-compose.yml.
+
+gui:
+    num_preview_workers: 4 # how many previews to generate in parallel
+
+    library:
+        readonly: no
+        # Use to split artists in the library view if using multiple artists in a field.
+        # Set to an empty list to disable this feature.
+        artist_separators: [",", ";", "&"]
+
+    terminal:
+        start_path: "/music/inbox" # the directory where to start new terminal sessions
+
+    inbox:
+        # specify ignore patterns to hide from all inbox views.
+        # If not configured, we use the settings from your beets config,
+        # which by default holds [".*", "*~", "System Volume Information", "lost+found"].
+        # To show all files in the frontend, set this to an empty list:
+        # ignore: []
+
+        folders:
+            # --------------------------------- README -------------------------------- #
+            # Before using the inbox feature, you need to create the folders
+            # and decide on an inbox type. Have a look at the examples below.
+
+           # Inbox1:
+           #     name: "Dummy inbox"
+           #     path: "/music/dummy"
+           #     autotag: no
+           #     # do not automatically trigger tagging and do not automatically import
+           # Inbox2:
+           #     name: "Auto Inbox"
+           #     path: "/music/inbox_auto"
+           #     autotag: "auto"
+           #     # trigger tag and import if a good match is found based on `auto_threshold`
+           #     auto_threshold: null
+           #     # if set to null, uses the value in beets config (match.strong_rec_thresh)
+           #     # define the distance from a perfect match, i.e. set to 0.1 to import
+           #     # matches with 90% similarity or better.
+           # Inbox3:
+           #     name: "An Inbox that only generates the previews"
+           #     path: "/music/inbox_preview"
+           #     autotag: "preview"
+           #     # trigger tag but do not import, recommended for most control
+          Inbox:
+            name: "Inbox"
+            path: "/music/inbox"
+            autotag: "preview"
