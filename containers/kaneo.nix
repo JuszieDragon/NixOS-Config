@@ -15,10 +15,13 @@ let
     POSTGRES_PASSWORD = "Qywter101";
 
     CORS_ORIGINS="${KANEO_CLIENT_URL}";
+
+    #TODO at least pretend to care about security
+    AUTH_SECRET = "d3353680-29a2-4e1b-b134-8eb1a421d74e";
   };
   id = 1825;
   idStr = toString id;
-  version = "2.0.4";
+  version = "2.1.6";
 
 in {
   users = {
