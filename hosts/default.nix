@@ -14,7 +14,10 @@
 
   time.timeZone = "Australia/Hobart";
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    trusted-users = [ "root" "justin" ];
+  };
 
   services = {
     openssh = {

@@ -19,7 +19,7 @@ in {
       img = "qimgv .";
       setvol = "amixer -c S9 set 'PCM',1 69";
 
-      rebuild = "sudo echo -n; nixos-rebuild switch --flake --sudo";
+      rebuild = "sudo -v; nixos-rebuild switch --flake --sudo";
       rebuild-local = "rebuild --override-input my-nixpkgs ~/projects/nixpkgs";
       rebuild-droid = "nix-on-droid switch --flake ~/nixos-config";
       update = "nix flake update";
