@@ -37,6 +37,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     hyprland.url = "github:hyprwm/Hyprland";
     nixarr.url = "github:rasmus-kirk/nixarr";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
@@ -49,6 +54,7 @@
     agenix,
     home-manager,
     my-nixpkgs,
+    niri,
     nix-on-droid,
     nixpkgs-unstable,
     nixarr,
@@ -102,6 +108,19 @@
 
         modules = default-modules "last-defence-academy" catalog;
 
+        specialArgs = { inherit inputs catalog; };
+      };
+
+      revachol = let
+        catalog = catalog-gen "revachol";
+      in nixpkgs-unstable.lib.nixosSystem {
+        system = "x86_65-linux";
+
+        modules = [ 
+          niri.nixosModules.niri
+          { nixpkgs.overlays = [ niri.overlays.niri ]; }
+        ] ++ (default-modules "revachol" catalog);
+        
         specialArgs = { inherit inputs catalog; };
       };
     };

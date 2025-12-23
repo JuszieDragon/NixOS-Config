@@ -14,18 +14,13 @@
 in {
   environment.systemPackages = with pkgs; [
     steam
-    protonup-qt
+    protonup-rs
     protontricks
     gamescope
     gamemode
-    steamtinkerlaunch
-    # https://github.com/sonic2kk/steamtinkerlaunch/wiki
-    # need to run `steamtinkerlaunch compat add` to make appear in steam
-    # other setup info here https://gist.github.com/jakehamilton/632edeb9d170a2aedc9984a0363523d3
-    mangohud # to enable with steamtinkerlaunch goto Game Menu (on the bottom) and scroll to Tool Options
+    mangohud
     gpu-screen-recorder
     libnotify
-    bottles
     #itch #currently has a broken dependency
   ];
 
@@ -35,11 +30,8 @@ in {
     steam = {
       enable = true;
       localNetworkGameTransfers.openFirewall = true;
-      #gamescopeSession.enable = true;
+      gamescopeSession.enable = true;
     };
-    #mangohud = {
-
-    #}
     gamemode = {
       enable = true;
       settings = {
@@ -51,12 +43,12 @@ in {
     };
   };
 
-  xdg.mime = {
-    enable = true;
-    addedAssociations = {
-      "x-scheme-handler/r2" = ["reloaded-ii-url.desktop"];
-    };
-  };
+  #xdg.mime = {
+  #  enable = true;
+  #  addedAssociations = {
+  #    "x-scheme-handler/r2" = ["reloaded-ii-url.desktop"];
+  #  };
+  #};
 
   #might be able to setup reloaded one click with this
   /*
