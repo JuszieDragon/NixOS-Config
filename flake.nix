@@ -27,11 +27,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    aagl = {
-      url = "github:ezKEa/aagl-gtk-on-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -42,15 +37,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    hyprland.url = "github:hyprwm/Hyprland";
     nixarr.url = "github:rasmus-kirk/nixarr";
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
-    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
   outputs = {
     self,
-    aagl,
     agenix,
     home-manager,
     my-nixpkgs,
@@ -58,7 +49,6 @@
     nix-on-droid,
     nixpkgs-unstable,
     nixarr,
-    vscode-server,
     ...
   } @ inputs: 
     with inputs;
@@ -68,7 +58,6 @@
       default-modules = system: catalog: [
         agenix.nixosModules.default
         nixarr.nixosModules.default
-        vscode-server.nixosModules.default
 
         home-manager.nixosModules.home-manager
         {

@@ -8,6 +8,7 @@ let
   modulesRoot = ../../modules/nixos;
   
   modulesImports = map (module: modulesRoot + module) [
+    /feishin.nix
     /gaming.nix
   ];
 
@@ -74,6 +75,7 @@ in {
     mpv
     neovim
     pulseaudio
+    qimgv
     swaylock
     wget
     vesktop

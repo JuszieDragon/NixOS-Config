@@ -37,18 +37,20 @@
     "Mod+Down" = { action = focus-window-down; };
     "Mod+Up" = { action = focus-window-up; };
     "Mod+Right" = { action = focus-column-right; };
-    "Mod+H" = { action = focus-column-left; };
-    "Mod+J" = { action = focus-window-down; };
-    "Mod+K" = { action = focus-window-up; };
-    "Mod+L" = { action = focus-column-right; };
+    #"Mod+H" = { action = focus-column-left; };
+    #"Mod+J" = { action = focus-window-down; };
+    #"Mod+K" = { action = focus-window-up; };
+    #"Mod+L" = { action = focus-column-right; };
 
     "Mod+Ctrl+Left" = { action = move-column-left; };
     "Mod+Ctrl+Down" = { action = move-window-down; };
     "Mod+Ctrl+Up" = { action = move-window-up; };
     "Mod+Ctrl+Right" = { action = move-column-right; };
-    "Mod+Ctrl+H" = { action = move-column-left; };
-    "Mod+Ctrl+J" = { action = move-window-down; };
-    "Mod+Ctrl+K" = { action = move-window-up; };
-    "Mod+Ctrl+L" = { action = move-column-right; };
+    #"Mod+Ctrl+H" = { action = move-column-left; };
+    #"Mod+Ctrl+J" = { action = move-window-down; };
+    #"Mod+Ctrl+K" = { action = move-window-up; };
+    #"Mod+Ctrl+L" = { action = move-column-right; };
+
+    "Mod+F" = { action = maximize-column; };
   };
 }
