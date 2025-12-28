@@ -10,6 +10,7 @@
 
   programs.niri = {
     settings = {
+      environment."NIXOS_OZONE_WL" = "1";
       hotkey-overlay.skip-at-startup = true;
       prefer-no-csd = true;
       xwayland-satellite = {

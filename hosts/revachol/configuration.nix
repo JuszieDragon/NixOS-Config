@@ -85,6 +85,7 @@ in {
     kdePackages.qtsvg
     kdePackages.kio
     kdePackages.kio-extras
+    nautilus
   ];
 
   fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
