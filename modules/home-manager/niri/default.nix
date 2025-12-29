@@ -17,6 +17,10 @@
         enable = true;
         path = lib.getExe pkgs.xwayland-satellite;
       };
+      spawn-at-startup = [
+        { sh = "qs"; }
+        { sh = "swaybg -i /home/justin/martinaise-skyline-expanded.jpg"; }
+      ];
     };
   };
 }

@@ -76,6 +76,7 @@ in {
     neovim
     pulseaudio
     qimgv
+    swaybg
     swaylock
     wget
     vesktop
