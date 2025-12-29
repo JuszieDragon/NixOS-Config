@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: let
@@ -11,13 +12,20 @@
     terminal = "false";
     mimetypes = ["x-scheme-handler/r2"];
   };
+
+  customProtonGEVersion = pVersion: pHash:
+    ( pkgs.proton-ge-bin.overrideAttrs rec { 
+      version = pVersion;
+      src = pkgs.fetchzip {
+        url = "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${version}/${version}.tar.gz";
+        hash = pHash;
+      };
+    }).override { steamDisplayName = pVersion; };
 in {
   environment.systemPackages = with pkgs; [
-    steam
     protonup-rs
     protontricks
     gamescope
-    gamemode
     mangohud
     gpu-screen-recorder
     libnotify
@@ -31,6 +39,9 @@ in {
       enable = true;
       localNetworkGameTransfers.openFirewall = true;
       gamescopeSession.enable = true;
+      extraCompatPackages = [
+        ( customProtonGEVersion "GE-Proton10-3" "sha256-V4znOni53KMZ0rs7O7TuBst5kDSaEOyWUGgL7EESVAU=" )
+      ];
     };
     gamemode = {
       enable = true;

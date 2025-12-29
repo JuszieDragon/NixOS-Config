@@ -17,5 +17,13 @@
       open-maximized = true;
       open-on-output = "DP-2";
     }
+    {
+      matches = [
+        { app-id = "steam_app_.+"; }
+        { app-id = "gamescope"; }
+      ];
+      open-maximized = true;
+      open-on-output = "DP-1";
+    }
   ];
 }

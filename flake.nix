@@ -38,6 +38,11 @@
     };
 
     nixarr.url = "github:rasmus-kirk/nixarr";
+
+    steam-config-nix = {
+      url = "github:different-name/steam-config-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = {
