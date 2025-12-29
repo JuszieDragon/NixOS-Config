@@ -6,13 +6,13 @@
 
   nixpkgs.overlays = [( self: super: {
     feishin = super.feishin.overrideAttrs (previousAttrs: rec {
-      version = "1.0.1-beta.1";
+      version = "1.0.2";
             
       src = super.fetchFromGitHub {
         tag = "v${version}";
         owner = "jeffvli";
         repo = "feishin";
-        hash = "sha256-OLf84KJsbpE2C2UY76O6W23g2IsBc/vxhDG8TlNGf2I=";
+        hash = "sha256-otobV3bpANbhrAiscDxV1IGJ36i/37aPei6wdo5SDSw=";
       };
 
       pnpmDeps = super.fetchPnpmDeps {
