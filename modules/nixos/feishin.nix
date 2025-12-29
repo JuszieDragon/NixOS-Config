@@ -1,6 +1,7 @@
 { lib, pkgs, fetchPnpmDeps, ... }: {
   environment.systemPackages = with pkgs; [
     feishin
+    playerctl
   ];
 
   nixpkgs.overlays = [( self: super: {

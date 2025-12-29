@@ -11,6 +11,18 @@
       action.spawn = "fuzzel";
     };
 
+    "XF86AudioPlay" = {
+      action.spawn = ["playerctl" "play-pause"];
+      allow-when-locked = true;
+    };
+    "XF86AudioNext" = {
+      action.spawn = ["playerctl" "next"];
+      allow-when-locked = true;
+    };
+    "XF86AudioPrev" = {
+      action.spawn = ["playerctl" "previous"];
+      allow-when-locked = true;
+    };
     "XF86AudioRaiseVolume" = {
       action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];
       allow-when-locked = true;
