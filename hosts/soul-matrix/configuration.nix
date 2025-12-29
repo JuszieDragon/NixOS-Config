@@ -5,6 +5,7 @@ let
   containersRoot = ../../containers;
 
   moduleImports = map (module: modulesRoot + module) [
+    /caddy.nix
     /git.nix
     /komga.nix
     /navidrome.nix

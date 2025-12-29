@@ -162,7 +162,7 @@ rec {
     };
     caddy = {
       enable = true;
-      host = hosts.night-city;
+      host = hosts.soul-matrix;
     };
 
     home-assistant = {
