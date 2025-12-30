@@ -8,20 +8,36 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/779508fb-e372-4a3d-9487-4fc1f880b93c";
-    fsType = "ext4";
+  boot = {
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [ ];
+    initrd = {
+      availableKernelModules = [ "xhci_pci" "nvme" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+      kernelModules = [ ];
+    };
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/3A45-673E";
-    fsType = "vfat";
-    options = [ "fmask=0022" "dmask=0022" ];
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/779508fb-e372-4a3d-9487-4fc1f880b93c";
+      fsType = "ext4";
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-uuid/3A45-673E";
+      fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
+    };
+
+    "/mnt/arch" = {
+      device = "/dev/disk/by-uuid/3cba7588-3089-4bb8-bd6e-c377105c4d98";
+      fsType = "ext4";
+    };
+
+    "/mnt/games" = {
+      device = "/dev/disk/by-uuid/6143ebfb-6f1b-4aa9-88ea-40d34c0f1cd4";
+      fsType = "ext4";
+    };
   };
 
   swapDevices = [ ];

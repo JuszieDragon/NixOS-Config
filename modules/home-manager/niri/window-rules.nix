@@ -8,7 +8,10 @@
 
   programs.niri.settings.window-rules = [
     {
-      matches = [ { app-id = "steam"; } ];
+      matches = [ 
+        { app-id = "steam"; }
+        { app-id = "feishin"; }
+      ];
       open-maximized = true;
       open-on-output = "DP-3";
     }

@@ -18,32 +18,19 @@ in {
     ../default.nix
   ] ++ modulesImports;
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot.enable = true;
+    };
+    kernelPackages = pkgs.linuxPackages_latest;
+  };
 
-  # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  networking.hostName = "revachol"; # Define your hostname.
-
-  # Configure network connections interactively with nmcli or nmtui.
-  networking.networkmanager.enable = true;
-
-  # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
-
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
+  networking = {
+    firewall.enable = false;
+    hostName = "revachol";
+    networkmanager.enable = true;
+  };
 
   nixpkgs.config.allowUnfree = true;
 
@@ -57,6 +44,7 @@ in {
       enable = true;
       pulse.enable = true;
     };
+    openssh.enable = true;
     printing.enable = true;
     xserver.videoDrivers = [ "amdgpu" ];
   };
@@ -66,8 +54,6 @@ in {
     firefox.enable = true;
   };
 
-  # List packages installed in system profile.
-  # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     alacritty
     fuzzel
@@ -78,22 +64,27 @@ in {
     qimgv
     swaybg
     swaylock
+    unrar
     wget
     vesktop
     xwayland-satellite
 
+    kdePackages.ark
     kdePackages.dolphin
     kdePackages.qtsvg
     kdePackages.kio
     kdePackages.kio-extras
-    nautilus
   ];
 
+  #xdg.portal = with pkgs; {
+  #  enable = true;
+  #  xdgOpenUsePortal = true;
+  #  extraPortals = [ xdg-desktop-portal-gtk xdg-desktop-portal-wlr ];
+  #  configPackages = [ xdg-desktop-portal-gtk ];
+  #  config.common.default = "gtk";
+  #};
+
   fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
-
-  services.openssh.enable = true;
-
-  networking.firewall.enable = false;
 
   system.stateVersion = "25.11"; # Did you read the comment?
 }
