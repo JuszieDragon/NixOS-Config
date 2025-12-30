@@ -24,7 +24,7 @@ plugins: [
         inline,
         edit,
         spotify, # needs authentication https://docs.beets.io/en/latest/plugins/spotify.html
-        discogs
+        #discogs,
         musicbrainz
     ]
 
@@ -124,7 +124,7 @@ musicbrainz:
 
 spotify:
     # 0.0 gives spotify the same priority as musicbrainz
-    source_weight: 0.0
+    data_source_mislatch_penalty: 0.0
 
 discogs:
     data_source_mismatch_penalty: 0.5

@@ -3,6 +3,9 @@
 with lib;
 
 {
+  networking.nat.enable = true;
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;

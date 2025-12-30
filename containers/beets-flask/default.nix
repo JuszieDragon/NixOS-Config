@@ -16,7 +16,7 @@ in lib.mkIf cfg.isEnabled {
 
   virtualisation.oci-containers.containers = {
     beets-flask = {
-      image = "pspitzner/beets-flask:v1.2.0";
+      image = "pspitzner/beets-flask:v1.2.1";
       ports = [ "${cfg.portString}:5001" ];
       environment = {
         TZ = "Australia/Hobart";
@@ -32,6 +32,8 @@ in lib.mkIf cfg.isEnabled {
   };
 
   systemd = {
+    #TODO add below line back when discogs plugin issue fixed
+    #\\cp -f ${inputs.self}/containers/beets-flask/requirements.txt ${configDir}/beets-flask/requirements.txt;
     services.podman-beets-flask.preStart = "
       \\cp -f ${inputs.self}/containers/beets-flask/beets-config.yaml ${configDir}/beets/config.yaml;
       \\cp -f ${inputs.self}/containers/beets-flask/beets-flask-config.yaml ${configDir}/beets-flask/config.yaml;
