@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ lib, pkgs, inputs, ... }:
 
 let
   modulesRoot = ../../modules/nixos;
@@ -7,6 +7,7 @@ let
   moduleImports = map (module: modulesRoot + module) [
     /caddy.nix
     /git.nix
+    /kavita.nix
     /komga.nix
     /navidrome.nix
     /nixarr.nix
@@ -14,7 +15,6 @@ let
     /qbittorrent.nix
     /samba.nix
     /scrutiny.nix
-    /vscode-server.nix
     /yarr.nix
     /zfs.nix
   ];
