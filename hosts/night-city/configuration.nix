@@ -10,7 +10,6 @@ let
     /podman.nix
     /shares.nix
     /unifi.nix
-    /vscode-server.nix
   ];
 
   containerImports = map (container: containersRoot + container) [
