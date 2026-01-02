@@ -1,6 +1,7 @@
 { lib, pkgs, ... }: {
   home.packages = with pkgs; [
     quickshell
+    lm_sensors
   ];
 
   xdg = {

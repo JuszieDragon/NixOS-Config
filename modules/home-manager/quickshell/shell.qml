@@ -24,6 +24,7 @@ PanelWindow {
 
   property string kernelVersion: "Linux"
   property int cpuUsage: 0
+  property string gpuJunction: ""
   property int memUsage: 0
   property int diskUsage: 0
   property int volumeLevel: 0
@@ -57,6 +58,21 @@ PanelWindow {
         }
         lastCpuTotal = total
         lastCpuIdle = idle
+      }
+    }
+
+    Component.onCompleted: running = true
+  }
+
+  Process {
+    id: gpuJunctionProc
+    command: ["sh", "-c", "sensors amdgpu-pci-0300 | grep junction"]
+
+    stdout: SplitParser {
+      onRead: data => {
+        if (!data) return
+        var p = data.trim().split(/\s+/)
+        gpuJunction = p[1].slice(1)
       }
     }
 
@@ -115,6 +131,7 @@ PanelWindow {
     repeat: true
     onTriggered: {
       cpuProc.running = true
+      gpuJunctionProc.running = true
       memProc.running = true
       diskProc.running = true
       volProc.running = true
@@ -149,6 +166,24 @@ PanelWindow {
 
     Text {
       text: "CPU: " + cpuUsage + "%"
+      color: root.colYellow
+      font.pixelSize: root.fontSize
+      font.family: root.fontFamily
+      font.bold: true
+      Layout.rightMargin: 8
+    }
+
+  Rectangle {
+      Layout.preferredWidth: 1
+      Layout.preferredHeight: 16
+      Layout.alignment: Qt.AlignVCenter
+      Layout.leftMargin: 0
+      Layout.rightMargin: 8
+      color: root.colMuted
+    }
+
+    Text {
+      text: "GPU Junc: " + gpuJunction
       color: root.colYellow
       font.pixelSize: root.fontSize
       font.family: root.fontFamily

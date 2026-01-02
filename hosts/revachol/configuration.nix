@@ -47,6 +47,7 @@ in {
     openssh.enable = true;
     printing.enable = true;
     xserver.videoDrivers = [ "amdgpu" ];
+    udisks2.enable = true;
   };
 
   programs = {
@@ -58,8 +59,10 @@ in {
     alacritty
     fuzzel
     git
+    usbutils
     mpv
     neovim
+    orca-slicer
     pulseaudio
     qimgv
     swaybg

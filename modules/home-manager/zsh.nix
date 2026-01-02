@@ -1,4 +1,4 @@
-{ catalog, inputs, lib, pkgs, ... }: 
+{ catalog, config, inputs, lib, pkgs, ... }: 
 let
   wrapAlias = command: "f() { " + command + "; unset -f f; }; f";
   hostSSHAliases = lib.mapAttrs (host: attrs:
@@ -11,6 +11,7 @@ in {
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    dotDir = "${config.xdg.configHome}/zsh";
 
     shellAliases = {
       cpk = "cat /etc/current-system-packages";
@@ -30,7 +31,7 @@ in {
       jctl = wrapAlias "sudo journalctl -u $1.service -b 0";
       jctlc = wrapAlias "sudo journalctl -u podman-$1.service -b 0";
       agee = wrapAlias "agenix -e $1 -i ~/.ssh/id_ed25519";
-      szsh = "source ~/.zshrc";
+      szsh = "source ~/.config/zsh/.zshrc";
 
       tnmoni = "tmux new -s monifactory 'cd /srv/minecraft/Monifactory && ./run.sh'";
       tamoni = "tmux attach -t monifactory";

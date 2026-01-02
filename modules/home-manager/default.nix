@@ -16,6 +16,7 @@
       jq
       lazygit
       nixd
+      nurl
       pciutils
       tmux
       unzip
