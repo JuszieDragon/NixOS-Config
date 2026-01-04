@@ -32,7 +32,10 @@ in {
     #itch #currently has a broken dependency
   ];
 
-  hardware.xone.enable = true;
+  hardware = {
+    xone.enable = true;
+    enableRedistributableFirmware = true;
+  };
 
   programs = {
     steam = {

@@ -52,6 +52,15 @@
       url = "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:yarr.diff";
       flake = false;
     };
+    # https://github.com/NixOS/nixpkgs/pull/472163
+    nixpkgs-patch-xone-dongle-drivers = {
+      url = "https://github.com/NixOS/nixpkgs/pull/472163.diff";
+      flake = false;
+    };
+    nixpkgs-patch-vesktop-permission-fix = {
+      url = "https://github.com/NixOS/nixpkgs/pull/476347.diff";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -96,9 +105,7 @@
       soul-matrix = let
         catalog = catalog-gen "soul-matrix";
       in nixpkgs-patcher.lib.nixosSystem {
-        nixpkgsPatcher = {
-          inputs = inputs;
-        };
+        nixpkgsPatcher.inputs = inputs;
 
         system = "x86_64-linux";
 
@@ -119,8 +126,10 @@
 
       revachol = let
         catalog = catalog-gen "revachol";
-      in nixpkgs.lib.nixosSystem {
-        system = "x86_65-linux";
+      in nixpkgs-patcher.lib.nixosSystem {
+        nixpkgsPatcher.inputs = inputs;
+        
+        system = "x86_64-linux";
 
         modules = [ 
           niri.nixosModules.niri
