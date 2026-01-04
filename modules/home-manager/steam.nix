@@ -11,10 +11,9 @@
         compatTool = "GE-Proton10-3";
       };
       # Native linux version doesn't detect mouse, might be niri related
-      #TODO see if I can get this to set Proton Experimental instead
       Tabletop-Simulator = {
         id = 286160;
-        compatTool = "GE-Proton10-3";
+        compatTool = "proton_experimental";
       };
     };
   };
