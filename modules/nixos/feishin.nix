@@ -6,20 +6,20 @@
 
   nixpkgs.overlays = [( self: super: {
     feishin = super.feishin.overrideAttrs (previousAttrs: rec {
-      version = "1.1.0";
+      version = "1.2.0";
             
       src = super.fetchFromGitHub {
         tag = "v${version}";
         owner = "jeffvli";
         repo = "feishin";
-        hash = "sha256-8/2gHa030EtllPayMu1J62wn8CKy8/MNIdqet/8+eYQ=";
+        hash = "sha256-ycKW3tY2chWdkYebPYYoEuANF/c+yYUAS0v1w1iz66A=";
       };
 
       pnpmDeps = super.fetchPnpmDeps {
         inherit version src;
         pname = previousAttrs.pname;
         fetcherVersion = 2;
-        hash = "sha256-cIHwCZg7sf4phEZMCX4Y/4CGnGEPvL1spNt4GgEVLPw=";
+        hash = "sha256-rKzmc2BPtgTUwXG2y00mURYuTrWawR9l7D+IJwLYtz8=";
       };
     });
   })];
