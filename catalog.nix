@@ -146,6 +146,12 @@ rec {
       port = 5001;
       reverseProxy = "internal";
     };
+    a2o4-server = {
+      enable = true;
+      host = hosts.soul-matrix;
+      port = 9797;
+      reverseProxy = "internal";
+    };
 
     openspeedtest = {
       enable = true;

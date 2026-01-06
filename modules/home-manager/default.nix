@@ -19,6 +19,7 @@
       nurl
       pciutils
       tmux
+      tree
       unzip
       zip
     ];
