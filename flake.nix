@@ -42,6 +42,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sqlit = {
+      url = "github:Maxteabag/sqlit";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     steam-config-nix = {
       url = "github:different-name/steam-config-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -74,6 +79,7 @@
     nixpkgs,
     nixpkgs-patcher,
     nixarr,
+    sqlit,
     ...
   } @ inputs: 
     let

@@ -8,11 +8,13 @@
     homeDirectory = "/home/justin";
     stateVersion = "25.05";
     packages = with pkgs; [
+      alacritty
       bat
       btop
       gh
       git
       inputs.agenix.packages."${stdenv.hostPlatform.system}".default
+      inputs.sqlit.packages."${stdenv.hostPlatform.system}".default
       jq
       lazygit
       nixd
@@ -23,6 +25,10 @@
       unzip
       zip
     ];
+  };
+
+  sessionVariables = {
+    COLORTERM = "truecolor";
   };
   
   programs = {
