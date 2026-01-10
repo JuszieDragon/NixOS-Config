@@ -7,6 +7,9 @@
     username = "justin";
     homeDirectory = "/home/justin";
     stateVersion = "25.05";
+    sessionVariables = {
+      COLORTERM = "truecolor";
+    };
     packages = with pkgs; [
       alacritty
       bat
@@ -27,10 +30,6 @@
     ];
   };
 
-  sessionVariables = {
-    COLORTERM = "truecolor";
-  };
-  
   programs = {
     git = {
       enable = true;
