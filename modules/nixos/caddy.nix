@@ -34,7 +34,7 @@ let
     )
   ) (servicesValidForProxy catalog.services);
 
-in {
+in mkIf cfg.isEnabled {
   #networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   age.secrets.caddy = {
@@ -44,7 +44,7 @@ in {
   };
 
   services.caddy = {
-    enable = cfg.isEnabled;
+    enable = true;
 
     package = pkgs.caddy.withPlugins {
       plugins = [ "github.com/caddy-dns/porkbun@v0.3.1" ];

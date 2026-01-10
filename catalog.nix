@@ -155,7 +155,7 @@ rec {
 
     openspeedtest = {
       enable = true;
-      host = hosts.night-city;
+      host = hosts.soul-matrix;
       port = 3000;
       reverseProxy = "internal";
       subdomain = "speedtest";

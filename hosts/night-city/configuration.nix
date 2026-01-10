@@ -9,7 +9,7 @@ let
     /git.nix
     /podman.nix
     /shares.nix
-    /unifi.nix
+    #/unifi.nix
   ];
 
   containerImports = map (container: containersRoot + container) [
@@ -53,6 +53,6 @@ in {
     steamcmd
   ];
 
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "25.11"; # Did you read the comment?
 }
 
