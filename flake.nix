@@ -68,6 +68,10 @@
       url = "https://github.com/NixOS/nixpkgs/pull/476347.diff";
       flake = false;
     };
+    nixpkgs-patch-kavita-groups = {
+      url = "https://github.com/NixOS/nixpkgs/pull/456789.diff";
+      flake = false;
+    };
   };
 
   outputs = {

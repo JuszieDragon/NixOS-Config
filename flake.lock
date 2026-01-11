@@ -342,6 +342,18 @@
         "type": "github"
       }
     },
+    "nixpkgs-patch-kavita-groups": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-XIn8cV8PyShULCS4yaFFIkEdxJQiMFz8k9j6o5ja3RI=",
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/456789.diff"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/456789.diff"
+      }
+    },
     "nixpkgs-patch-qbit-and-yarr": {
       "flake": false,
       "locked": {
@@ -493,6 +505,7 @@
         "nix-on-droid": "nix-on-droid",
         "nixarr": "nixarr",
         "nixpkgs": "nixpkgs_2",
+        "nixpkgs-patch-kavita-groups": "nixpkgs-patch-kavita-groups",
         "nixpkgs-patch-qbit-and-yarr": "nixpkgs-patch-qbit-and-yarr",
         "nixpkgs-patch-vesktop-permission-fix": "nixpkgs-patch-vesktop-permission-fix",
         "nixpkgs-patch-xone-dongle-drivers": "nixpkgs-patch-xone-dongle-drivers",

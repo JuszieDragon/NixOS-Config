@@ -152,6 +152,12 @@ rec {
       port = 9797;
       reverseProxy = "internal";
     };
+    kavita = {
+      enable = true;
+      host = hosts.soul-matrix;
+      port = 5000;
+      reverseProxy = "internal";
+    };
 
     openspeedtest = {
       enable = true;
