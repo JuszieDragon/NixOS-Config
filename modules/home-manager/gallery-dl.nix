@@ -19,6 +19,7 @@
             volume = ["{category}" "{manga}" "v{volume}" "c{chapter:>03}_{title}"];
             "" = ["{category}" "{manga}" "c{chapter:>03}"];
           };
+          archive-format = "{manga} {volume:>03} {chapter:>03} {page:>03}.{extension}";
           postprocessors = [
             {
               name = "metadata";
