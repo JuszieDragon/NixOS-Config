@@ -13,6 +13,7 @@ let
     /nixarr.nix
     /podman.nix
     /qbittorrent.nix
+    /remote-builders.nix
     /samba.nix
     /scrutiny.nix
     /yarr.nix
