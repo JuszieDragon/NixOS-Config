@@ -23,9 +23,9 @@ plugins: [
         fromfilename,
         inline,
         edit,
-        spotify, # needs authentication https://docs.beets.io/en/latest/plugins/spotify.html
+        #spotify, # needs authentication https://docs.beets.io/en/latest/plugins/spotify.html
         #discogs,
-        musicbrainz
+        musicbrainz,
     ]
 
 directory: /music/imported
@@ -67,6 +67,10 @@ asciify_paths: yes
 # we launch our own workers for previews and only have one
 # import worker that runs one import (file moving) at a time.
 threaded: no
+
+#TODO figure out best way to handle secrets for SubsonicUpdate plugin
+#https://beets.readthedocs.io/en/stable/plugins/subsonicupdate.html
+#subsonic:
 
 fetchart:
     midwidth: 500
@@ -122,9 +126,9 @@ match:
 musicbrainz:
   languages: en jp
 
-spotify:
+#spotify:
     # 0.0 gives spotify the same priority as musicbrainz
-    data_source_mislatch_penalty: 0.0
+#    data_source_mislatch_penalty: 0.0
 
 discogs:
     data_source_mismatch_penalty: 0.5

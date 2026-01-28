@@ -33,7 +33,7 @@ in {
   ];
 
   hardware = {
-    xone.enable = true;
+    #xone.enable = true;
     enableRedistributableFirmware = true;
   };
 
