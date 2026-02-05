@@ -48,6 +48,11 @@ rec {
       isNixos = false;
       ip = "192.168.2.7";
     };
+
+    centauri-carbon = {
+      isNixos = false;
+      ip = "192.168.2.102";
+    };
   };
 
   hosts = mapAttrs (host: attrs:
@@ -57,136 +62,136 @@ rec {
   servicesBase = {
     jellyfin = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 8096;
       reverseProxy = "external";
     };
     radarr = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 7878;
       reverseProxy = "internal";
     };
     sonarr = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 8989;
       reverseProxy = "internal";
     };
     sonarr-anime = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 8990;
       reverseProxy = "internal";
     };
     prowlarr = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 9696;
       reverseProxy = "internal";
     };
     qbittorrent = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 8081;
       reverseProxy = "internal";
     };
     komga = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 8082;
       reverseProxy = "internal";
     };
     yamtrack = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 8084;
       reverseProxy = "internal";
     };
     yarr = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 7070;
       reverseProxy = "external";
     };
     scrutiny = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 8083;
       reverseProxy = "internal";
     };
     kaneo = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 5173;
       reverseProxy = "internal";
     };
     #TODO maybe setup dependent services under kaneo object for DRY
     kaneo-api = {
       enable = servicesBase.kaneo.enable;
-      host = servicesBase.kaneo.host;
+      hosts = servicesBase.kaneo.hosts;
       port = 1337;
       reverseProxy = "internal";
     };
     kaneo-db = {
       enable = servicesBase.kaneo.enable;
-      host = servicesBase.kaneo.host;
+      hosts = servicesBase.kaneo.hosts;
       port = 5432;
       reverseProxy = "none";
     };
     navidrome = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 4553;
       reverseProxy = "external";
     };
     beets-flask = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 5001;
       reverseProxy = "internal";
     };
     a2o4-server = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 9797;
       reverseProxy = "internal";
     };
     kavita = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
       port = 5000;
       reverseProxy = "internal";
     };
 
     openspeedtest = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" "night-city" ];
       port = 3000;
       reverseProxy = "internal";
       subdomain = "speedtest";
     };
     romm = {
       enable = false;
-      host = hosts.night-city;
+      hosts = [ "night-city" ];
       port = 8282;
       reverseProxy = "internal";
     };
     caddy = {
       enable = true;
-      host = hosts.soul-matrix;
+      hosts = [ "soul-matrix" ];
     };
 
     home-assistant = {
       enable = true;
-      host = hosts.home-assistant;
+      hosts = [ "home-assistant" ];
       port = 8123;
       reverseProxy = "internal";
     };
 
     revachol-syncthing = {
       enable = true;
-      host = hosts.revachol;
+      hosts = [ "revachol" ];
       port = 8384;
       reverseProxy = "internal";
       subdomain = "syncthing";
@@ -194,7 +199,7 @@ rec {
 
     tracen-syncthing = {
       enable = true;
-      host = hosts.tracen;
+      hosts = [ "tracen" ];
       port = 8082;
       reverseProxy = "internal";
       subdomain = "syncthing";
@@ -202,10 +207,18 @@ rec {
 
     cabin-syncthing = {
       enable = true;
-      host = hosts.cabin;
+      hosts = [ "cabin" ];
       port = 8384;
       reverseProxy = "internal";
       subdomain = "syncthing";
+    };
+
+    centauri-carbon-web-ui = {
+      enable = true;
+      hosts = [ "centauri-carbon" ];
+      port = 80;
+      reverseProxy = "internal";
+      subdomain = "cc-web";
     };
   };
 
@@ -218,12 +231,13 @@ rec {
         then builtins.toString attrs.port
         else "";
       #TODO this might be able to directly grab the current hostname instead of having it passed in
-      isEnabled = attrs.enable == true && attrs.host == hosts.${host};
+      isEnabled = attrs.enable == true && builtins.elem "${host}" attrs.hosts;
+      host = hosts.${host};
     }
   ) servicesBase;
 
   portsUsed = concatMapAttrs (service: attrs: {
     ${attrs.portString} = "${service}";
-  }) (filterAttrs (service: attrs: attrs ? port && attrs.host == hosts.${host}) services);
+  }) (filterAttrs (service: attrs: attrs ? port && builtins.elem "${host}" attrs.hosts) services);
 }
 

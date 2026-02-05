@@ -7,32 +7,45 @@ let
   
   servicesValidForProxy = services: filterAttrs (n: v: v ? reverseProxy && v.reverseProxy != "none" && v.enable == true) services;
 
-  vHosts = mapAttrs' (serviceName: service:
-    nameValuePair
-    (
-      if service ? subdomain 
-        then "${service.subdomain}.${catalog.domain}"
-        else "${serviceName}.${catalog.domain}"
-    )
-    (
-      #TODO really need to figure out how to setup propagation_timeout with this setup
-      if service.reverseProxy == "external" then {
-        extraConfig = ''
-          reverse_proxy ${service.host.ip}:${service.portString}
-        '';
-      } else {
-        extraConfig = ''
-          @internal { remote_ip 192.168.0.0/22 }
-          handle @internal {
-            reverse_proxy ${service.host.ip}:${service.portString} {
-              header_up Host {upstream_hostport}
-            }
-          }
-          respond "Go away" 403
-        '';
-      }
-    )
-  ) (servicesValidForProxy catalog.services);
+  #TODO figure out how to set propagation_timeout
+  vHosts = builtins.listToAttrs (builtins.foldl' (acc: serviceName:
+    let
+      service = catalog.services.${serviceName};
+      base = lib.removeAttrs service [ "hosts" ];
+      isMultiHost = (builtins.length service.hosts) > 1;
+      entriesForService = map (host:
+        let
+          url = 
+            (if service ? subdomain 
+              then "${service.subdomain}"
+              else "${serviceName}") +
+            (if isMultiHost
+              then ".${host}"
+              else "") +
+            ".${catalog.domain}";
+        in {
+          name = url;
+          value = if service.reverseProxy == "external" then {
+            extraConfig = ''
+              reverse_proxy ${catalog.hosts.${host}.ip}:${service.portString}
+            '';
+          } else {
+            extraConfig = ''
+              @internal { remote_ip 192.168.0.0/22 }
+              handle @internal {
+                reverse_proxy ${catalog.hosts.${host}.ip}:${service.portString} {
+                  header_up Host {upstream_hostport}
+                }
+              }
+              respond "Go away" 403
+            '';
+          };
+        }
+      ) service.hosts;
+    in
+      acc ++ entriesForService
+  ) [] (builtins.attrNames (servicesValidForProxy catalog.services)));
+
 
 in mkIf cfg.isEnabled {
   #networking.firewall.allowedTCPPorts = [ 80 443 ];
@@ -60,9 +73,7 @@ in mkIf cfg.isEnabled {
       }
     '';
 
-      #virtualHosts = vHostsTrace;
       virtualHosts = vHosts;
-      #virtualHosts = test;
   };
 }
 
