@@ -55,8 +55,12 @@
 
     # Use https://nixpkgs-tracker.ocfox.me/?pr=<prNum> to check if patch is still needed
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
-    nixpkgs-patch-qbit-and-yarr = {
-      url = "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:yarr.diff";
+    nixpkgs-patch-qbittorrent = {
+      url = "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:qbittorrent-categories.diff";
+      flake = false;
+    };
+    nixpkgs-patch-yarr = {
+      url = "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:yarr-db-path-and-user.diff";
       flake = false;
     };
     # https://github.com/NixOS/nixpkgs/pull/472163

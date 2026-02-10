@@ -354,16 +354,28 @@
         "url": "https://github.com/NixOS/nixpkgs/pull/456789.diff"
       }
     },
-    "nixpkgs-patch-qbit-and-yarr": {
+    "nixpkgs-patch-qbittorrent": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-+oxdhD2pMOlvPXY72FamadZ073A7tcwNTGMr0n+hZSs=",
+        "narHash": "sha256-YafBLzg/2BITdFv2ATW6q8bSdEWXIK8wtpDWfVxHW8c=",
         "type": "file",
-        "url": "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:yarr.diff"
+        "url": "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:qbittorrent-categories.diff"
       },
       "original": {
         "type": "file",
-        "url": "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:yarr.diff"
+        "url": "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:qbittorrent-categories.diff"
+      }
+    },
+    "nixpkgs-patch-yarr": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-Dfys04lxw8Xnf6kSLZPKqNX/aJfXOp8OcCwcl8wUzzs=",
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:yarr-db-path-and-user.diff"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:yarr-db-path-and-user.diff"
       }
     },
     "nixpkgs-patcher": {
@@ -482,7 +494,8 @@
         "nixarr": "nixarr",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-patch-kavita-groups": "nixpkgs-patch-kavita-groups",
-        "nixpkgs-patch-qbit-and-yarr": "nixpkgs-patch-qbit-and-yarr",
+        "nixpkgs-patch-qbittorrent": "nixpkgs-patch-qbittorrent",
+        "nixpkgs-patch-yarr": "nixpkgs-patch-yarr",
         "nixpkgs-patcher": "nixpkgs-patcher",
         "quickshell": "quickshell",
         "sqlit": "sqlit",
