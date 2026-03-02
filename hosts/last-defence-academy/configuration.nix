@@ -1,10 +1,22 @@
 { config, lib, pkgs, ... }:
 
-{
+let
+  modulesRoot = ../../modules/nixos;
+  containersRoot = ../../containers;
+
+  moduleImports = map (module: modulesRoot + module) [
+    /scrutiny.nix
+  ];
+
+  containerImports = map (container: containersRoot + container) [
+    /openspeedtest.nix
+  ];
+
+in {
   imports = [
     ./hardware-configuration.nix
     ../default.nix
-  ];
+  ] ++ moduleImports ++ containerImports;
 
   boot.loader = {
     systemd-boot.enable = true;
@@ -15,6 +27,7 @@
     hostName = "last-defence-academy";
     firewall.enable = false;
     networkmanager.enable = true;
+    interfaces.enp3s0.wakeOnLan.enable = true;
   };
 
   environment.systemPackages = with pkgs; [

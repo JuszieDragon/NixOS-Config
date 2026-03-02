@@ -34,6 +34,11 @@ rec {
       ip = "192.168.1.3";
     };
 
+    last-defence-academy = {
+      isNixos = true;
+      ip = "192.168.1.5";
+    };
+
     revachol = {
       isNixos = false;
       ip = "192.168.2.1";
@@ -116,7 +121,7 @@ rec {
     };
     scrutiny = {
       enable = true;
-      hosts = [ "soul-matrix" ];
+      hosts = [ "soul-matrix" "last-defence-academy" ];
       port = 8083;
       reverseProxy = "internal";
     };
@@ -166,7 +171,7 @@ rec {
 
     openspeedtest = {
       enable = true;
-      hosts = [ "soul-matrix" "night-city" ];
+      hosts = [ "soul-matrix" "night-city" "last-defence-academy" ];
       port = 3000;
       reverseProxy = "internal";
       subdomain = "speedtest";
