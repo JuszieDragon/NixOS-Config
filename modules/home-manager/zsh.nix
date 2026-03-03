@@ -4,6 +4,11 @@ let
   hostSSHAliases = lib.mapAttrs (host: attrs:
     "ssh ${attrs.ip}"
   ) catalog.hostsBase;
+  hostRemoteBuildAliases = lib.mapAttrs' (host: attrs:
+    lib.nameValuePair
+      ("rebuild-${host}")
+      ("nixos-rebuild switch --sudo --ask-sudo-password --flake .#${host} --target-host justin@${attrs.ip}")
+  ) catalog.hostsBase;
 
 in {
   programs.zsh = {
@@ -43,7 +48,7 @@ in {
       taa2o4 = "tmux attach -t a2o4";
       #zip each folder in current folder
       fzip = "for i in */; do zip -r \"\${i%/}.zip\" \"$i\"; done";
-    } // hostSSHAliases;      
+    } // hostSSHAliases // hostRemoteBuildAliases;      
     
     plugins = [
       {
