@@ -8,7 +8,7 @@ let
     lib.nameValuePair
       ("rebuild-${host}")
       ("nixos-rebuild switch --sudo --ask-sudo-password --flake .#${host} --target-host justin@${attrs.ip}")
-  ) catalog.hostsBase;
+  ) (lib.filterAttrs (n: v: v.isNixos == true) catalog.hostsBase);
 
 in {
   programs.zsh = {
