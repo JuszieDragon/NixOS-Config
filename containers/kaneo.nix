@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = catalog.services.kaneo;
+  cfg = catalog.containers.kaneo;
   configDir = "/state/kaneo";
   env = rec {
     KANEO_CLIENT_URL = "https://kaneo.dragon.luxe";

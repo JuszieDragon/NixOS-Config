@@ -70,30 +70,28 @@ rec {
       hosts = [ "soul-matrix" ];
       port = 8096;
       reverseProxy = "external";
+      module = "nixarr";
     };
     radarr = {
       enable = true;
       hosts = [ "soul-matrix" ];
       port = 7878;
       reverseProxy = "internal";
+      module = "nixarr";
     };
     sonarr = {
       enable = true;
       hosts = [ "soul-matrix" ];
       port = 8989;
       reverseProxy = "internal";
-    };
-    sonarr-anime = {
-      enable = true;
-      hosts = [ "soul-matrix" ];
-      port = 8990;
-      reverseProxy = "internal";
+      module = "nixarr";
     };
     prowlarr = {
       enable = true;
       hosts = [ "soul-matrix" ];
       port = 9696;
       reverseProxy = "internal";
+      module = "nixarr";
     };
     qbittorrent = {
       enable = true;
@@ -105,12 +103,6 @@ rec {
       enable = true;
       hosts = [ "soul-matrix" ];
       port = 8082;
-      reverseProxy = "internal";
-    };
-    yamtrack = {
-      enable = true;
-      hosts = [ "soul-matrix" ];
-      port = 8084;
       reverseProxy = "internal";
     };
     yarr = {
@@ -125,42 +117,18 @@ rec {
       port = 8083;
       reverseProxy = "internal";
     };
-    kaneo = {
-      enable = true;
-      hosts = [ "soul-matrix" ];
-      port = 5173;
-      reverseProxy = "internal";
-    };
-    #TODO maybe setup dependent services under kaneo object for DRY
-    kaneo-api = {
-      enable = servicesBase.kaneo.enable;
-      hosts = servicesBase.kaneo.hosts;
-      port = 1337;
-      reverseProxy = "internal";
-    };
-    kaneo-db = {
-      enable = servicesBase.kaneo.enable;
-      hosts = servicesBase.kaneo.hosts;
-      port = 5432;
-      reverseProxy = "none";
-    };
     navidrome = {
       enable = true;
       hosts = [ "soul-matrix" ];
       port = 4553;
       reverseProxy = "external";
     };
-    beets-flask = {
-      enable = true;
-      hosts = [ "soul-matrix" ];
-      port = 5001;
-      reverseProxy = "internal";
-    };
     a2o4-server = {
       enable = true;
       hosts = [ "soul-matrix" ];
       port = 9797;
       reverseProxy = "internal";
+      noModule = true;
     };
     kavita = {
       enable = true;
@@ -168,30 +136,9 @@ rec {
       port = 5000;
       reverseProxy = "internal";
     };
-
-    openspeedtest = {
-      enable = true;
-      hosts = [ "soul-matrix" "night-city" "last-defence-academy" ];
-      port = 3000;
-      reverseProxy = "internal";
-      subdomain = "speedtest";
-    };
-    romm = {
-      enable = false;
-      hosts = [ "night-city" ];
-      port = 8282;
-      reverseProxy = "internal";
-    };
     caddy = {
       enable = true;
       hosts = [ "soul-matrix" ];
-    };
-
-    home-assistant = {
-      enable = true;
-      hosts = [ "home-assistant" ];
-      port = 8123;
-      reverseProxy = "internal";
     };
 
     revachol-syncthing = {
@@ -217,20 +164,65 @@ rec {
       reverseProxy = "internal";
       subdomain = "syncthing";
     };
+  };
 
-    centauri-carbon-web-ui = {
+  containersBase = {
+    sonarr-anime = {
       enable = true;
-      hosts = [ "centauri-carbon" ];
-      port = 80;
+      hosts = [ "soul-matrix" ];
+      port = 8990;
       reverseProxy = "internal";
-      subdomain = "cc-web";
+    };
+    yamtrack = {
+      enable = true;
+      hosts = [ "soul-matrix" ];
+      port = 8084;
+      reverseProxy = "internal";
+    };
+   # kaneo = {
+   #   enable = true;
+   #   hosts = [ "soul-matrix" ];
+   #   port = 5173;
+   #   reverseProxy = "internal";
+   # };
+   # #TODO maybe setup dependent services under kaneo object for DRY
+   # kaneo-api = {
+   #   enable = servicesBase.kaneo.enable;
+   #   hosts = servicesBase.kaneo.hosts;
+   #   port = 1337;
+   #   reverseProxy = "internal";
+   #   noModule = true;
+   # };
+   # kaneo-db = {
+   #   enable = servicesBase.kaneo.enable;
+   #   hosts = servicesBase.kaneo.hosts;
+   #   port = 5432;
+   #   reverseProxy = "none";
+   #   noModule = true;
+   # };
+    beets-flask = {
+      enable = true;
+      hosts = [ "soul-matrix" ];
+      port = 5001;
+      reverseProxy = "internal";
+      module = "beets-flask/default";
+    };
+    openspeedtest = {
+      enable = true;
+      hosts = [ "soul-matrix" "night-city" "last-defence-academy" ];
+      port = 3000;
+      reverseProxy = "internal";
+      subdomain = "speedtest";
+    };
+    romm = {
+      enable = false;
+      hosts = [ "night-city" ];
+      port = 8282;
+      reverseProxy = "internal";
     };
   };
 
-  #TODO setup container seperately maybe
-  containers = {};
-
-  services = mapAttrs (service: attrs:
+  populate = servicesToPop: mapAttrs (service: attrs:
     attrs // { 
       portString = if attrs ? port
         then builtins.toString attrs.port
@@ -239,10 +231,27 @@ rec {
       isEnabled = attrs.enable == true && builtins.elem "${host}" attrs.hosts;
       host = hosts.${host};
     }
-  ) servicesBase;
+  ) servicesToPop;
+
+  services = populate servicesBase;
+  containers = populate containersBase;
 
   portsUsed = concatMapAttrs (service: attrs: {
     ${attrs.portString} = "${service}";
   }) (filterAttrs (service: attrs: attrs ? port && builtins.elem "${host}" attrs.hosts) services);
+
+  getModuleName = module: attrs: 
+    if attrs ? module
+      then "${attrs.module}"
+      else "${module}";
+
+  modulePathsForHost = servicesToMap: path: lists.unique (
+    lib.attrsets.mapAttrsToList (module: attrs:
+      path + (/. + (getModuleName module attrs)) + ".nix"
+    ) (filterAttrs (n: v: v.isEnabled == true && !(v ? noModule)) servicesToMap)
+  );
+
+  servicePathsForHost = modulePathsForHost services ./modules/nixos;
+  containerPathsForHost = modulePathsForHost containers ./containers;
 }
 

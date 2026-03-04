@@ -1,7 +1,7 @@
 { catalog, config, inputs, lib, ... }:
 
 let
-  cfg = catalog.services.beets-flask;
+  cfg = catalog.containers.beets-flask;
   configDir = "/state/beets-flask";
   musicDir = "/mnt/media/music";
   uid = 3195;

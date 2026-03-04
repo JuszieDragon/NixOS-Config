@@ -10,7 +10,7 @@ let
   #TODO figure out how to set propagation_timeout
   vHosts = builtins.listToAttrs (builtins.foldl' (acc: serviceName:
     let
-      service = catalog.services.${serviceName};
+      service = catalog.services.${serviceName} or catalog.containers.${serviceName};
       base = lib.removeAttrs service [ "hosts" ];
       isMultiHost = (builtins.length service.hosts) > 1;
       entriesForService = map (host:
@@ -44,7 +44,7 @@ let
       ) service.hosts;
     in
       acc ++ entriesForService
-  ) [] (builtins.attrNames (servicesValidForProxy catalog.services)));
+  ) [] (builtins.attrNames (servicesValidForProxy (catalog.services // catalog.containers))));
 
 
 in mkIf cfg.isEnabled {

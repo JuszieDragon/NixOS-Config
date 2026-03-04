@@ -1,22 +1,13 @@
-{ config, lib, pkgs, ... }:
+{ config, catalog, lib, pkgs, ... }:
 
-let
-  modulesRoot = ../../modules/nixos;
-  containersRoot = ../../containers;
-
-  moduleImports = map (module: modulesRoot + module) [
-    /scrutiny.nix
-  ];
-
-  containerImports = map (container: containersRoot + container) [
-    /openspeedtest.nix
-  ];
+  serviceImports = catalog.servicePathsForHost;
+  containerImports = catalog.servicePathsForHost;
 
 in {
   imports = [
     ./hardware-configuration.nix
     ../default.nix
-  ] ++ moduleImports ++ containerImports;
+  ] ++ serviceImports ++ containerImports;
 
   boot.loader = {
     systemd-boot.enable = true;

@@ -1,38 +1,22 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, catalog, lib, pkgs, inputs, ... }:
 
 let
-  modulesRoot = ../../modules/nixos;
-  containersRoot = ../../containers;
-
-  moduleImports = map (module: modulesRoot + module) [
-    /caddy.nix
-    /git.nix
-    /kavita.nix
-    /komga.nix
-    /navidrome.nix
-    /nixarr.nix
+  moduleImports = map (module: ../../modules/nixos + module) [
+    #/git.nix
     /podman.nix
-    /qbittorrent.nix
     /remote-builders.nix
     /samba.nix
-    /scrutiny.nix
-    /yarr.nix
     /zfs.nix
   ];
 
-  containerImports = map (container: containersRoot + container) [
-    /beets-flask
-    /kaneo.nix
-    /openspeedtest.nix
-    /sonarr-anime.nix
-    /yamtrack.nix
-  ];
+  serviceImports = catalog.servicePathsForHost;
+  containerImports = catalog.containerPathsForHost;
 
 in {
   imports = [ 
     ./hardware-configuration.nix
     ../default.nix
-  ] ++ moduleImports ++ containerImports;
+  ] ++ moduleImports ++ serviceImports ++ containerImports;
 
   # Use the systemd-boot EFI boot loader.
   boot = {

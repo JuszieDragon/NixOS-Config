@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = catalog.services.yamtrack;
+  cfg = catalog.containers.yamtrack;
   configDir = "/state/yamtrack";
   id = 1936;
   idStr = toString id;

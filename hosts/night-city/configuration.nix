@@ -1,21 +1,14 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, catalog, lib, pkgs, inputs, ... }:
 
 let
-  modulesRoot = ../../modules/nixos;
-  containersRoot = ../../containers;
-
-  moduleImports = map (module: modulesRoot + module) [
-    /caddy.nix
-    /git.nix
+  moduleImports = map (module: ../../modules/nixos + module) [
     /podman.nix
     /shares.nix
     #/unifi.nix
   ];
 
-  containerImports = map (container: containersRoot + container) [
-    /openspeedtest.nix
-    /romm.nix
-  ];
+  serviceImports = catalog.servicePathsForHost;
+  containerImports = catalog.containerPathsForHost;
 
   wrapAlias = command: "f() { " + command + "; unset -f f; }; f";
 
@@ -23,7 +16,7 @@ in {
   imports = [ 
     ./hardware-configuration.nix
     ../default.nix
-  ] ++ moduleImports ++ containerImports;
+  ] ++ moduleImports ++ serviceImports ++ containerImports;
 
   nixpkgs.config.allowUnfree = true;
 

@@ -3,7 +3,7 @@
 with lib;
 
 let 
-  cfg = catalog.services.openspeedtest;
+  cfg = catalog.containers.openspeedtest;
 
 in {
   virtualisation.oci-containers.containers = {

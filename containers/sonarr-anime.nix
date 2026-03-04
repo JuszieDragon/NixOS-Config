@@ -3,7 +3,7 @@
 with lib;
 
 let 
-  cfg = catalog.services.sonarr-anime;
+  cfg = catalog.containers.sonarr-anime;
   util-nixarr = config.util-nixarr;
 
 in {
