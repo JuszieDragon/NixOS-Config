@@ -61,7 +61,7 @@ in mkIf cfg.isEnabled {
 
     package = pkgs.caddy.withPlugins {
       plugins = [ "github.com/caddy-dns/porkbun@v0.3.1" ];
-      hash = "sha256-R1ZqQ8drcBQIH7cLq9kEvdg9Ze3bKkT8IAFavldVeC0=";
+      hash = "sha256-cM9ez2i9ZADbXSI7KNZlBCe1F1vpX5fH++qKILaHguA=";
     };
 
     environmentFile = config.age.secrets.caddy.path;

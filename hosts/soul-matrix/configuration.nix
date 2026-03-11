@@ -4,7 +4,7 @@ let
   moduleImports = map (module: ../../modules/nixos + module) [
     #/git.nix
     /podman.nix
-    /remote-builders.nix
+    #/remote-builders.nix
     /samba.nix
     /zfs.nix
   ];
