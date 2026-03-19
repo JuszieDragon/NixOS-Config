@@ -36,8 +36,18 @@ in {
   };
 
   users.users.justin = {
-    extraGroups = [ "wheel" "media" "file_share" ];
+    extraGroups = [ "wheel" "media" "file_share" "seat" "video" ];
   };
+
+  environment.systemPackages = with pkgs; [
+    cage
+  ];
+
+  services.seatd.enable = true;
+  
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+  ];
 
   system.stateVersion = "25.05"; # Did you read the comment?
 }

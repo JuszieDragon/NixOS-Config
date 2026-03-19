@@ -61,7 +61,6 @@ in {
         src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
       }
     ];
-
       
     initContent = '' 
       source ${inputs.dotfiles}/.p10k.zsh
@@ -72,6 +71,12 @@ in {
       zstyle ':completion:*' menu no
       zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
       zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+    '';
+
+    loginExtra = ''
+      if [ -z "$SSH_CONNECTION" ]; then
+        cage alacritty
+      fi
     '';
       
     oh-my-zsh = {

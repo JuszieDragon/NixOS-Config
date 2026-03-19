@@ -56,6 +56,18 @@
         source-file ${inputs.dotfiles}/.config/tmux/tmux.conf
       '';
     };
+    alacritty = {
+      enable = true;
+      settings = {
+        font = {
+          normal = {
+            family = "JetBrainsMono Nerd Font";
+            style = "Regular";
+          };
+        };
+        terminal.shell = "${pkgs.zsh}/bin/zsh";
+      };
+    };
   };
 }
 
