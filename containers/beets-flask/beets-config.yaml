@@ -25,6 +25,7 @@ plugins: [
         edit,
         #spotify, # needs authentication https://docs.beets.io/en/latest/plugins/spotify.html
         #discogs,
+        lyrics,
         musicbrainz,
     ]
 
@@ -141,3 +142,9 @@ discogs:
     append_style_genre: no
     separator: ', '
     strip_disambiguation: yes
+
+lyrics:
+  auto: yes
+  sources: [lrclib]
+  synced: yes
+

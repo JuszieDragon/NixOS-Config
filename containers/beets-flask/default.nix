@@ -32,11 +32,10 @@ in lib.mkIf cfg.isEnabled {
   };
 
   systemd = {
-    #TODO add below line back when discogs plugin issue fixed
-    #\\cp -f ${inputs.self}/containers/beets-flask/requirements.txt ${configDir}/beets-flask/requirements.txt;
     services.podman-beets-flask.preStart = "
       \\cp -f ${inputs.self}/containers/beets-flask/beets-config.yaml ${configDir}/beets/config.yaml;
       \\cp -f ${inputs.self}/containers/beets-flask/beets-flask-config.yaml ${configDir}/beets-flask/config.yaml;
+      \\cp -f ${inputs.self}/containers/beets-flask/requirements.txt ${configDir}/beets-flask/requirements.txt;
     ";
     #TODO keep an eye on this issue to copy file and set permissions in dir not owned by root
     #https://github.com/systemd/systemd/issues/31030
