@@ -136,6 +136,12 @@ rec {
       port = 5000;
       reverseProxy = "internal";
     };
+    forgejo = {
+      enable = true;
+      hosts = [ "soul-matrix" ];
+      port = 3001;
+      reverseProxy = "internal";
+    };
     caddy = {
       enable = true;
       hosts = [ "soul-matrix" ];
