@@ -11,12 +11,13 @@ let
   keys = users ++ servers;
 
 in {
-  "caddy.age".publicKeys    = keys;
-  "kavita.age".publicKeys   = keys;
-  "romm.age".publicKeys     = keys;
-  "romm-db.age".publicKeys  = keys;
-  "share.age".publicKeys    = keys;
-  "vpn.age".publicKeys      = keys;
-  "yarr.age".publicKeys     = keys;
+  "caddy.age".publicKeys  = keys;
+  "forgejo-admin-password.age".publicKeys = keys;
+  "kavita.age".publicKeys = keys;
+  "romm.age".publicKeys = keys;
+  "romm-db.age".publicKeys = keys;
+  "share.age".publicKeysg = keys;
+  "vpn.age".publicKeys = keys;
+  "yarr.age".publicKeys = keys;
 }
 
