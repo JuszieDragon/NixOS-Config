@@ -42,8 +42,9 @@ in {
 
   environment.systemPackages = with pkgs; [
     temurin-jre-bin
-    nixfmt-rfc-style
+    nixfmt
     steamcmd
+    steam-run
   ];
 
   system.stateVersion = "25.11"; # Did you read the comment?
