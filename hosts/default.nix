@@ -19,6 +19,10 @@
     trusted-users = [ "root" "justin" ];
   };
 
+  environment.systemPackages = with pkgs; [
+    unar
+  ];
+
   services = {
     openssh = {
       enable = true;
