@@ -72,6 +72,10 @@
       url = "https://github.com/NixOS/nixpkgs/pull/456789.diff";
       flake = false;
     };
+    nixpkgs-patch-cage-0-3-0 = {
+      url = "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:cage-0.3.0.diff";
+      flake = false;
+    };
   };
 
   outputs = {

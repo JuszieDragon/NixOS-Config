@@ -342,6 +342,18 @@
         "type": "github"
       }
     },
+    "nixpkgs-patch-cage-0-3-0": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-qQgWfqi1PrNEvotEtLvNzpqZ0Gqrj6f/6Qg9qHF/46I=",
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:cage-0.3.0.diff"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:cage-0.3.0.diff"
+      }
+    },
     "nixpkgs-patch-kavita-groups": {
       "flake": false,
       "locked": {
@@ -493,6 +505,7 @@
         "nix-on-droid": "nix-on-droid",
         "nixarr": "nixarr",
         "nixpkgs": "nixpkgs_2",
+        "nixpkgs-patch-cage-0-3-0": "nixpkgs-patch-cage-0-3-0",
         "nixpkgs-patch-kavita-groups": "nixpkgs-patch-kavita-groups",
         "nixpkgs-patch-qbittorrent": "nixpkgs-patch-qbittorrent",
         "nixpkgs-patch-yarr": "nixpkgs-patch-yarr",
