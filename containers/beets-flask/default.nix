@@ -1,4 +1,4 @@
-{ catalog, config, inputs, lib, ... }:
+{ catalog, config, inputs, lib, pkgs, ... }:
 
 let
   cfg = catalog.containers.beets-flask;
@@ -30,6 +30,23 @@ in lib.mkIf cfg.isEnabled {
       ];
     };
   };
+
+  environment.systemPackages = [(
+    pkgs.writeShellScriptBin "zip-download" ''
+      if [[ -z "$1" ]]; then
+        echo "Need to pass a url to download";
+        exit 1;
+      fi
+      if [[ -z "$2" ]]; then
+        echo "Need to pass dir name";
+        exit 1;
+      fi
+      DIR=${musicDir}/inbox/$2;
+      mkdir $DIR;
+      ${pkgs.curl}/bin/curl -sSL $1 | ${pkgs.libarchive}/bin/bsdtar -xvf- -C $DIR;
+      sudo chown -R beets-flask:media $DIR;
+    ''
+  )];
 
   systemd = {
     services.podman-beets-flask.preStart = "
