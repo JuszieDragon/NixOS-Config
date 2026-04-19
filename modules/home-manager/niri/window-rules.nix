@@ -13,12 +13,12 @@
         { app-id = "feishin"; }
       ];
       open-maximized = true;
-      open-on-output = "DP-3";
+      open-on-output = "DP-2";
     }
     {
       matches = [ { app-id = "vesktop"; } ];
       open-maximized = true;
-      open-on-output = "DP-2";
+      open-on-output = "DP-3";
     }
     {
       matches = [
