@@ -21,6 +21,7 @@
       jq
       lazygit
       nixd
+      nerd-fonts.jetbrains-mono
       nurl
       pciutils
       tmux
@@ -29,6 +30,8 @@
       zip
     ];
   };
+
+  fonts.fontconfig.enable = true;
 
   programs = {
     git = {
@@ -49,6 +52,9 @@
         syntax enable
         filetype plugin indent on
       '';
+      #These two silence a warning on default setting changes in home-manager 26.05
+      withRuby = false;
+      withPython3 = true;
     };
     tmux = {
       enable = true;

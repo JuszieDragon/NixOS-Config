@@ -74,13 +74,7 @@ in {
       zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
       zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
     '';
-
-    loginExtra = ''
-      if [ -z "$SSH_CONNECTION" ]; then
-        cage alacritty
-      fi
-    '';
-      
+    
     oh-my-zsh = {
       enable = true;
       plugins = [  
@@ -96,7 +90,7 @@ in {
 
   programs.fzf = {
     enable = true;
-    enableZshIntegration = true; # This handles key bindings and completion
+    enableZshIntegration = true;
   };
 }
 

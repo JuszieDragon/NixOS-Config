@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 { config, lib, pkgs, ... }:
 
 let
@@ -74,7 +70,6 @@ in {
     etc."xdg/menus/applications.menu".source =
       "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
     systemPackages = with pkgs; [
-      alacritty
       fuzzel
       git
       gnome-disk-utility
@@ -115,8 +110,6 @@ in {
 #  configPackages = [ xdg-desktop-portal-gtk ];
 #  config.common.default = "gtk";
 #};
-
-  fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
 
   system.stateVersion = "25.11"; # Did you read the comment?
 }
