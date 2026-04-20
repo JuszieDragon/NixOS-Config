@@ -10,7 +10,7 @@
   home-manager.users.justin = { pkgs, ... }: {
     programs.zsh.loginExtra = ''
       if [ -z "$SSH_CONNECTION" ]; then
-	      cage alacritty
+	      cage -d alacritty
 	    fi
     '';
   };
