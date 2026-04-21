@@ -99,9 +99,11 @@
 
         home-manager.nixosModules.home-manager
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.users."justin" = ./hosts/${system}/home.nix;
-          home-manager.extraSpecialArgs = { inherit inputs catalog; };
+          home-manager = {
+            useGlobalPkgs = true;
+            users."justin" = ./hosts/${system}/home.nix;
+            extraSpecialArgs = { inherit inputs catalog; };
+          };
         }
 
         ./hosts/${system}/configuration.nix

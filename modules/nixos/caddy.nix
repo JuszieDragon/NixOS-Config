@@ -5,7 +5,7 @@ with lib;
 let
   cfg = catalog.services.caddy;
   
-  servicesValidForProxy = services: filterAttrs (n: v: v ? reverseProxy && v.reverseProxy != "none" && v.enable == true) services;
+  servicesValidForProxy = services: filterAttrs (n: v: v ? reverseProxy && v.reverseProxy != "none" && v.enable) services;
 
   #TODO figure out how to set propagation_timeout
   vHosts = builtins.listToAttrs (builtins.foldl' (acc: serviceName:

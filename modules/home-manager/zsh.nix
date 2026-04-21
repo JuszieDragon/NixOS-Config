@@ -47,7 +47,8 @@ in {
       tna2o4 = "tmux new -s a2o4 '~/projects/A2O4-Server-RS/target/release/a2o4-server'";
       taa2o4 = "tmux attach -t a2o4";
       tnzomb = "tmux new -s zomboid 'cd /srv/zomboid/b42; steam-run ./start-server.sh'";
-      tazomb = "tmux attach-t zomboid";
+      tazomb = "tmux attach -t zomboid";
+      zomb-update = "steamcmd +force_install_dir /srv/zomboid/b42 +login anonymous +app_update 380870 -beta unstable validate +quit";
       #zip each folder in current folder
       fzip = "for i in */; do zip -r \"\${i%/}.zip\" \"$i\"; done";
     } // hostSSHAliases // hostRemoteBuildAliases;      

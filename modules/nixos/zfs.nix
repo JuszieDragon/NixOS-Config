@@ -1,9 +1,13 @@
 { config, pkgs, ... }:
 
 {
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.zfs.forceImportRoot = false;
-  boot.zfs.extraPools = [ "media" "files" ];
+  boot = {
+    supportedFilesystems = [ "zfs" ];
+    zfs = {
+      forceImportRoot = false;
+      extraPools = [ "media" "files" ];
+    };
+  };
 
   services.zfs.autoScrub.enable = true;
 
