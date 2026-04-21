@@ -1,10 +1,10 @@
-{ config, inputs, pkgs, lib, catalog, ... }:
+{ catalog, config, inputs, lib, ... }:
 
 with lib;
 
 let 
   cfg = catalog.containers.sonarr-anime;
-  util-nixarr = config.util-nixarr;
+  inherit (config) util-nixarr;
 
 in {
   containers.sonarr-anime = mkIf cfg.isEnabled {
@@ -21,7 +21,7 @@ in {
       };
     };
 
-    config = { config, pkgs, lib, ... }: {
+    config = { config, ... }: {
       users = {
         #If have issue with media having wrong guid again use this https://superuser.com/questions/1736609
         groups.media.gid = util-nixarr.globals.gids.media;

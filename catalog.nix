@@ -234,7 +234,7 @@ rec {
         then builtins.toString attrs.port
         else "";
       #TODO this might be able to directly grab the current hostname instead of having it passed in
-      isEnabled = attrs.enable == true && builtins.elem "${host}" attrs.hosts;
+      isEnabled = attrs.enable && builtins.elem "${host}" attrs.hosts;
       host = hosts.${host};
     }
   ) servicesToPop;
@@ -254,7 +254,7 @@ rec {
   modulePathsForHost = servicesToMap: path: lists.unique (
     lib.attrsets.mapAttrsToList (module: attrs:
       path + (/. + (getModuleName module attrs)) + ".nix"
-    ) (filterAttrs (n: v: v.isEnabled == true && !(v ? noModule)) servicesToMap)
+    ) (filterAttrs (n: v: v.isEnabled && !(v ? noModule)) servicesToMap)
   );
 
   servicePathsForHost = modulePathsForHost services ./modules/nixos;

@@ -91,8 +91,7 @@
     ...
   } @ inputs: 
     let
-      lib = nixpkgs.lib;
-      catalog-gen = host: import ./catalog.nix { inherit lib host; };
+      catalog-gen = host: import ./catalog.nix { inherit (nixpkgs) lib; inherit host; };
       default-modules = system: catalog: [
         agenix.nixosModules.default
         nixarr.nixosModules.default

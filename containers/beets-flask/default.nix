@@ -10,7 +10,7 @@ let
 in lib.mkIf cfg.isEnabled {
   users.users.beets-flask = {
     isSystemUser = true;
-    uid = uid;
+    inherit uid;
     group = "media";
   };
 

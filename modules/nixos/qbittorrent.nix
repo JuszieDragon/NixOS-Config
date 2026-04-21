@@ -9,7 +9,7 @@ let
   stateDir = "/state";
 
 in rec {
-  users.users.qbittorrent = mkIf (services.qbittorrent.enable) {
+  users.users.qbittorrent = mkIf services.qbittorrent.enable {
     isSystemUser = true;
     group = "media";
     uid = 987;

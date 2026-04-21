@@ -16,7 +16,7 @@ in lib.mkIf cfg.isEnabled {
   services.forgejo = {
     enable = true;
     lfs.enable = true;
-    stateDir = stateDir;
+    inherit stateDir;
     settings = {
       server = {
         DOMAIN = "git.example.com";

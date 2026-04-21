@@ -1,4 +1,4 @@
-{ ... }: {
+_: {
   programs.niri.settings.cursor = {
     theme = "Nice Nature";
     size = 32;

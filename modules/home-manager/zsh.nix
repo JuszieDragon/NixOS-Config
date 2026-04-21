@@ -6,9 +6,9 @@ let
   ) catalog.hostsBase;
   hostRemoteBuildAliases = lib.mapAttrs' (host: attrs:
     lib.nameValuePair
-      ("rebuild-${host}")
-      ("nixos-rebuild switch --sudo --ask-sudo-password --flake .#${host} --target-host justin@${attrs.ip}")
-  ) (lib.filterAttrs (n: v: v.isNixos == true) catalog.hostsBase);
+      "rebuild-${host}"
+      "nixos-rebuild switch --sudo --ask-sudo-password --flake .#${host} --target-host justin@${attrs.ip}"
+  ) (lib.filterAttrs (n: v: v.isNixos) catalog.hostsBase);
 
 in {
   programs.zsh = {

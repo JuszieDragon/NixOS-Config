@@ -30,16 +30,17 @@ in {
     prowlarr = {
       enable = cfg.prowlarr.isEnabled;
       vpn.enable = false;
-      port = cfg.prowlarr.port;
+      inherit (cfg.prowlarr) port;
     };
 
     radarr = {
       enable = cfg.radarr.isEnabled;
-      port = cfg.radarr.port;
+      inherit (cfg.radarr) port;
     };
 
     sonarr = {
       enable = cfg.sonarr.isEnabled;
+      inherit (cfg.sonarr) port;
     };
   };
 }

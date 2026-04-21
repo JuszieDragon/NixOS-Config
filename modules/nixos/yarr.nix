@@ -10,7 +10,7 @@ in {
 
   services.yarr = {
     enable = cfg.isEnabled;
-    port = cfg.port;
+    inherit (cfg) port;
     address = "0.0.0.0";
     dbPath = "/state/yarr/storage.db";
     authFilePath = config.age.secrets.yarr.path;
