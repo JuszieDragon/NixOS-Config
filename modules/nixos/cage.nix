@@ -7,7 +7,7 @@
 	
 	services.seatd.enable = true;
 
-  home-manager.users.justin = { ... }: {
+  home-manager.users.justin = _: {
     programs.zsh.loginExtra = ''
       if [ -z "$SSH_CONNECTION" ]; then
 	      cage -d alacritty

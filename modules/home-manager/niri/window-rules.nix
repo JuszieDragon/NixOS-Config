@@ -1,4 +1,4 @@
-{ ... }: {
+_: {
   /*
   Kogan: DP-1
   Philips: DP-2
