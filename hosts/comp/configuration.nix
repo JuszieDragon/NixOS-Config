@@ -1,4 +1,4 @@
-{ catalog, config, inputs, lib, pkgs, ... }:
+{ catalog, inputs, lib, pkgs, ... }:
 
 {
   # Simply install just the packages

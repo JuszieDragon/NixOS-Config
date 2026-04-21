@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, ... }: {
   programs.niri.settings.binds = with config.lib.niri.actions; {
     "Mod+Shift+Slash".action = show-hotkey-overlay;
 

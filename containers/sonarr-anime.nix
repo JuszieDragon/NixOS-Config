@@ -1,4 +1,4 @@
-{ catalog, config, inputs, lib, ... }:
+{ catalog, config, lib, ... }:
 
 with lib;
 
@@ -21,7 +21,7 @@ in {
       };
     };
 
-    config = { config, ... }: {
+    config = { ... }: {
       users = {
         #If have issue with media having wrong guid again use this https://superuser.com/questions/1736609
         groups.media.gid = util-nixarr.globals.gids.media;

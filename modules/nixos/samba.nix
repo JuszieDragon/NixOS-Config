@@ -1,5 +1,5 @@
 #This whole config stolen from here https://gist.github.com/vy-let/a030c1079f09ecae4135aebf1e121ea6
-{ config, lib, pkgs, ... }:
+{ ... }:
 
 {
   users = {

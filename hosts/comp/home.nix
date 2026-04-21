@@ -1,4 +1,4 @@
-{ config, inputs, lib, pkgs, ... }: {
+{ lib, ... }: {
   imports = [ ../../modules/home-manager ];
 
   home = {

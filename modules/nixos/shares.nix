@@ -1,6 +1,5 @@
-{ config, inputs, lib, pkgs, ... }: 
-let 
-  inherit (builtins) toString;
+{ config, inputs, pkgs, ... }: 
+let
   sharedOptions = [
     "credentials=${config.age.secrets.share.path}" 
     "rw"

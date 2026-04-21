@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ ... }: {
   /*
   Kogan: DP-1
   Philips: DP-2

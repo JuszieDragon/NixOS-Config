@@ -1,4 +1,4 @@
-{ lib, pkgs, fetchPnpmDeps, ... }: {
+{ pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     feishin
     playerctl

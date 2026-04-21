@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, ... }: {
+{ inputs, ... }: {
   imports = [ inputs.steam-config-nix.homeModules.default ];
 
   programs.steam.config = {

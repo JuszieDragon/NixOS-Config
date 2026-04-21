@@ -1,17 +1,7 @@
 {
-  config,
-  lib,
   pkgs,
   ...
 }: let
-  reloadedDesktopItem = pkgs.makeDesktopItem {
-    name = "Reloaded-II URL Handler";
-    exec = "protontricks-launch --appid 2161700 /home/justin/Modding/Persona/Reloaded-II.exe --download %U";
-    icon = "applications-games";
-    startupNotify = false;
-    terminal = "false";
-    mimetypes = ["x-scheme-handler/r2"];
-  };
 
   customProtonGEVersion = pVersion: pHash:
     ( pkgs.proton-ge-bin.overrideAttrs rec { 

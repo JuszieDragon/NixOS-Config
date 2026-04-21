@@ -79,7 +79,6 @@
   };
 
   outputs = {
-    self,
     agenix,
     home-manager,
     niri,
@@ -87,7 +86,6 @@
     nixpkgs,
     nixpkgs-patcher,
     nixarr,
-    sqlit,
     ...
   } @ inputs: 
     let

@@ -1,14 +1,14 @@
 { catalog, config, inputs, lib, pkgs, ... }: 
 let
   wrapAlias = command: "f() { " + command + "; unset -f f; }; f";
-  hostSSHAliases = lib.mapAttrs (host: attrs:
+  hostSSHAliases = lib.mapAttrs (_host: attrs:
     "ssh ${attrs.ip}"
   ) catalog.hostsBase;
   hostRemoteBuildAliases = lib.mapAttrs' (host: attrs:
     lib.nameValuePair
       "rebuild-${host}"
       "nixos-rebuild switch --sudo --ask-sudo-password --flake .#${host} --target-host justin@${attrs.ip}"
-  ) (lib.filterAttrs (n: v: v.isNixos) catalog.hostsBase);
+  ) (lib.filterAttrs (_n: v: v.isNixos) catalog.hostsBase);
 
 in {
   programs.zsh = {

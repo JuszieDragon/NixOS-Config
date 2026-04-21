@@ -1,4 +1,4 @@
-{ config, catalog, lib, pkgs, inputs, ... }:
+{ catalog, pkgs, ... }:
 
 let
   moduleImports = map (module: ../../modules/nixos + module) [

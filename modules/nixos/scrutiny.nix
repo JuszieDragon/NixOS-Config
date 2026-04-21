@@ -1,4 +1,4 @@
-{ catalog, config, ... }: 
+{ catalog, ... }: 
 
 
 let
@@ -13,7 +13,7 @@ in {
     };
   };
 
-  nixpkgs.overlays = [( final: prev: 
+  nixpkgs.overlays = [( _final: prev: 
     let
       scrutinyVersion = "0.8.6";
       scrutinySrc = prev.fetchFromGitHub {
@@ -25,7 +25,7 @@ in {
       scrutinyVendorHash = "sha256-4qjKGjCvB0ggf6Cda7LfMeqbbBbhGcxB2ZfymUhajq8=";
     in
     {
-      scrutiny = prev.scrutiny.overrideAttrs (oldAttrs: rec {
+      scrutiny = prev.scrutiny.overrideAttrs (_oldAttrs: rec {
         version = scrutinyVersion;
         src = scrutinySrc;
     
@@ -56,7 +56,7 @@ in {
         vendorHash = scrutinyVendorHash;
       });
     
-      scrutiny-collector = prev.scrutiny-collector.overrideAttrs (oldAttrs: {
+      scrutiny-collector = prev.scrutiny-collector.overrideAttrs (_oldAttrs: {
         version = scrutinyVersion;
         src = scrutinySrc;
         vendorHash = scrutinyVendorHash;

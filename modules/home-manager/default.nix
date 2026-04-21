@@ -1,4 +1,4 @@
-{ config, dotfiles, lib, inputs, pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     ./zsh.nix
   ];

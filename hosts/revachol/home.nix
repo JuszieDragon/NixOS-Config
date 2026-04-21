@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, ... }: {
+{ pkgs, ... }: {
   imports = [
     ../../modules/home-manager
     ../../modules/home-manager/niri

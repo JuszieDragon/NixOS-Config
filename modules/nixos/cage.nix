@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ pkgs, ... }: {
   users.users.justin.extraGroups = [ "seat" "video" ];
 
   environment.systemPackages = with pkgs; [
@@ -7,7 +7,7 @@
 	
 	services.seatd.enable = true;
 
-  home-manager.users.justin = { pkgs, ... }: {
+  home-manager.users.justin = { ... }: {
     programs.zsh.loginExtra = ''
       if [ -z "$SSH_CONNECTION" ]; then
 	      cage -d alacritty

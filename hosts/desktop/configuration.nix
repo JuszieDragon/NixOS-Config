@@ -5,7 +5,6 @@
   config,
   pkgs,
   inputs,
-  nixpkgs,
   ...
 }: {
   imports = with inputs; [

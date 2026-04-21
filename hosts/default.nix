@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ pkgs, ... }: {
   users.users.justin = {
     isNormalUser = true;
     shell = pkgs.zsh;

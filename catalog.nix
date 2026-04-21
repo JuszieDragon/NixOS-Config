@@ -228,7 +228,7 @@ rec {
     };
   };
 
-  populate = servicesToPop: mapAttrs (service: attrs:
+  populate = servicesToPop: mapAttrs (_service: attrs:
     attrs // { 
       portString = if attrs ? port
         then builtins.toString attrs.port
@@ -244,7 +244,7 @@ rec {
 
   portsUsed = concatMapAttrs (service: attrs: {
     ${attrs.portString} = "${service}";
-  }) (filterAttrs (service: attrs: attrs ? port && builtins.elem "${host}" attrs.hosts) services);
+  }) (filterAttrs (_service: attrs: attrs ? port && builtins.elem "${host}" attrs.hosts) services);
 
   getModuleName = module: attrs: 
     if attrs ? module
@@ -254,7 +254,7 @@ rec {
   modulePathsForHost = servicesToMap: path: lists.unique (
     lib.attrsets.mapAttrsToList (module: attrs:
       path + (/. + (getModuleName module attrs)) + ".nix"
-    ) (filterAttrs (n: v: v.isEnabled && !(v ? noModule)) servicesToMap)
+    ) (filterAttrs (_n: v: v.isEnabled && !(v ? noModule)) servicesToMap)
   );
 
   servicePathsForHost = modulePathsForHost services ./modules/nixos;

@@ -1,4 +1,4 @@
-{ config, catalog, lib, pkgs, inputs, ... }:
+{ catalog, pkgs, ... }:
 
 let
   moduleImports = map (module: ../../modules/nixos + module) [
@@ -9,8 +9,6 @@ let
 
   serviceImports = catalog.servicePathsForHost;
   containerImports = catalog.containerPathsForHost;
-
-  wrapAlias = command: "f() { " + command + "; unset -f f; }; f";
 
 in {
   imports = [ 

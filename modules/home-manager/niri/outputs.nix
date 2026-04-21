@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ ... }: {
   programs.niri.settings.outputs = {
     #Kogan
     DP-1 = {
