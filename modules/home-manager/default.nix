@@ -27,6 +27,7 @@
       tmux
       tree
       unzip
+      yazi
       zip
     ];
   };

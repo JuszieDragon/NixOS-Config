@@ -42,9 +42,9 @@ in lib.mkIf cfg.isEnabled {
         exit 1;
       fi
       DIR=${musicDir}/inbox/$2;
-      mkdir $DIR;
-      ${pkgs.curl}/bin/curl -sSL $1 | ${pkgs.libarchive}/bin/bsdtar -xvf- -C $DIR;
-      sudo chown -R beets-flask:media $DIR;
+      mkdir "$DIR";
+      ${pkgs.curl}/bin/curl -sSL $1 | ${pkgs.libarchive}/bin/bsdtar -xvf- -C "$DIR";
+      sudo chown -R beets-flask:media "$DIR";
     ''
   )];
 
