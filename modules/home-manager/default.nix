@@ -14,6 +14,7 @@
       alacritty
       bat
       btop
+      deadnix
       gh
       git
       inputs.agenix.packages."${stdenv.hostPlatform.system}".default
@@ -24,6 +25,7 @@
       nerd-fonts.jetbrains-mono
       nurl
       pciutils
+      statix
       tmux
       tree
       unzip

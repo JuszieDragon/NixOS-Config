@@ -1,7 +1,8 @@
-{ config, catalog, lib, pkgs, ... }:
+{ catalog, pkgs, ... }:
 
+let
   serviceImports = catalog.servicePathsForHost;
-  containerImports = catalog.servicePathsForHost;
+  containerImports = catalog.containerPathsForHost;
 
 in {
   imports = [
