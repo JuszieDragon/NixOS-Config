@@ -15,22 +15,22 @@
     extraModulePackages = [ ];
   };
 
-  fileSystems."/" = {
-    #device = "/dev/disk/by-uuid/e62675be-f82d-4fd9-af83-b37b35acba16";
-    device = "/dev/disk/by-label/NIXROOT";
-    fsType = "ext4";
-  };
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-label/NIXROOT";
+      fsType = "ext4";
+    };
 
-  fileSystems."/boot" = {
-    #device = "/dev/disk/by-uuid/9CE4-7B49";
-    device = "/dev/disk/by-label/NIXBOOT";
-    fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
-  };
+    "/boot" = {
+      device = "/dev/disk/by-label/NIXBOOT";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
 
-  fileSystems."/mnt/backup" = {
-    device = "/dev/disk/by-label/BACKUP";
-    fsType = "ext4";
+    "/mnt/backup" = {
+      device = "/dev/disk/by-label/BACKUP";
+      fsType = "ext4";
+    };
   };
 
   swapDevices = [ ];

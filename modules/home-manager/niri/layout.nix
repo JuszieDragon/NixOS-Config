@@ -1,4 +1,4 @@
-{ ... }: {
+_: {
   programs.niri.settings.layout = {
     gaps = 5;
     preset-column-widths = [
