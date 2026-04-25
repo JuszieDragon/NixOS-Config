@@ -12,10 +12,12 @@ rec {
         ip: IP address to the host
       services:
         enable: if the service is enabled or not
-        host: Which host to run the service on TODO add multihost support
+        host: Which host to run the service on
         port: Which port to bind the service to
         reverseProxy: What type of reverse proxy to use, options are: internal, external and none #TODO add local DNS server to handle internal instead of caddy
         subdomain: Override the name used by the reverse proxy
+        module: Override the module filename if it doesn't match service name
+        noModule: Don't add service to module import list
   */
 
   hostsBase = {
@@ -145,6 +147,12 @@ rec {
     caddy = {
       enable = true;
       hosts = [ "soul-matrix" ];
+    };
+
+    restic-server = {
+      enable = true;
+      hosts = [ "last-defence-academy" ];
+      port = 8000;
     };
 
     revachol-syncthing = {
