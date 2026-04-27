@@ -148,6 +148,12 @@ rec {
       enable = true;
       hosts = [ "soul-matrix" ];
     };
+    immich = {
+      enable = true;
+      hosts = [ "soul-matrix" ];
+      port = 2283;
+      reverseProxy = "internal";
+    };
 
     restic-server = {
       enable = true;
