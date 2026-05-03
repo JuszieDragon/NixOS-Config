@@ -14,7 +14,7 @@ rec {
         enable: if the service is enabled or not
         host: Which host to run the service on
         port: Which port to bind the service to
-        reverseProxy: What type of reverse proxy to use, options are: internal, external and none #TODO add local DNS server to handle internal instead of caddy
+        reverseProxy: What type of reverse proxy to use, options are: internal, external, TODO add local DNS server to handle internal instead of caddy
         subdomain: Override the name used by the reverse proxy
         module: Override the module filename if it doesn't match service name
         noModule: Don't add service to module import list
@@ -152,7 +152,7 @@ rec {
       enable = true;
       hosts = [ "soul-matrix" ];
       port = 2283;
-      reverseProxy = "internal";
+      reverseProxy = "external";
     };
 
     restic-server = {
@@ -217,7 +217,6 @@ rec {
    #   enable = servicesBase.kaneo.enable;
    #   hosts = servicesBase.kaneo.hosts;
    #   port = 5432;
-   #   reverseProxy = "none";
    #   noModule = true;
    # };
     beets-flask = {

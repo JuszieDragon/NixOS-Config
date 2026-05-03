@@ -1,6 +1,8 @@
 { inputs, pkgs, ... }: {
   imports = [
     ./zsh.nix
+
+    inputs.lazyvim.homeManagerModules.default
   ];
   
   home = {
@@ -44,20 +46,36 @@
         email = "justin.h.j.johnson@gmail.com";
       };
     };
-    neovim = {
+    lazyvim = {
       enable = true;
-      defaultEditor = true;
-      extraConfig = ''
-        set tabstop=2 softtabstop=2 shiftwidth=2
-        set expandtab
-        set number ruler
-        set autoindent smartindent
-        syntax enable
-        filetype plugin indent on
+      extras.lang.nix.enable = true;
+      extraPackages = with pkgs; [
+        nixd
+        ripgrep
+        fd
+        fzf
+      ];
+      treesitterParsers = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+        nix
+      ];
+      config.options = #lua 
+      ''
+        vim.opt.relativenumber = false
       '';
-      #These two silence a warning on default setting changes in home-manager 26.05
-      withRuby = false;
-      withPython3 = true;
+      plugins = {
+        colorscheme = #lua
+        ''
+          return {
+            { "ellisonleao/gruvbox.nvim" },
+            {
+              "LazyVim/LazyVim",
+              opts = {
+                colorscheme = "gruvbox",
+              },
+            }
+          }
+        '';
+      };
     };
     tmux = {
       enable = true;

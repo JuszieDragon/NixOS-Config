@@ -52,6 +52,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    lazyvim = {
+      url = "github:pfassina/lazyvim-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
 
     # Use https://nixpkgs-tracker.ocfox.me/?pr=<prNum> to check if patch is still needed
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
@@ -81,6 +86,7 @@
   outputs = {
     agenix,
     home-manager,
+    lazyvim,
     niri,
     nix-on-droid,
     nixpkgs,
