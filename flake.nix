@@ -57,6 +57,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    kosync = {
+      url = "git+https://codeberg.org/cmooon/kosync";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
 
     # Use https://nixpkgs-tracker.ocfox.me/?pr=<prNum> to check if patch is still needed
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
@@ -86,6 +91,7 @@
   outputs = {
     agenix,
     home-manager,
+    kosync,
     lazyvim,
     niri,
     nix-on-droid,
@@ -125,12 +131,14 @@
       
       soul-matrix = let
         catalog = catalog-gen "soul-matrix";
-      in nixpkgs-patcher.lib.nixosSystem {
+      in nixpkgs-patcher.lib.nixosSystem rec {
         nixpkgsPatcher.inputs = inputs;
 
         system = "x86_64-linux";
 
-        modules = default-modules "soul-matrix" catalog;
+        modules = [
+          kosync.nixosModules.${system}.default
+        ] ++ default-modules "soul-matrix" catalog;
 
         specialArgs = { inherit inputs catalog; };
       };

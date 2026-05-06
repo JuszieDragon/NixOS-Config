@@ -58,7 +58,7 @@
       treesitterParsers = with pkgs.vimPlugins.nvim-treesitter-parsers; [
         nix
       ];
-      config.options = #lua 
+      config.options = #lua
       ''
         vim.opt.relativenumber = false
       '';

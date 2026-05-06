@@ -154,6 +154,12 @@ rec {
       port = 2283;
       reverseProxy = "external";
     };
+    kosync = {
+      enable = true;
+      hosts = [ "soul-matrix" ];
+      port = 7200;
+      reverseProxy = "internal";
+    };
 
     restic-server = {
       enable = true;
