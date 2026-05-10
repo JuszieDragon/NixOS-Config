@@ -14,9 +14,18 @@
 
   time.timeZone = "Australia/Hobart";
 
-  nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    trusted-users = [ "root" "justin" ];
+  boot.loader.systemd-boot.configurationLimit = 10;
+
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "justin" ];
+    };
   };
 
   environment.systemPackages = with pkgs; [
