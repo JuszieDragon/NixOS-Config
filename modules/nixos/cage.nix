@@ -1,18 +1,24 @@
-{ pkgs, ... }: {
-  users.users.justin.extraGroups = [ "seat" "video" ];
+{ catalog, pkgs, ... }:
+{
+  users.users.justin.extraGroups = [
+    "seat"
+    "video"
+  ];
 
   environment.systemPackages = with pkgs; [
-	  cage
-	];
-	
-	services.seatd.enable = true;
+    cage
+    (writeShellScriptBin "3dcam" ''
+      ${cage}/bin/cage -d ${mpv}/bin/mpv -- --cache-secs=0 --demuxer-readahead-secs=0 http://${catalog.hosts.centauri-carbon.ip}:3031/video --no-terminal 
+    '')
+  ];
+
+  services.seatd.enable = true;
 
   home-manager.users.justin = _: {
     programs.zsh.loginExtra = ''
-      if [ -z "$SSH_CONNECTION" ]; then
-	      cage -d alacritty
-	    fi
+            if [ -z "$SSH_CONNECTION" ]; then
+      	      cage -d alacritty
+      	    fi
     '';
   };
 }
-
