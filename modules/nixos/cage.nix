@@ -16,9 +16,9 @@
 
   home-manager.users.justin = _: {
     programs.zsh.loginExtra = ''
-            if [ -z "$SSH_CONNECTION" ]; then
-      	      cage -d alacritty
-      	    fi
+      if [ -z "$SSH_CONNECTION" ]; then
+      	cage -d alacritty
+      fi
     '';
   };
 }

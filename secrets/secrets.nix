@@ -4,21 +4,28 @@ let
   night-city = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGtlt9IOh+D0TKdQNhD2Gjlvkf4zdgguDuYzAj34Vg9g";
   soul-matrix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIld/b48XwprSugh38a7ENoYchexDL6ANEbnKYWGljoq";
   last-defence-academy = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPsLqXr/dETjYP3ZlWFTn9yZ1euzbl6hFTj9CwXKYlXY";
-  eden = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJR2UrdB3XxtNZVi5Ggz4h+tkvhMb/91VuOkO/O/GCqD"; 
+  eden = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJR2UrdB3XxtNZVi5Ggz4h+tkvhMb/91VuOkO/O/GCqD";
 
-  servers = [ night-city soul-matrix last-defence-academy ];
-  users = [ revachol eden ];
-  
+  servers = [
+    night-city
+    soul-matrix
+    last-defence-academy
+  ];
+  users = [
+    revachol
+    eden
+  ];
+
   keys = users ++ servers;
 
-in {
-  "caddy.age".publicKeys  = keys;
+in
+{
+  "caddy.age".publicKeys = keys;
   "forgejo-admin-password.age".publicKeys = keys;
   "kavita.age".publicKeys = keys;
   "romm.age".publicKeys = keys;
   "romm-db.age".publicKeys = keys;
-  "share.age".publicKeysg = keys;
+  "share.age".publicKeys = keys;
   "vpn.age".publicKeys = keys;
   "yarr.age".publicKeys = keys;
 }
-
