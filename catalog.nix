@@ -46,6 +46,11 @@ rec {
       ip = "192.168.2.1";
     };
 
+    eden = {
+      isNixos = true;
+      ip = "192.168.2.8";
+    };
+
     tracen = {
       isNixos = false;
       ip = "192.168.2.5";

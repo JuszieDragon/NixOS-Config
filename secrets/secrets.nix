@@ -4,9 +4,10 @@ let
   night-city = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGtlt9IOh+D0TKdQNhD2Gjlvkf4zdgguDuYzAj34Vg9g";
   soul-matrix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIld/b48XwprSugh38a7ENoYchexDL6ANEbnKYWGljoq";
   last-defence-academy = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPsLqXr/dETjYP3ZlWFTn9yZ1euzbl6hFTj9CwXKYlXY";
-  
+  eden = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJR2UrdB3XxtNZVi5Ggz4h+tkvhMb/91VuOkO/O/GCqD"; 
+
   servers = [ night-city soul-matrix last-defence-academy ];
-  users = [ revachol ];
+  users = [ revachol eden ];
   
   keys = users ++ servers;
 
