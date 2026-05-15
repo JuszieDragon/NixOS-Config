@@ -167,6 +167,19 @@
         
         specialArgs = { inherit inputs catalog; };
       };
+
+      eden = let
+        catalog = catalog-gen "eden";
+      in nixpkgs-patcher.lib.nixosSystem {
+        nixpkgsPatcher.inputs = inputs;
+
+        system = "x86_64-linux";
+
+	      modules = [
+	        niri.nixosModules.niri
+          { nixpkgs.overlays = [ niri.overlays.niri ]; }
+        ] ++ (default-modules "eden" catalog);
+      };
     };
 
     nixOnDroidConfigurations.default = let
