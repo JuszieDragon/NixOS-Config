@@ -22,6 +22,7 @@ in
 {
   "caddy.age".publicKeys = keys;
   "forgejo-admin-password.age".publicKeys = keys;
+  "grafana-key".publicKeys = keys;
   "kavita.age".publicKeys = keys;
   "romm.age".publicKeys = keys;
   "romm-db.age".publicKeys = keys;

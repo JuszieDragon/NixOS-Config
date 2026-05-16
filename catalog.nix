@@ -165,6 +165,16 @@ rec {
       port = 7200;
       reverseProxy = "internal";
     };
+    grafana = {
+      enable = true;
+      hosts = [ "soul-matrix" ];
+      port = 8010;
+    };
+    prometheus = {
+      enable = true;
+      hosts = [ "soul-matrix" "night-city" "last-defence-academy" ];
+      port = 3020;
+    };
 
     restic-server = {
       enable = true;

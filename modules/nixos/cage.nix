@@ -8,7 +8,7 @@
   environment.systemPackages = with pkgs; [
     cage
     (writeShellScriptBin "3dcam" ''
-      ${cage}/bin/cage -d ${mpv}/bin/mpv -- --cache-secs=0 --demuxer-readahead-secs=0 http://${catalog.hosts.centauri-carbon.ip}:3031/video --no-terminal 
+      ${cage}/bin/cage -d ${mpv}/bin/mpv -- --cache-secs=0 --demuxer-readahead-secs=0 http://${catalog.hosts.centauri-carbon.ip}:3031/video 
     '')
   ];
 
