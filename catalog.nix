@@ -175,6 +175,16 @@ rec {
       hosts = [ "soul-matrix" "night-city" "last-defence-academy" ];
       port = 3020;
     };
+    loki = {
+      enable = true;
+      hosts = [ "soul-matrix" "night-city" "last-defence-academy" ];
+      port = 3100;
+    };
+    vector = {
+      enable = true;
+      hosts = [ "soul-matrix" "night-city" "last-defence-academy" ];
+      port = 9598;
+    };
 
     restic-server = {
       enable = true;

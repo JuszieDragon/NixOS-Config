@@ -56,7 +56,8 @@
         fzf
       ];
       treesitterParsers = with pkgs.vimPlugins.nvim-treesitter-parsers; [
-        nix
+        caddy
+        vrl
       ];
       config.options = #lua
       ''

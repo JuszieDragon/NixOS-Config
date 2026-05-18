@@ -24,12 +24,12 @@ let
             ".${catalog.domain}";
         in {
           name = url;
-          value = if service.reverseProxy == "external" then {
-            extraConfig = ''
+          value = (if service.reverseProxy == "external" then {
+            extraConfig = /*caddy*/''
               reverse_proxy ${catalog.hosts.${host}.ip}:${service.portString}
             '';
           } else {
-            extraConfig = ''
+            extraConfig = /*caddy*/''
               @internal { remote_ip 192.168.0.0/22 }
               handle @internal {
                 reverse_proxy ${catalog.hosts.${host}.ip}:${service.portString} {
@@ -37,6 +37,17 @@ let
                 }
               }
               respond "Go away" 403
+            '';
+          }) // {
+            logFormat = /*caddy*/''
+              output file /var/log/caddy/${url}.log {
+                roll_size 100MiB
+                roll_keep 5
+                roll_keep_for 100d
+                mode 0640
+              }
+              format json
+              level INFO
             '';
           };
         }
@@ -65,14 +76,27 @@ in mkIf cfg.isEnabled {
 
     environmentFile = config.age.secrets.caddy.path;
 
-    globalConfig = ''
-      acme_dns porkbun {
-        api_key {$API_KEY}
-        api_secret_key {$API_SECRET_KEY} 
+    logFormat = /*caddy*/''
+      output file /var/log/caddy/caddy_main.log {
+        roll_size 100MiB
+        roll_keep 5
+        roll_keep_for 100d
+        mode 0640
       }
+      format json
+      level INFO
     '';
 
-      virtualHosts = vHosts;
+    globalConfig = /*caddy*/''
+        acme_dns porkbun {
+          api_key {$API_KEY}
+          api_secret_key {$API_SECRET_KEY}
+        }
+
+        metrics
+    '';
+
+    virtualHosts = vHosts;
   };
 }
 

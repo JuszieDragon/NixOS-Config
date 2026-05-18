@@ -1,4 +1,4 @@
-{ catalog, config, ... }:
+{ catalog, config, pkgs, ... }:
 let
   cfg = catalog.services.prometheus;
   nodeExporterPort = 3021;
@@ -21,6 +21,7 @@ in {
       static_configs = [{
         targets = [
           "0.0.0.0:${toString nodeExporterPort}"
+          "0.0.0.0:${catalog.services.vector.portString}"
         ];
       }];
     }];
