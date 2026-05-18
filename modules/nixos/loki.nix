@@ -2,7 +2,8 @@
 let
   cfg = catalog.services.loki;
 
-in {
+in
+{
   services.loki = {
     enable = true;
     configuration = {

@@ -1,4 +1,10 @@
-{ catalog, config, inputs, lib, ... }:
+{
+  catalog,
+  config,
+  inputs,
+  lib,
+  ...
+}:
 
 let
   cfg = catalog.services.grafana;
@@ -8,8 +14,15 @@ let
     access = "proxy";
     url = "http://${catalog.hosts.${host}.ip}:${catalog.services.prometheus.portString}";
   }) catalog.services.prometheus.hosts;
+  lokiDataSources = map (host: {
+    name = "Loki ${host}";
+    type = "loki";
+    access = "proxy";
+    url = "http://${catalog.hosts.${host}.ip}:${catalog.services.loki.portString}";
+  }) catalog.services.loki.hosts;
 
-in {
+in
+{
   age.secrets.grafana-key = lib.mkIf cfg.enable {
     file = inputs.self + /secrets/grafana-key.age;
     owner = "grafana";
@@ -32,7 +45,7 @@ in {
       enable = true;
       datasources.settings = {
         prune = true;
-        datasources = prometheusDataSources;
+        datasources = prometheusDataSources ++ lokiDataSources;
       };
     };
   };

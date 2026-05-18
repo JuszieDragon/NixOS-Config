@@ -1,8 +1,12 @@
-{ catalog, ... }:
+{ catalog, lib, ... }:
+with lib;
+
 let
   cfg = catalog.services.vector;
+  isCaddyHost = catalog.services.caddy.isEnabled;
 
-in {
+in
+{
   services.vector = {
     enable = true;
     journaldAccess = true;
@@ -10,7 +14,7 @@ in {
       sources = {
         journald.type = "journald";
 
-        caddy = {
+        caddy = mkIf isCaddyHost {
           type = "file";
           include = [ "/var/log/caddy/*.log" ];
         };
@@ -18,11 +22,11 @@ in {
         vector_metrics.type = "internal_metrics";
       };
 
-      transforms = {
+      transforms = mkIf isCaddyHost {
         caddy_logs_timestamp = {
           type = "remap";
           inputs = [ "caddy" ];
-          source = /* vrl */''
+          source = /* vrl */ ''
             .tmp_timestamp, err = parse_json!(.message).ts * 1000000
 
             if err != null {
@@ -42,7 +46,7 @@ in {
         loki = {
           type = "loki";
           encoding.codec = "json";
-          inputs = [ "caddy_logs_timestamp" "journald" ];
+          inputs = [ "journald" ] ++ optionals isCaddyHost [ "caddy_logs_timestamp" ];
           endpoint = "http://0.0.0.0:${catalog.services.loki.portString}";
 
           labels.source = "journald";
@@ -57,7 +61,7 @@ in {
     };
   };
 
-  systemd.services.vector.serviceConfig = {
+  systemd.services.vector.serviceConfig = mkIf isCaddyHost {
     SupplementaryGroups = [ "caddy" ];
   };
 }
