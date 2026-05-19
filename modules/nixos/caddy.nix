@@ -4,10 +4,18 @@ with lib;
 
 let
   cfg = catalog.services.caddy;
-  
+
+  propagation_timeout = /*caddy*/''
+    tls {
+      issuer acme {
+        propagation_timeout 5m
+        propagation_delay 30s
+      }
+    }
+  '';
+
   servicesValidForProxy = services: filterAttrs (_n: v: v ? reverseProxy && v.enable) services;
 
-  #TODO figure out how to set propagation_timeout
   vHosts = builtins.listToAttrs (builtins.foldl' (acc: serviceName:
     let
       service = catalog.services.${serviceName} or catalog.containers.${serviceName};
@@ -26,10 +34,12 @@ let
           name = url;
           value = (if service.reverseProxy == "external" then {
             extraConfig = /*caddy*/''
+              ${propagation_timeout}
               reverse_proxy ${catalog.hosts.${host}.ip}:${service.portString}
             '';
           } else {
             extraConfig = /*caddy*/''
+              ${propagation_timeout}
               @internal { remote_ip 192.168.0.0/22 }
               handle @internal {
                 reverse_proxy ${catalog.hosts.${host}.ip}:${service.portString} {

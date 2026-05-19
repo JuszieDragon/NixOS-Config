@@ -169,6 +169,7 @@ rec {
       enable = true;
       hosts = [ "soul-matrix" ];
       port = 8010;
+      reverseProxy = "internal";
     };
     prometheus = {
       enable = true;
