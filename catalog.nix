@@ -186,6 +186,12 @@ rec {
       hosts = [ "soul-matrix" "night-city" "last-defence-academy" ];
       port = 9598;
     };
+    librespeed = {
+      enable = true;
+      hosts = [ "soul-matrix" "night-city" "last-defence-academy" ];
+      frontendHost = "soul-matrix";
+      port = 3002;
+    };
 
     restic-server = {
       enable = true;
@@ -257,13 +263,6 @@ rec {
       port = 5001;
       reverseProxy = "internal";
       module = "beets-flask/default";
-    };
-    openspeedtest = {
-      enable = true;
-      hosts = [ "soul-matrix" "night-city" "last-defence-academy" ];
-      port = 3000;
-      reverseProxy = "internal";
-      subdomain = "speedtest";
     };
     romm = {
       enable = false;
