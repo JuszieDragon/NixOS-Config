@@ -1,18 +1,22 @@
-{ catalog, lib, ... }:
-
-with lib;
-
+{ catalog, config, lib, inputs, ... }:
 let
   cfg = catalog.services.restic-server;
 
   dataDir = "/mnt/backup/restic";
 
-in {
+in lib.mkIf cfg.enable {
+  age.secrets.restic-server = {
+    file = inputs.self + /secrets/restic-server.age;
+    owner = "restic";
+    group = "restic";
+    mode = "0400";
+  };
+
   services.restic.server = {
     enable = cfg.isEnabled;
-    extraFlags = [ "--no-auth" ];
     inherit dataDir;
     listenAddress = cfg.portString;
+    htpasswd-file = config.age.secrets.restic-server.path;
     prometheus = true;
   };
 }
