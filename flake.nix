@@ -57,7 +57,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    kosync.url = "git+https://codeberg.org/cmooon/kosync";
+    kosync = {
+      url = "git+https://codeberg.org/cmooon/kosync";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
     nixpkgs-patch-qbittorrent = {

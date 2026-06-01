@@ -46,7 +46,7 @@ let
                   header_up Host {upstream_hostport}
                 }
               }
-              respond "Go away" 403
+              abort
             '';
           }) // {
             logFormat = /*caddy*/''

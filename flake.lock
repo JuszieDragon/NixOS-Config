@@ -203,14 +203,16 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nix-gleam": "nix-gleam",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1758034501,
-        "narHash": "sha256-Ik8VSqs0n7eN21BYL5UXNj8okfwCZATJH0g1GW0WYr4=",
+        "lastModified": 1780221376,
+        "narHash": "sha256-2DTyeVqGUha5T412HFml7PHMgnn5mI4u4x1xuLeNzXo=",
         "ref": "refs/heads/main",
-        "rev": "f4b0e990d6bd9a2eba40dcba863f4e66fb887877",
-        "revCount": 19,
+        "rev": "58ab315f81c455d8766394e6d34a828b5bb908af",
+        "revCount": 21,
         "type": "git",
         "url": "https://codeberg.org/cmooon/kosync"
       },
@@ -368,7 +370,7 @@
     },
     "nixarr": {
       "inputs": {
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "treefmt-nix": "treefmt-nix",
         "vpnconfinement": "vpnconfinement",
         "website-builder": "website-builder"
@@ -389,16 +391,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1779560665,
-        "narHash": "sha256-tpyBcxPpcQb8ukyNF7DoCwfSY3VPsxHoYwj00Cayv5o=",
-        "owner": "NixOS",
+        "lastModified": 1775595990,
+        "narHash": "sha256-OEf7YqhF9IjJFYZJyuhAypgU+VsRB5lD4DuiMws5Ltc=",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "64c08a7ca051951c8eae34e3e3cb1e202fe36786",
+        "rev": "4e92bbcdb030f3b4782be4751dc08e6b6cb6ccf2",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "owner": "nixos",
+        "ref": "nixos-25.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -504,22 +506,6 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1775595990,
-        "narHash": "sha256-OEf7YqhF9IjJFYZJyuhAypgU+VsRB5lD4DuiMws5Ltc=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "4e92bbcdb030f3b4782be4751dc08e6b6cb6ccf2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-25.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
         "lastModified": 1777578337,
         "narHash": "sha256-Ad49moKWeXtKBJNy2ebiTQUEgdLyvGmTeykAQ9xM+Z4=",
         "owner": "nixos",
@@ -603,7 +589,7 @@
         "niri": "niri",
         "nix-on-droid": "nix-on-droid",
         "nixarr": "nixarr",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-patch-kavita-groups": "nixpkgs-patch-kavita-groups",
         "nixpkgs-patch-qbittorrent": "nixpkgs-patch-qbittorrent",
         "nixpkgs-patch-yarr": "nixpkgs-patch-yarr",

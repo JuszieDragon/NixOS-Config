@@ -75,7 +75,7 @@ threaded: no
 
 fetchart:
     minwidth: 500
-    maxwidth: 1600 # flac has a size limit on embedded art, RIP Gold-Triumph you were simply too girthy
+    maxwidth: 1200 # flac has a size limit on embedded art, RIP Gold-Triumph you were simply too girthy
     enforce_ratio: 10px # yes|no or tolerance around 1:1 ratio
     sources: coverart filesystem itunes amazon spotify albumart fanarttv
 
@@ -83,7 +83,7 @@ embedart:
     auto: yes
     ifempty: yes # whether to avoid embedding album art for files that already have art embedded.
     remove_art_file: yes
-    maxwidth: 1600
+    maxwidth: 1200
 
 ftintitle:
     auto: yes
