@@ -6,7 +6,7 @@ let
 
 in lib.mkIf cfg.enable {
   age.secrets.restic-server = {
-    file = inputs.self + /secrets/restic-server.age;
+    file = inputs.self + /secrets/restic-server-password.age;
     owner = "restic";
     group = "restic";
     mode = "0400";

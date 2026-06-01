@@ -24,7 +24,8 @@ in
   "forgejo-admin-password.age".publicKeys = keys;
   "grafana-key".publicKeys = keys;
   "kavita.age".publicKeys = keys;
-  "restic-server.age".publicKeys = keys;
+  "restic-server-password.age".publicKeys = keys;
+  "restic-repository-url.age".publicKeys = keys;
   "romm.age".publicKeys = keys;
   "romm-db.age".publicKeys = keys;
   "share.age".publicKeys = keys;

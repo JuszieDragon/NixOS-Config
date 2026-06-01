@@ -5,6 +5,7 @@ let
     #/git.nix
     /cage.nix
     /podman.nix
+    /restic.nix
     #/remote-builders.nix
     /samba.nix
     /zfs.nix

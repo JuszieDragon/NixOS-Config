@@ -57,13 +57,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    kosync = {
-      url = "git+https://codeberg.org/cmooon/kosync";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    kosync.url = "git+https://codeberg.org/cmooon/kosync";
 
-
-    # Use https://nixpkgs-tracker.ocfox.me/?pr=<prNum> to check if patch is still needed
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
     nixpkgs-patch-qbittorrent = {
       url = "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:qbittorrent-categories.diff";
@@ -80,10 +75,6 @@
     #};
     nixpkgs-patch-kavita-groups = {
       url = "https://github.com/NixOS/nixpkgs/pull/456789.diff";
-      flake = false;
-    };
-    nixpkgs-patch-cage-0-3-0 = {
-      url = "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:cage-0.3.0.diff";
       flake = false;
     };
   };
