@@ -2,7 +2,10 @@
   users.users.justin = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGtlt9IOh+D0TKdQNhD2Gjlvkf4zdgguDuYzAj34Vg9g" #night-city
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIld/b48XwprSugh38a7ENoYchexDL6ANEbnKYWGljoq" #soul-matrix

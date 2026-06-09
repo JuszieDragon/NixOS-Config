@@ -64,5 +64,8 @@
     #"Mod+Ctrl+L" = { action = move-column-right; };
 
     "Mod+F" = { action = maximize-column; };
+    "Mod+Ctrl+F" = { action = fullscreen-window; };
+    "Mod+Page_Up" = { action = focus-workspace-up; };
+    "Mod+Page_Down" = { action = focus-workspace-down; };
   };
 }

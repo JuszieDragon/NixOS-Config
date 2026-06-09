@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   imports = [
     ./binds.nix
     ./cursor.nix
@@ -15,8 +15,11 @@
       name = "Adwaita-dark";
       package = pkgs.gnome-themes-extra;
     };
-    gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
-    gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
+    gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
+    gtk4 = {
+      extraConfig.gtk-application-prefer-dark-theme = true;
+      theme = config.gtk.theme;
+    };
   };
   qt = {
     enable = true;
@@ -34,7 +37,7 @@
       };
       spawn-at-startup = [
         { sh = "qs"; }
-        { sh = "swaybg -i /home/justin/martinaise-skyline-expanded.jpg"; }
+        { sh = "swaybg -i '/home/justin/Pictures/Disco Main Menu.png'"; }
       ];
     };
   };

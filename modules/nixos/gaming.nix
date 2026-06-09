@@ -13,17 +13,24 @@
     }).override { steamDisplayName = pVersion; };
 in {
   environment.systemPackages = with pkgs; [
-    protonup-rs
-    protontricks
     gamescope
-    mangohud
     gpu-screen-recorder
-    libnotify
     #itch #currently has a broken dependency
+    libnotify
+    libsecret
+    lutris
+    mangohud
+    protontricks
+    protonup-rs
+    protonplus
   ];
 
   hardware = {
     #xone.enable = true;
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
     enableRedistributableFirmware = true;
   };
 
@@ -46,22 +53,4 @@ in {
       };
     };
   };
-
-  #xdg.mime = {
-  #  enable = true;
-  #  addedAssociations = {
-  #    "x-scheme-handler/r2" = ["reloaded-ii-url.desktop"];
-  #  };
-  #};
-
-  #might be able to setup reloaded one click with this
-  /*
-  xdg.mimeApps.defaultApplications = {
-  "text/html" = [ "firefox.desktop" ];
-  "text/xml" = [ "firefox.desktop" ];
-  "x-scheme-handler/http" = [ "firefox.desktop" ];
-  "x-scheme-handler/https" = [ "firefox.desktop" ];
-  };
-  */
 }
-

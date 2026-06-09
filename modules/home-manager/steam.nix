@@ -4,7 +4,7 @@
   programs.steam.config = {
     enable = true;
     closeSteam = true;
-    
+
     apps = {
       Umamusume-Pretty-Derby = {
         id = 3224770;

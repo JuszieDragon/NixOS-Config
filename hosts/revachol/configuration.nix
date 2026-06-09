@@ -15,6 +15,8 @@ in {
   ] ++ modulesImports;
 
   boot = {
+    #Related to USB PD, should be fine to disable to remove error in logs on boot
+    blacklistedKernelModules = [ "ucsi_acpi" ];
     loader = {
       efi.canTouchEfiVariables = true;
       systemd-boot.enable = true;
@@ -84,6 +86,7 @@ in {
       swaylock
       unrar
       wget
+      wiremix
       vesktop
       xwayland-satellite
 
