@@ -9,7 +9,7 @@ _: {
   programs.niri.settings = {
     window-rules = [
       {
-        matches = [ 
+        matches = [
           { app-id = "steam"; }
           { app-id = "feishin"; }
         ];

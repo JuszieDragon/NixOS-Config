@@ -26,7 +26,7 @@ in {
   ];
 
   hardware = {
-    #xone.enable = true;
+    xone.enable = true;
     graphics = {
       enable = true;
       enable32Bit = true;
@@ -37,6 +37,12 @@ in {
   programs = {
     steam = {
       enable = true;
+      # Fix crashing until pipewire is restarted
+      package = pkgs.steam.override {
+        extraEnv = {
+          SDL_AUDIODRIVER = "pipewire";
+        };
+      };
       localNetworkGameTransfers.openFirewall = true;
       gamescopeSession.enable = true;
       extraCompatPackages = [
