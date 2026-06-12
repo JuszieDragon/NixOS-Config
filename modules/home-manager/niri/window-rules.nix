@@ -39,6 +39,23 @@ _: {
         open-on-workspace = "Nikke";
         open-fullscreen = true;
       }
+      {
+        # Make steam notification toast appear in the bottom right
+        #TODO fix match
+        matches = [
+          {
+            "app-id" = "steam";
+            "title" = "#\"^notificationtoasts_\d+_desktop$\"#";
+          }
+        ];
+        default-floating-position = {
+          x = 0;
+          y = 0;
+          relative-to = "bottom-right";
+        };
+        open-focused = false;
+        open-floating = true;
+      }
     ];
     workspaces = {
       "Nikke" = {

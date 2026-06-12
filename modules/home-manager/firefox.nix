@@ -1,6 +1,6 @@
 { lib, pkgs, ... }: {
   options.firefox.enable = lib.mkEnableOption "Enable Firefox";
-  
+
   config = {
     programs.firefox = {
       enable = true;
@@ -14,6 +14,7 @@
           settings = {
             "media.hardwaremediakeys.enabled" = false;
             "xpinstall.signatures.required" = false;
+            "extensions.langpacks.signatures.required" = false;
           };
 
           search = {

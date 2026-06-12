@@ -3,13 +3,17 @@
     "Mod+Shift+Slash".action = show-hotkey-overlay;
 
     "Mod+T" = {
-      hotkey-overlay.title = "Open a Terminal: alacritty";
+      hotkey-overlay.title = "Alacritty";
       action.spawn = "alacritty";
     };
-    "Mod+Space" = {
-      hotkey-overlay.title = "Run an Application: fuzzel";
+    "Mod+Shift+Space" = {
+      hotkey-overlay.title = "Fuzzel";
       action.spawn = "fuzzel";
     };
+
+    "Mod+Space" = { action.spawn = [ "noctalia" "msg" "panel-toggle" "launcher" ]; };
+    "Mod+S" = { action.spawn = [ "noctalia" "msg" "panel-toggle" "control-center" ]; };
+    "Mod+Comma" = { action.spawn = [ "noctalia" "msg" "settings-toggle" ]; };
 
     "XF86AudioPlay" = {
       action.spawn = ["playerctl" "play-pause"];
@@ -23,18 +27,38 @@
       action.spawn = ["playerctl" "previous"];
       allow-when-locked = true;
     };
-    "XF86AudioRaiseVolume" = {
-      action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+"];
+    XF86AudioRaiseVolume = {
+      action.spawn = [ "noctalia" "msg" "volume-up"];
       allow-when-locked = true;
     };
-    "XF86AudioLowerVolume" = {
-      action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05-"];
+    XF86AudioLowerVolume = {
+      action.spawn = [ "noctalia" "msg" "volume-down" ];
       allow-when-locked = true;
     };
-    "XF86AudioMute" = {
-      action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "toggle"];
+    XF86AudioMute = {
+      action.spawn = [ "noctalia" "msg" "volume-mute" ];
       allow-when-locked = true;
     };
+    XF86MonBrightnessUp = {
+      action.spawn = [ "noctalia" "msg" "brightness-up" ];
+      allow-when-locked = true;
+    };
+    XF86MonBrightnessDown = {
+      action.spawn = [ "noctalia" "msg" "brightness-down" ];
+      allow-when-locked = true;
+    };
+    # "XF86AudioRaiseVolume" = {
+    #   action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+"];
+    #   allow-when-locked = true;
+    # };
+    # "XF86AudioLowerVolume" = {
+    #   action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05-"];
+    #   allow-when-locked = true;
+    # };
+    # "XF86AudioMute" = {
+    #   action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "toggle"];
+    #   allow-when-locked = true;
+    # };
 
     "Mod+O" = {
       action = toggle-overview;

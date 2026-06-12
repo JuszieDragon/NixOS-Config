@@ -36,8 +36,9 @@
         path = lib.getExe pkgs.xwayland-satellite;
       };
       spawn-at-startup = [
-        { sh = "qs"; }
-        { sh = "swaybg -i '/home/justin/Pictures/Disco Main Menu.png'"; }
+        { sh = "noctalia"; }
+        { sh = "swaybg -i \"/home/justin/Pictures/Disco Main Menu.png\" -m fill"; }
+        { sh = "niri msg action focus-workspace 2"; }
       ];
     };
   };

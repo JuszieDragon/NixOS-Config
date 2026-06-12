@@ -62,6 +62,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
     nixpkgs-patch-qbittorrent = {
       url = "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:qbittorrent-categories.diff";
@@ -71,11 +76,6 @@
       url = "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:yarr-db-path-and-user.diff";
       flake = false;
     };
-    # https://github.com/NixOS/nixpkgs/pull/472163
-    #nixpkgs-patch-xone-dongle-drivers = {
-    #  url = "https://github.com/NixOS/nixpkgs/pull/472163.diff";
-    #  flake = false;
-    #};
     nixpkgs-patch-kavita-groups = {
       url = "https://github.com/NixOS/nixpkgs/pull/456789.diff";
       flake = false;
@@ -122,7 +122,7 @@
 
         specialArgs = { inherit inputs catalog; };
       };
-      
+
       soul-matrix = let
         catalog = catalog-gen "soul-matrix";
       in nixpkgs-patcher.lib.nixosSystem rec {
@@ -151,14 +151,14 @@
         catalog = catalog-gen "revachol";
       in nixpkgs-patcher.lib.nixosSystem {
         nixpkgsPatcher.inputs = inputs;
-        
+
         system = "x86_64-linux";
 
-        modules = [ 
+        modules = [
           niri.nixosModules.niri
           { nixpkgs.overlays = [ niri.overlays.niri ]; }
         ] ++ (default-modules "revachol" catalog);
-        
+
         specialArgs = { inherit inputs catalog; };
       };
 

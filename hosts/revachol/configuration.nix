@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 let
   modulesRoot = ../../modules/nixos;
-  
+
   modulesImports = map (module: modulesRoot + module) [
     /feishin.nix
     /gaming.nix
@@ -68,10 +68,7 @@ in {
     };
   };
 
-  programs = {
-    niri.enable = true;
-    firefox.enable = true;
-  };
+  programs.niri.enable = true;
 
   environment = {
     # https://discourse.nixos.org/t/hyprland-dolphin-file-manager-trying-to-open-an-image-asks-for-a-program-to-use-for-open-it/69824/3
@@ -81,6 +78,7 @@ in {
       fuzzel
       git
       gnome-disk-utility
+      hydrus
       usbutils
       mpv
       neovim
@@ -109,16 +107,19 @@ in {
       libreoffice-qt
       hunspell
       hunspellDicts.en_AU-large
+
+      inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
   };
 
-#xdg.portal = with pkgs; {
-#  enable = true;
-#  xdgOpenUsePortal = true;
-#  extraPortals = [ xdg-desktop-portal-gtk xdg-desktop-portal-wlr ];
-#  configPackages = [ xdg-desktop-portal-gtk ];
-#  config.common.default = "gtk";
-#};
+  xdg.portal = with pkgs; {
+    enable = true;
+    xdgOpenUsePortal = true;
+    extraPortals = [ xdg-desktop-portal-gtk xdg-desktop-portal-wlr ];
+    configPackages = [ xdg-desktop-portal-gtk ];
+    config.common.default = "gtk";
+    wlr.enable = true;
+  };
 
   system.stateVersion = "25.11"; # Did you read the comment?
 }

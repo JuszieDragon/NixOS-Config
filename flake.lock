@@ -558,6 +558,26 @@
         "type": "gitlab"
       }
     },
+    "noctalia": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781151084,
+        "narHash": "sha256-ftNKnGmfoQtJK+mLZQyvrMoRWd6sCYj1jT/FOUM77Vk=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia",
+        "rev": "b347de8e1ae24e61b24e28c40173a9a19ff5fb90",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "noctalia",
+        "type": "github"
+      }
+    },
     "quickshell": {
       "inputs": {
         "nixpkgs": [
@@ -594,6 +614,7 @@
         "nixpkgs-patch-qbittorrent": "nixpkgs-patch-qbittorrent",
         "nixpkgs-patch-yarr": "nixpkgs-patch-yarr",
         "nixpkgs-patcher": "nixpkgs-patcher",
+        "noctalia": "noctalia",
         "quickshell": "quickshell",
         "sqlit": "sqlit",
         "steam-config-nix": "steam-config-nix"
