@@ -44,6 +44,13 @@ in {
   security.rtkit.enable = true;
 
   services = {
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
+    logind.settings.Login.HandlePowerKey = "poweroff";
+    openssh.enable = true;
     pipewire = {
       enable = true;
       alsa = {
@@ -52,14 +59,6 @@ in {
       };
       pulse.enable = true;
     };
-    openssh.enable = true;
-    xserver.videoDrivers = [ "amdgpu" ];
-    udisks2.enable = true;
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
-    };
     printing = {
       enable = true;
       drivers = with pkgs; [
@@ -67,6 +66,8 @@ in {
         cups-browsed
       ];
     };
+    udisks2.enable = true;
+    xserver.videoDrivers = [ "amdgpu" ];
   };
 
   programs.niri.enable = true;
