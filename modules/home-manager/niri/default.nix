@@ -31,13 +31,14 @@
       environment."NIXOS_OZONE_WL" = "1";
       hotkey-overlay.skip-at-startup = true;
       prefer-no-csd = true;
+      gestures.hot-corners.enable = false;
       xwayland-satellite = {
         enable = true;
         path = lib.getExe pkgs.xwayland-satellite;
       };
       spawn-at-startup = [
         { sh = "noctalia"; }
-        { sh = "swaybg -i \"/home/justin/Pictures/Disco Main Menu.png\" -m fill"; }
+        { sh = "workspace-backgrounds"; }
         { sh = "niri msg action focus-workspace 2"; }
       ];
     };

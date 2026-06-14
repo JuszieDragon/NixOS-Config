@@ -33,6 +33,7 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   hardware = {
+    bluetooth.enable = true;
     graphics = {
       enable = true;
       enable32Bit = true;

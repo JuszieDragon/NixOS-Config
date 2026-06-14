@@ -48,9 +48,17 @@
     };
     lazyvim = {
       enable = true;
-      extras.lang.nix.enable = true;
+
+      extras.lang = {
+        python = {
+          enable = true;
+          installDependencies = true;
+        };
+        nix.enable = true;
+      };
       extraPackages = with pkgs; [
         nixd
+        pyright
         ripgrep
         fd
         fzf

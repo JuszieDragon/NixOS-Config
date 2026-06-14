@@ -44,8 +44,8 @@ _: {
         #TODO fix match
         matches = [
           {
-            "app-id" = "steam";
-            "title" = "#\"^notificationtoasts_\d+_desktop$\"#";
+            app-id = "steam";
+            title = "^notificationtoasts_\d+_desktop$";
           }
         ];
         default-floating-position = {
