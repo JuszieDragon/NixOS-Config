@@ -50,15 +50,20 @@
       enable = true;
 
       extras.lang = {
+        rust = {
+          enable = true;
+          installDependencies = true;
+          installRuntimeDependencies = true;
+        };
+        nix.enable = true;
         python = {
           enable = true;
           installDependencies = true;
+          installRuntimeDependencies = true;
         };
-        nix.enable = true;
       };
       extraPackages = with pkgs; [
         nixd
-        pyright
         ripgrep
         fd
         fzf
