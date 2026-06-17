@@ -63,10 +63,11 @@
         };
       };
       extraPackages = with pkgs; [
-        nixd
-        ripgrep
         fd
         fzf
+        gcc
+        nixd
+        ripgrep
       ];
       treesitterParsers = with pkgs.vimPlugins.nvim-treesitter-parsers; [
         caddy
