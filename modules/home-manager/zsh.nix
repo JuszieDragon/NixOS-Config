@@ -51,8 +51,8 @@ in {
       zomb-update = "steamcmd +force_install_dir /srv/zomboid/b42 +login anonymous +app_update 380870 -beta unstable validate +quit";
       #zip each folder in current folder
       fzip = "for i in */; do zip -r \"\${i%/}.zip\" \"$i\"; done";
-    } // hostSSHAliases // hostRemoteBuildAliases;      
-    
+    } // hostSSHAliases // hostRemoteBuildAliases;
+
     plugins = [
       {
         name = "powerlevel10k";
@@ -64,10 +64,10 @@ in {
         src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
       }
     ];
-      
+
     initContent = '' 
       source ${inputs.dotfiles}/.p10k.zsh
-      
+
       # Completion styling
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
       zstyle ':completion:*' list-colors "\$\{(s.:.)LS_COLORS\}"
@@ -75,10 +75,10 @@ in {
       zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
       zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
     '';
-    
+
     oh-my-zsh = {
       enable = true;
-      plugins = [  
+      plugins = [
         "git"
         "npm"
         "history"

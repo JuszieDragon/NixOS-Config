@@ -49,7 +49,8 @@ in {
       nssmdns4 = true;
       openFirewall = true;
     };
-    logind.settings.Login.HandlePowerKey = "poweroff";
+    getty.autologinUser = "justin";
+    logind.powerKey = "poweroff";
     openssh.enable = true;
     pipewire = {
       enable = true;
@@ -67,6 +68,11 @@ in {
       ];
     };
     udisks2.enable = true;
+    # To build crosspoint
+    udev.packages = with pkgs; [
+      platformio-core.udev
+      openocd
+    ];
     xserver.videoDrivers = [ "amdgpu" ];
   };
 

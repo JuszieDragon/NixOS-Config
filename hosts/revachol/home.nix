@@ -17,6 +17,12 @@
     )
   ];
 
+  programs.zsh.loginExtra = #bash
+    ''
+    if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+      exec dbus-run-session niri --session
+    fi
+  '';
 
   xdg = {
     enable = true;
@@ -24,7 +30,7 @@
     desktopEntries = {
       "hydrus-client" = {
         name = "hydrus-client";
-        exec = "hydrus-client -d \"/home/justin/Documents/Hydrus Network/db\""; # Overridden execution flag
+        exec = "hydrus-client -d \"/home/justin/Documents/Hydrus Network/db\"";
         icon = "hydrus-client";
         comment = "Danbooru-like image tagging and searching system for the desktop";
         terminal = false;

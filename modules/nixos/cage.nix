@@ -1,5 +1,4 @@
-{ catalog, pkgs, ... }:
-{
+{ catalog, pkgs, ... }: {
   users.users.justin.extraGroups = [
     "seat"
     "video"
@@ -15,7 +14,8 @@
   services.seatd.enable = true;
 
   home-manager.users.justin = _: {
-    programs.zsh.loginExtra = ''
+    programs.zsh.loginExtra = #bash
+      ''
       if [ -z "$SSH_CONNECTION" ]; then
       	cage -d alacritty
       fi

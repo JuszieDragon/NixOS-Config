@@ -10,7 +10,7 @@
     extraModulePackages = [ ];
     initrd = {
       availableKernelModules = [ "xhci_pci" "nvme" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-      kernelModules = [ ];
+      kernelModules = [ "amdgpu" ];
     };
   };
 
