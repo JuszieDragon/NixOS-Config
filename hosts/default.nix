@@ -28,6 +28,7 @@
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" "justin" ];
+      auto-optimise-store = true;
     };
   };
 

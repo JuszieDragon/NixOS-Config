@@ -192,6 +192,11 @@ rec {
       frontendHost = "soul-matrix";
       port = 3002;
     };
+    sws = {
+      enable = true;
+      hosts = [ "soul-matrix" ];
+      port = 8085;
+    };
 
     restic-server = {
       enable = true;
@@ -288,7 +293,10 @@ rec {
 
   portsUsed = concatMapAttrs (service: attrs: {
     ${attrs.portString} = "${service}";
-  }) (filterAttrs (_service: attrs: attrs ? port && builtins.elem "${host}" attrs.hosts) services);
+  }) (
+      filterAttrs (_service: attrs: attrs ? port && builtins.elem "${host}" attrs.hosts) services //
+      filterAttrs (_service: attrs: attrs ? port && builtins.elem "${host}" attrs.hosts) containers
+    );
 
   getModuleName = module: attrs: 
     if attrs ? module
