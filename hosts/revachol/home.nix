@@ -6,6 +6,7 @@
     ../../modules/home-manager/noctalia
     ../../modules/home-manager/quickshell
     ../../modules/home-manager/steam.nix
+    ../../modules/home-manager/yt-dlp.nix
   ];
 
   home.packages = with pkgs; [

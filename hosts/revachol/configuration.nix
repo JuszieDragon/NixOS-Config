@@ -50,7 +50,6 @@ in {
       openFirewall = true;
     };
     getty.autologinUser = "justin";
-    logind.powerKey = "poweroff";
     openssh.enable = true;
     pipewire = {
       enable = true;

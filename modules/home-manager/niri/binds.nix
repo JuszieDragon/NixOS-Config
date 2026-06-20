@@ -51,6 +51,7 @@
       action.spawn = [ "noctalia" "msg" "brightness-down" ];
       allow-when-locked = true;
     };
+    "XF86PowerOff".action.spawn = [ "shutdown" "now" ];
 
     "Mod+O" = {
       action = toggle-overview;

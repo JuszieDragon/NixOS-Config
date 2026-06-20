@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: with builtins; {
   imports = [
     ./binds.nix
     ./cursor.nix
@@ -39,7 +39,7 @@
       spawn-at-startup = [
         { sh = "noctalia"; }
         { sh = "workspace-backgrounds"; }
-        { sh = "niri msg action focus-workspace 2"; }
+        { sh = "niri msg action focus-workspace ${toString (length (attrNames config.programs.niri.settings.workspaces) + 1)}"; }
       ];
     };
   };
