@@ -163,7 +163,7 @@ rec {
       enable = true;
       hosts = [ "soul-matrix" ];
       port = 7200;
-      reverseProxy = "internal";
+      reverseProxy = "external";
     };
     grafana = {
       enable = true;

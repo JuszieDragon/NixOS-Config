@@ -31,22 +31,38 @@ in lib.mkIf cfg.isEnabled {
     };
   };
 
-  environment.systemPackages = [(
-    pkgs.writeShellScriptBin "zip-download" ''
-      if [[ -z "$1" ]]; then
-        echo "Need to pass a url to download";
-        exit 1;
+  environment.systemPackages = [
+    (pkgs.writeShellScriptBin "music-download" ''
+      if [[ "$EUID" -ne 0 ]]; then
+        echo "Please run this script with sudo or as root"
+        exit 1
       fi
-      if [[ -z "$2" ]]; then
+      if [[ -z "$1" ]]; then
         echo "Need to pass dir name";
         exit 1;
       fi
-      DIR=${musicDir}/inbox/$2;
+      if [[ -z "$2" ]]; then
+        echo "Need to pass file type";
+        exit 1;
+      fi
+      if [[ "$2" != "zip" && "$2" != "file" ]]; then
+        echo "Filetype must be \"zip\" or \"file\"";
+        exit 1;
+      fi
+      if [[ -z "$3" ]]; then
+        echo "Need to pass a url to download";
+        exit 1;
+      fi
+      DIR=${musicDir}/inbox/$1;
       mkdir "$DIR";
-      ${pkgs.curl}/bin/curl -sSL $1 | ${pkgs.libarchive}/bin/bsdtar -xvf- -C "$DIR";
+      if [[ "$2" == "zip" ]]; then
+        ${pkgs.curl}/bin/curl -sSL $3 | ${pkgs.libarchive}/bin/bsdtar -xvf- -C "$DIR";
+      else
+        ${pkgs.curl}/bin/curl --output-dir "$DIR" -sSLOJ $3;
+      fi
       sudo chown -R beets-flask:media "$DIR";
-    ''
-  )];
+    '')
+  ];
 
   systemd = {
     services.podman-beets-flask.preStart = "
