@@ -20,7 +20,7 @@ let
     fi
   '';
 
-  lounge-screens = pkgs.writeShellScriptBin "lounge-screens" ''
+  lounge-mode = pkgs.writeShellScriptBin "lounge-mode" ''
     ${env-vars}
 
     ${pkgs.niri}/bin/niri msg output HDMI-A-1 on
@@ -38,7 +38,7 @@ let
     done
   '';
 
-  main-screens = pkgs.writeShellScriptBin "main-screens" ''
+  main-mode = pkgs.writeShellScriptBin "main-mode" ''
     ${env-vars}
 
     ${pkgs.niri}/bin/niri msg output HDMI-A-1 off
@@ -56,12 +56,12 @@ in
     group = "users";
     openFirewall = true;
     hooks = {
-      lounge-screens = {
-        execute-command = "${lounge-screens}/bin/lounge-screens";
+      ${lounge-mode.name} = {
+        execute-command = "${lounge-mode}/bin/${lounge-mode.name}";
         command-working-directory = "/tmp";
       };
-      main-screens = {
-        execute-command = "${main-screens}/bin/main-screens";
+      ${main-mode.name} = {
+        execute-command = "${main-mode}/bin/${main-mode.name}";
         command-working-directory = "/tmp";
       };
     };
