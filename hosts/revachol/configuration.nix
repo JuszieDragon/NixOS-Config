@@ -6,6 +6,7 @@ let
   modulesImports = map (module: modulesRoot + module) [
     /feishin.nix
     /gaming.nix
+    /webhook.nix
   ];
 
 in {

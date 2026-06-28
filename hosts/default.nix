@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   users.users.justin = {
     isNormalUser = true;
+    uid = 1000;
     shell = pkgs.zsh;
     extraGroups = [
       "networkmanager"

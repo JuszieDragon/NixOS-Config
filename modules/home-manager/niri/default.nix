@@ -8,6 +8,12 @@
     ./window-rules.nix
   ];
 
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
+
   # Set darkmode
   gtk = {
     enable = true;
@@ -15,11 +21,7 @@
       name = "Adwaita-dark";
       package = pkgs.gnome-themes-extra;
     };
-    gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
-    gtk4 = {
-      extraConfig.gtk-application-prefer-dark-theme = true;
-      theme = config.gtk.theme;
-    };
+    gtk4.theme = config.gtk.theme;
   };
   qt = {
     enable = true;
