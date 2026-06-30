@@ -1,6 +1,6 @@
 _: {
   programs.niri.settings.layout = {
-    gaps = 5;
+    gaps = 2;
     preset-column-widths = [
       { proportion = 1. / 3.; }
       { proportion = 1. / 2.; }
