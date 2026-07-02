@@ -35,41 +35,37 @@
       caddy
       vrl
     ];
-    config.options = #lua
-      ''
-        vim.opt.relativenumber = false
-        -- Fix terminal errors when in a nix develop shell
-        vim.opt.shell = "zsh"
-        vim.opt.shellcmdflag = "-l -i -c"
+    config.options = /*lua*/ ''
+      vim.opt.relativenumber = false
 
-        -- Automatically enter insert mode when opening a new terminal
-        local term_group = vim.api.nvim_create_augroup("TerminalSettings", { clear = true })
+      -- Fix terminal errors when in a nix develop shell
+      vim.opt.shell = "zsh"
+      vim.opt.shellcmdflag = "-l -i -c"
 
-        vim.api.nvim_create_autocmd("TermOpen", {
-          group = term_group,
-          pattern = "*",
-          command = "startinsert",
-        })
+      -- Automatically enter insert mode when opening a new terminal
+      local term_group = vim.api.nvim_create_augroup("TerminalSettings", { clear = true })
 
-        -- Split horizontally and open terminal
-        vim.keymap.set('n', '<leader>th', ':split | terminal<CR>', { desc = 'Terminal split horizontal' })
+      vim.api.nvim_create_autocmd("TermOpen", {
+        group = term_group,
+        pattern = "*",
+        command = "startinsert",
+      })
 
-        -- Split vertically and open terminal
-        vim.keymap.set('n', '<leader>tv', ':vsplit | terminal<CR>', { desc = 'Terminal split vertical' })
-        '';
-        plugins = {
-        colorscheme = #lua
-        ''
-        return {
-          { "ellisonleao/gruvbox.nvim" },
-          {
-            "LazyVim/LazyVim",
-            opts = {
-              colorscheme = "gruvbox",
-            },
-          }
+      vim.keymap.set('n', '<leader>th', ':split | terminal<CR>', { desc = 'Terminal split horizontal' })
+      vim.keymap.set('n', '<leader>tv', ':vsplit | terminal<CR>', { desc = 'Terminal split vertical' })
+    '';
+    plugins = {
+    colorscheme = /*lua*/ ''
+      return {
+        { "ellisonleao/gruvbox.nvim" },
+        {
+          "LazyVim/LazyVim",
+          opts = {
+            colorscheme = "gruvbox",
+          },
         }
-      '';
+      }
+    '';
     };
   };
 }

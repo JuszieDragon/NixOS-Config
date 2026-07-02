@@ -6,6 +6,14 @@
       hotkey-overlay.title = "Alacritty";
       action.spawn = "alacritty";
     };
+    "Mod+B" = {
+      hotkey-overlay.title = "Firefox";
+      action.spawn = "firefox-devedition";
+    };
+    "Mod+M" = {
+      hotkey-overlay.title = "Feishin";
+      action.spawn = "feishin";
+    };
 
     "Mod+Space" = {
       hotkey-overlay.title = "Noctalia launcher";

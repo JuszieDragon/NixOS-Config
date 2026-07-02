@@ -26,11 +26,11 @@ in lib.mkIf cfg.isEnabled {
     };
   };
 
-  systemd.services.forgejo.preStart = let 
+  systemd.services.forgejo.preStart = let
     adminCmd = "${lib.getExe config.services.forgejo.package} admin user";
     pwd = config.age.secrets.forgejo-admin-password;
     user = "justin"; # Note, Forgejo doesn't allow creation of an account named "admin"
-  in ''
+  in /*bash*/ ''
     ${adminCmd} create --admin --email "jusziedragon@gmail.com" --username ${user} --password "$(tr -d '\n' < ${pwd.path})" || true
     ## uncomment this line to change an admin user which was already created
     # ${adminCmd} change-password --username ${user} --password "$(tr -d '\n' < ${pwd.path})" || true
