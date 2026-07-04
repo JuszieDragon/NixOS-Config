@@ -25,6 +25,7 @@ _: {
         matches = [
           { app-id = "gamescope"; }
           { app-id = "steam_app_.+"; }
+          { app-id = "hl2_linux"; }
         ];
         open-on-output = "DP-1";
         open-fullscreen = true;

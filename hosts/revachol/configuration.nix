@@ -12,6 +12,7 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
+    ./shares.nix
     ../default.nix
   ] ++ modulesImports;
 
@@ -93,6 +94,8 @@ in {
       orca-slicer
       pulseaudio
       qimgv
+      restic
+      restic-browser
       simple-scan
       swaybg
       swaylock

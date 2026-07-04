@@ -1,17 +1,4 @@
-{
-  pkgs,
-  ...
-}: let
-
-  customProtonGEVersion = pVersion: pHash:
-    ( pkgs.proton-ge-bin.overrideAttrs rec { 
-      version = pVersion;
-      src = pkgs.fetchzip {
-        url = "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${version}/${version}.tar.gz";
-        hash = pHash;
-      };
-    }).override { steamDisplayName = pVersion; };
-in {
+{ pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     gamescope
     gpu-screen-recorder
@@ -45,9 +32,6 @@ in {
       };
       localNetworkGameTransfers.openFirewall = true;
       gamescopeSession.enable = true;
-      extraCompatPackages = [
-        ( customProtonGEVersion "GE-Proton10-3" "sha256-V4znOni53KMZ0rs7O7TuBst5kDSaEOyWUGgL7EESVAU=" )
-      ];
     };
     gamemode = {
       enable = true;

@@ -1,7 +1,5 @@
 #This whole config stolen from here https://gist.github.com/vy-let/a030c1079f09ecae4135aebf1e121ea6
-_:
-
-{
+_: {
   users = {
     groups."file_share".gid = 2534;
     users."file_share" = {
@@ -10,7 +8,7 @@ _:
       uid = 2534;
     };
   };
-  
+
   services = {
     samba = {
       enable = true;
@@ -51,11 +49,11 @@ _:
         userServices = true;
       };
     };
-  
+ 
     samba-wsdd = {
       enable = true;
       openFirewall = true;
     };
-  };  
+  };
 }
 

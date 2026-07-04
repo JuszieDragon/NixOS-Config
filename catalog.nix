@@ -4,7 +4,7 @@ with lib;
 
 rec {
   domain = "dragon.luxe";
-  
+
   /*
     options:
       host:
@@ -30,7 +30,7 @@ rec {
       isNixos = true;
       ip = "192.168.1.1";
     };
-    
+ 
     home-assistant = {
       isNixos = false;
       ip = "192.168.1.3";
