@@ -93,7 +93,7 @@
     nixpkgs-patcher,
     nixarr,
     ...
-  } @ inputs: 
+  } @ inputs:
     let
       catalog-gen = host: import ./catalog.nix { inherit (nixpkgs) lib; inherit host; };
       default-modules = system: catalog: [
@@ -180,7 +180,7 @@
       catalog = catalog-gen "yes";
     in nix-on-droid.lib.nixOnDroidConfiguration {
       pkgs = import nixpkgs { system = "aarch64-linux"; };
-      
+
       modules = [ ./hosts/comp/configuration.nix ];
 
       extraSpecialArgs = { inherit inputs catalog; };

@@ -33,9 +33,7 @@ _: {
       }
       {
         matches = [
-          {
-            title = "NIKKE";
-          }
+          { title = "NIKKE"; }
         ];
         open-on-workspace = "Nikke";
         open-fullscreen = true;
