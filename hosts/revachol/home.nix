@@ -1,19 +1,25 @@
-{ pkgs, ... }: {
-  imports = [
-    ../../modules/home-manager
-    ../../modules/home-manager/firefox.nix
-    ../../modules/home-manager/niri
-    ../../modules/home-manager/noctalia
-    ../../modules/home-manager/quickshell
-    ../../modules/home-manager/steam.nix
-    ../../modules/home-manager/yt-dlp.nix
+{ pkgs, ... }:
+let
+  homeManagerDir = ../../modules/home-manager;
+  modules = map (module: homeManagerDir + module) [
+    /firefox.nix
+    /ludusavi.nix
+    /niri
+    /noctalia
+    /quickshell
+    /steam.nix
+    /yt-dlp.nix
   ];
+in {
+  imports = [
+    homeManagerDir
+  ] ++ modules;
 
   home.packages = with pkgs; [
     wlr-randr
     (
       pkgs.writers.writePython3Bin "workspace-backgrounds" {} (
-        builtins.readFile ../../modules/home-manager/niri/workspace-backgrounds.py
+        builtins.readFile (homeManagerDir + /niri/workspace-backgrounds.py)
       )
     )
   ];

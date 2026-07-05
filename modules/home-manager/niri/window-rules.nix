@@ -24,8 +24,9 @@ _: {
       {
         matches = [
           { app-id = "gamescope"; }
-          { app-id = "steam_app_.+"; }
           { app-id = "hl2_linux"; }
+          { app-id = "steam_app_.+"; }
+          { title = "Katawa Shoujo: Re-Engineered"; }
         ];
         open-on-output = "DP-1";
         open-fullscreen = true;
@@ -33,8 +34,7 @@ _: {
       {
         matches = [
           {
-            #title = "NIKKE";
-            app-id = "steam_proton";
+            title = "NIKKE";
           }
         ];
         open-on-workspace = "Nikke";
