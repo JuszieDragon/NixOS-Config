@@ -35,37 +35,43 @@
       caddy
       vrl
     ];
-    config.options = /*lua*/ ''
-      vim.opt.relativenumber = false
+    config = {
+      options = /*lua*/ ''
+        vim.opt.relativenumber = false
 
-      -- Fix terminal errors when in a nix develop shell
-      vim.opt.shell = "zsh"
-      vim.opt.shellcmdflag = "-l -i -c"
+        -- Fix terminal errors when in a nix develop shell
+        vim.opt.shell = "zsh"
+        vim.opt.shellcmdflag = "-l -i -c"
+      '';
 
+      keymaps = /*lua*/ ''
+        vim.keymap.set('n', '<leader>th', ':split | terminal<CR>', { desc = 'Terminal split horizontal' })
+        vim.keymap.set('n', '<leader>tv', ':vsplit | terminal<CR>', { desc = 'Terminal split vertical' })
+      '';
+
+      autocmds = /*lua*/ ''
       -- Automatically enter insert mode when opening a new terminal
-      local term_group = vim.api.nvim_create_augroup("TerminalSettings", { clear = true })
+        local term_group = vim.api.nvim_create_augroup("TerminalSettings", { clear = true })
 
-      vim.api.nvim_create_autocmd("TermOpen", {
-        group = term_group,
-        pattern = "*",
-        command = "startinsert",
-      })
-
-      vim.keymap.set('n', '<leader>th', ':split | terminal<CR>', { desc = 'Terminal split horizontal' })
-      vim.keymap.set('n', '<leader>tv', ':vsplit | terminal<CR>', { desc = 'Terminal split vertical' })
-    '';
+        vim.api.nvim_create_autocmd("TermOpen", {
+          group = term_group,
+          pattern = "*",
+          command = "startinsert",
+        })
+      '';
+    };
     plugins = {
-    colorscheme = /*lua*/ ''
-      return {
-        { "ellisonleao/gruvbox.nvim" },
-        {
-          "LazyVim/LazyVim",
-          opts = {
-            colorscheme = "gruvbox",
-          },
+      colorscheme = /*lua*/ ''
+        return {
+          { "ellisonleao/gruvbox.nvim" },
+          {
+            "LazyVim/LazyVim",
+            opts = {
+              colorscheme = "gruvbox",
+            },
+          }
         }
-      }
-    '';
+      '';
     };
   };
 }

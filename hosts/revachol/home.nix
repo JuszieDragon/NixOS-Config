@@ -7,6 +7,7 @@ let
     /niri
     /noctalia
     /quickshell
+    /slumber.nix
     /steam.nix
     /yt-dlp.nix
   ];
@@ -24,11 +25,19 @@ in {
     )
   ];
 
-  programs.zsh.loginExtra = /*bash*/ ''
-    if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
-      exec dbus-run-session niri --session
-    fi
-  '';
+  programs = {
+    direnv = {
+      enable = true;
+      enableZshIntegration = true; # see note on other shells below
+      nix-direnv.enable = true;
+    };
+
+    zsh.loginExtra = /*bash*/ ''
+      if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+        exec dbus-run-session niri --session
+      fi
+    '';
+  };
 
   xdg = {
     enable = true;
