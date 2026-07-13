@@ -19,13 +19,13 @@
       gh
       git
       inputs.agenix.packages."${stdenv.hostPlatform.system}".default
-      inputs.sqlit.packages."${stdenv.hostPlatform.system}".default
       jq
       lazygit
       nixd
       nerd-fonts.jetbrains-mono
       nurl
       pciutils
+      sqlit-tui
       statix
       tmux
       tree

@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
 
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid";
@@ -39,11 +40,6 @@
 
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    sqlit = {
-      url = "github:Maxteabag/sqlit";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -90,11 +86,18 @@
     niri,
     nix-on-droid,
     nixpkgs,
+    nixpkgs-master,
     nixpkgs-patcher,
     nixarr,
     ...
   } @ inputs:
     let
+      # for firefox-devedition as mozilla only keeps the latest binary and unstable can lag behind a bit on updating to latest
+      pkgs-master = import nixpkgs-master {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+
       catalog-gen = host: import ./catalog.nix { inherit (nixpkgs) lib; inherit host; };
       default-modules = system: catalog: [
         agenix.nixosModules.default
@@ -105,7 +108,7 @@
           home-manager = {
             useGlobalPkgs = true;
             users."justin" = ./hosts/${system}/home.nix;
-            extraSpecialArgs = { inherit inputs catalog; };
+            extraSpecialArgs = { inherit inputs catalog pkgs-master; };
           };
         }
 

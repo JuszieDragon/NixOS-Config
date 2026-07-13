@@ -1,10 +1,10 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, pkgs-master, ... }: {
   options.firefox.enable = lib.mkEnableOption "Enable Firefox";
 
   config = {
     programs.firefox = {
       enable = true;
-      package = pkgs.firefox-devedition;
+      package = pkgs-master.firefox-devedition;
       configPath = "${config.xdg.configHome}/mozilla/firefox";
 
       profiles = {
