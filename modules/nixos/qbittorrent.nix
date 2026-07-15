@@ -56,10 +56,15 @@ in rec {
       };
       Preferences = {
         WebUI = {
+          AlternativeUIEnabled = false;
           AuthSubnetWhitelist = "192.168.0.0/22";
           AuthSubnetWhitelistEnabled = true;
           Password_PBKDF2 = "@ByteArray(6V/U+piHm3jT+v6nvtJu7Q==:p7x9j9tM37ZqK5ytCLi+GbbxgBeLl1BtE09FPegVn24W+SF8Nd/VKzSrNEtZCDno5x9v36xmQViY/FtXIhE3CA==)";
           Username = "justinj0";
+
+          ReverseProxySupportEnabled = true;
+          HostHeaderValidation = false;
+          CSRFProtection = false;
         };
         BitTorrent = {
           MaxUploads = "-1";
