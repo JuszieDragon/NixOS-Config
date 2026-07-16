@@ -60,6 +60,7 @@ in {
         support32Bit = true;
       };
       pulse.enable = true;
+      jack.enable = true;
     };
     printing = {
       enable = true;
@@ -123,13 +124,25 @@ in {
     ];
   };
 
-  xdg.portal = with pkgs; {
+  xdg.portal = {
     enable = true;
-    xdgOpenUsePortal = true;
-    extraPortals = [ xdg-desktop-portal-gtk xdg-desktop-portal-wlr ];
-    configPackages = [ xdg-desktop-portal-gtk ];
-    config.common.default = "gtk";
-    wlr.enable = true;
+    wlr.enable = false;
+
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gnome
+      pkgs.xdg-desktop-portal-gtk
+    ];
+
+    config = {
+      common = {
+        default = [ "gnome" "gtk" ];
+      };
+      niri = {
+        default = [ "gnome" "gtk" ];
+        "org.freedesktop.portal.ScreenCast" = "gnome";
+        "org.freedesktop.portal.Screenshot" = "gnome";
+      };
+    };
   };
 
   system.stateVersion = "25.11"; # Did you read the comment?
