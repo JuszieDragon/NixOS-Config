@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ config, inputs, pkgs, ... }:
 
 let
   modulesRoot = ../../modules/nixos;
@@ -18,7 +18,9 @@ in {
 
   boot = {
     #Related to USB PD, should be fine to disable to remove error in logs on boot
-    blacklistedKernelModules = [ "ucsi_acpi" ];
+    blacklistedKernelModules = [ "ucsi_acpi" "r8169" ];
+    extraModulePackages = [ config.boot.kernelPackages.r8125 ];
+    kernelModules = [ "r8125" ];
     loader = {
       efi.canTouchEfiVariables = true;
       systemd-boot.enable = true;
@@ -29,7 +31,15 @@ in {
   networking = {
     firewall.enable = false;
     hostName = "revachol";
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      settings = {
+        device = {
+          "wifi.scan-rand-mac-address" = "no";
+          "ethernet.properties" = "eee=0";
+        };
+      };
+    };
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -86,9 +96,11 @@ in {
       "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
     systemPackages = with pkgs; [
       faugus-launcher
+      foliate
       git
       gnome-disk-utility
       hydrus
+      localsend
       usbutils
       mpv
       neovim
@@ -139,6 +151,9 @@ in {
       };
       niri = {
         default = [ "gnome" "gtk" ];
+        "org.freedesktop.impl.portal.FileChooser" = "gtk";
+
+        #fix discord screensharing with niri
         "org.freedesktop.portal.ScreenCast" = "gnome";
         "org.freedesktop.portal.Screenshot" = "gnome";
       };

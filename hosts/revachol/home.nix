@@ -3,6 +3,7 @@ let
   homeManagerDir = ../../modules/home-manager;
   modules = map (module: homeManagerDir + module) [
     /firefox.nix
+    /gallery-dl.nix
     /ludusavi.nix
     /niri
     /noctalia

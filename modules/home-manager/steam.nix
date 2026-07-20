@@ -34,14 +34,18 @@ in {
     onSteamRunning = "close";
 
     apps = {
-      Umamusume-Pretty-Derby = {
-        id = 3224770;
-        compatTool = customProtonGEVersion "GE-Proton10-3" "sha256-V4znOni53KMZ0rs7O7TuBst5kDSaEOyWUGgL7EESVAU=";
+      Satisfactory = {
+        id = 526870;
+        launchOptionsStr = "LD_PRELOAD=\"\" gamescope -f -w 3440 -h 1440 -W 3440 -H 1440 --force-grab-cursor -- %command% -vulkan";
       };
       # Native linux version doesn't detect mouse, might be niri related
       Tabletop-Simulator = {
         id = 286160;
         compatTool = "proton_experimental";
+      };
+      Umamusume-Pretty-Derby = {
+        id = 3224770;
+        compatTool = customProtonGEVersion "GE-Proton10-3" "sha256-V4znOni53KMZ0rs7O7TuBst5kDSaEOyWUGgL7EESVAU=";
       };
     };
     nonSteamApps = {

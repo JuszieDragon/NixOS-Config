@@ -14,6 +14,10 @@
       hotkey-overlay.title = "Feishin";
       action.spawn = "feishin";
     };
+    "Mod+V" = {
+      hotkey-overlay.title = "Vesktop";
+      action.spawn = "vesktop";
+    };
 
     "Mod+Space" = {
       hotkey-overlay.title = "Noctalia launcher";

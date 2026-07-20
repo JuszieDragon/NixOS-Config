@@ -140,6 +140,23 @@
         "type": "github"
       }
     },
+    "gallery-dl-latest": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784362370,
+        "narHash": "sha256-BIHjGbNjes9FMtz10cgGuHhpHTwdUfppINF1HjWMm7g=",
+        "ref": "refs/tags/v1.32.7",
+        "rev": "8594ad8d7fba07f504f733283f56c7a11802fe73",
+        "revCount": 8521,
+        "type": "git",
+        "url": "https://codeberg.org/mikf/gallery-dl"
+      },
+      "original": {
+        "ref": "refs/tags/v1.32.7",
+        "type": "git",
+        "url": "https://codeberg.org/mikf/gallery-dl"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -601,6 +618,7 @@
         "agenix": "agenix",
         "dotfiles": "dotfiles",
         "firefox-addons": "firefox-addons",
+        "gallery-dl-latest": "gallery-dl-latest",
         "home-manager": "home-manager_2",
         "kosync": "kosync",
         "lazyvim": "lazyvim",

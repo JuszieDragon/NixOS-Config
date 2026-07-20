@@ -1,12 +1,15 @@
-_: {
+{ inputs, pkgs, ... }: {
   programs.gallery-dl = {
     enable = true;
+    package = pkgs.gallery-dl.overrideAttrs (oldAttrs: {
+      src = inputs.gallery-dl-latest;
+    });
     settings = {
       extractor = {
         archive = "/state/gallery-dl/archive.sqlite3";
         base-directory = "/mnt/media/gallery-dl";
         skip = "abort:10";
-        
+
         #TODO could use this to make cbzs
         #https://github.com/mikf/gallery-dl/issues/7471
         mangadex = {

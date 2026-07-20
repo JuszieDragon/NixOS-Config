@@ -63,6 +63,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    gallery-dl-latest = {
+      url = "git+https://codeberg.org/mikf/gallery-dl?ref=refs/tags/v1.32.7";
+      flake = false;
+    };
+
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
     nixpkgs-patch-qbittorrent = {
       url = "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:qbittorrent-categories.diff";
@@ -80,6 +85,7 @@
 
   outputs = {
     agenix,
+    gallery-dl-latest,
     home-manager,
     kosync,
     lazyvim,
