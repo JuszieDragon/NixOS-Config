@@ -36,7 +36,7 @@ in {
     apps = {
       Satisfactory = {
         id = 526870;
-        launchOptionsStr = "LD_PRELOAD=\"\" gamescope -f -w 3440 -h 1440 -W 3440 -H 1440 --force-grab-cursor -- %command% -vulkan";
+        launchOptionsStr = "LD_PRELOAD=\"\" gamescope -f -w 3440 -h 1440 -W 3440 -H 1440 --force-grab-cursor -- %command%";
       };
       # Native linux version doesn't detect mouse, might be niri related
       Tabletop-Simulator = {
