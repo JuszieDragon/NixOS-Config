@@ -7,6 +7,13 @@
       package = pkgs-master.firefox-devedition;
       configPath = "${config.xdg.configHome}/mozilla/firefox";
 
+      policies = {
+        GenerativeAI = {
+          Enabled = false;
+          Locked = true;
+        };
+      };
+
       profiles = {
         dev-edition-default = {
           id = 0;
