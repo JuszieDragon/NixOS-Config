@@ -51,6 +51,7 @@ in {
       zomb-update = "steamcmd +force_install_dir /srv/zomboid/b42 +login anonymous +app_update 380870 -beta unstable validate +quit";
       #zip each folder in current folder
       fzip = "for i in */; do zip -r \"\${i%/}.zip\" \"$i\"; done";
+      nix-dev = "nix develop -c \"$SHELL\"";
     } // hostSSHAliases // hostRemoteBuildAliases;
 
     plugins = [
