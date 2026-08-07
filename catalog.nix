@@ -197,6 +197,12 @@ rec {
       hosts = [ "soul-matrix" ];
       port = 8085;
     };
+    gotify = {
+      enable = true;
+      hosts = [ "soul-matrix" ];
+      port = 8072;
+      reverseProxy = "external";
+    };
 
     restic-server = {
       enable = true;

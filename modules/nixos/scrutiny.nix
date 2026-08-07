@@ -1,16 +1,20 @@
-{ catalog, ... }: 
-
-
+{ catalog, config, inputs, ... }:
 let
   cfg = catalog.services.scrutiny;
-
 in {
+  age.secrets.scrutiny-gotify.file = inputs.self + /secrets/scrutiny-gotify.age;
+
   services.scrutiny = {
     enable = cfg.isEnabled;
     settings.web.listen = {
       inherit (cfg) port;
       host = cfg.host.ip; #TODO chenge this to work with multihost
+
     };
+  };
+
+  systemd.services.scrutiny.serviceConfig = {
+    EnvironmentFile = config.age.secrets.scrutiny-gotify.path;
   };
 
   #nixpkgs.overlays = [( _final: prev: 

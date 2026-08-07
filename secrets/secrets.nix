@@ -28,6 +28,7 @@ in
   "restic-repository-url.age".publicKeys = keys;
   "romm.age".publicKeys = keys;
   "romm-db.age".publicKeys = keys;
+  "scrutiny-gotify.age".publicKeys = keys;
   "share.age".publicKeys = keys;
   "vpn.age".publicKeys = keys;
   "yarr.age".publicKeys = keys;
