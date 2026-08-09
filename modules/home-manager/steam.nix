@@ -36,7 +36,13 @@ in {
     apps = {
       Satisfactory = {
         id = 526870;
+        compatTool = customProtonGEVersion "GE-Proton11-3" "sha256-RiCmnUKeZRhPUCgm7fsROKFkAl37+/tYkA47tQtkIF4=";
         launchOptionsStr = "LD_PRELOAD=\"\" gamescope -f -w 3440 -h 1440 -W 3440 -H 1440 --force-grab-cursor -- %command%";
+      };
+      #Fix audio with native linux build
+      Scarlet-Hollow = {
+        id = 1609230;
+        launchOptionsStr = "SDL_AUDIODRIVER=pulse %command%";
       };
       # Native linux version doesn't detect mouse, might be niri related
       Tabletop-Simulator = {
