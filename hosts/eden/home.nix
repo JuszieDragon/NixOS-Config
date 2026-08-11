@@ -6,8 +6,8 @@ let
     /gallery-dl.nix
     /ludusavi.nix
     /niri
+    /niri/asahi.nix
     /noctalia
-    /quickshell
     /slumber.nix
     # /steam.nix
     /yt-dlp.nix

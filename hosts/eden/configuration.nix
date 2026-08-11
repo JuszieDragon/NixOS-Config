@@ -1,13 +1,20 @@
-{ config, inputs, lib, pkgs, ... }: {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./shares.nix
-      ../default.nix
-    ];
+{ config, inputs, lib, pkgs, ... }:
+let
+  modulesRoot = ../../modules/nixos;
+
+  modulesImports = map (module: modulesRoot + module) [
+    /feishin.nix
+  ];
+
+in {
+  imports = [
+    ./hardware-configuration.nix
+    ./shares.nix
+    ../default.nix
+  ] ++ modulesImports;
 
   boot.loader = {
-    systemd-boot.enable = true;
+    systemd-bootystemd-boot.enable = true;
     efi.canTouchEfiVariables = false;
   };
 
@@ -17,10 +24,7 @@
       peripheralFirmwareDirectory = inputs.self + /firmware;
     };
     bluetooth.enable = true;
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
+    graphics.enable = true;
   };
 
   networking = {
@@ -37,7 +41,8 @@
     etc."xdg/menus/applications.menu".source =
       "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
     systemPackages = with pkgs; [
-      faugus-launcher
+      brightnessctl
+      distrobox
       foliate
       git
       gnome-disk-utility
@@ -58,6 +63,7 @@
       wget
       wiremix
       vesktop
+      vulkan-tools
       xwayland-satellite
 
       kdePackages.ark
@@ -77,6 +83,8 @@
       inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
   };
+
+  programs.niri.enable = true;
 
   xdg.portal = {
     enable = true;
@@ -104,11 +112,18 @@
 
   services = {
     openssh.enable = true;
+    getty.autologinUser = "justin";
     pipewire = {
       enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
       pulse.enable = true;
     };
-    slibinput.enable = true;
+    libinput.enable = true;
+    upower.enable = true;
+    power-profiles-daemon.enable = true;
   };
 
   system.stateVersion = "26.11"; # Did you read the comment?

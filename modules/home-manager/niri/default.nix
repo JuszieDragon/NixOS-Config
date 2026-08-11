@@ -29,7 +29,7 @@
   };
 
   programs.niri = {
-    package = inputs.niri.packages.${pkgs.system}.niri-unstable;
+    package = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
     settings = {
       environment."NIXOS_OZONE_WL" = "1";
       hotkey-overlay.skip-at-startup = true;
