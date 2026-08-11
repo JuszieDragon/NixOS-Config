@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: with builtins; {
+{ config, inputs, lib, pkgs, ... }: with builtins; {
   imports = [
     ./binds.nix
     ./cursor.nix
@@ -29,6 +29,7 @@
   };
 
   programs.niri = {
+    package = inputs.niri.packages.${pkgs.system}.niri-unstable;
     settings = {
       environment."NIXOS_OZONE_WL" = "1";
       hotkey-overlay.skip-at-startup = true;

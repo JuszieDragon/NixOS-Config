@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
+    nixpkgs-apple-silicon.follows = "apple-silicon/nixpkgs";
 
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid";
@@ -68,6 +69,8 @@
       flake = false;
     };
 
+    apple-silicon.url = "github:nix-community/nixos-apple-silicon";
+
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
     nixpkgs-patch-qbittorrent = {
       url = "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:qbittorrent-categories.diff";
@@ -83,8 +86,14 @@
     };
   };
 
+  nixConfig = {
+    extra-substituters = [ "https://nix-community.cachix.org" ];
+    extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
+  };
+
   outputs = {
     agenix,
+    apple-silicon,
     gallery-dl-latest,
     home-manager,
     kosync,
@@ -92,6 +101,7 @@
     niri,
     nix-on-droid,
     nixpkgs,
+    nixpkgs-apple-silicon,
     nixpkgs-master,
     nixpkgs-patcher,
     nixarr,
@@ -174,14 +184,20 @@
       eden = let
         catalog = catalog-gen "eden";
       in nixpkgs-patcher.lib.nixosSystem {
-        nixpkgsPatcher.inputs = inputs;
+        nixpkgsPatcher = {
+          inherit inputs;
+          nixpkgs = nixpkgs-apple-silicon;
+        };
 
-        system = "x86_64-linux";
+        system = "aarch64-linux";
 
 	      modules = [
+	        apple-silicon.nixosModules.apple-silicon-support
 	        niri.nixosModules.niri
           { nixpkgs.overlays = [ niri.overlays.niri ]; }
         ] ++ (default-modules "eden" catalog);
+
+	      specialArgs = { inherit inputs catalog; };
       };
     };
 

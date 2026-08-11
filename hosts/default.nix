@@ -20,6 +20,8 @@
 
   boot.loader.systemd-boot.configurationLimit = 10;
 
+  nixpkgs.config.allowUnfree = true;
+
   nix = {
     gc = {
       automatic = true;
