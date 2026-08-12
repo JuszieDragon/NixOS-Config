@@ -14,7 +14,7 @@ in {
   ] ++ modulesImports;
 
   boot.loader = {
-    systemd-bootystemd-boot.enable = true;
+    systemd-boot.enable = true;
     efi.canTouchEfiVariables = false;
   };
 
@@ -42,6 +42,7 @@ in {
       "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
     systemPackages = with pkgs; [
       brightnessctl
+      chromium
       distrobox
       foliate
       git
