@@ -63,6 +63,10 @@
       url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     gallery-dl-latest = {
       url = "git+https://codeberg.org/mikf/gallery-dl?ref=refs/tags/v1.32.7";
@@ -105,6 +109,7 @@
     nixpkgs-master,
     nixpkgs-patcher,
     nixarr,
+    noctalia-greeter,
     ...
   } @ inputs:
     let
@@ -195,6 +200,7 @@
 	        apple-silicon.nixosModules.apple-silicon-support
 	        niri.nixosModules.niri
           { nixpkgs.overlays = [ niri.overlays.niri ]; }
+          noctalia-greeter.nixosModules.default
         ] ++ (default-modules "eden" catalog);
 
 	      specialArgs = { inherit inputs catalog; };

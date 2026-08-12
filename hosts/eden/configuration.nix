@@ -53,6 +53,7 @@ in {
       mpv
       neovim
       orca-slicer
+      prismlauncher
       pulseaudio
       qimgv
       restic
@@ -81,11 +82,19 @@ in {
       hunspell
       hunspellDicts.en_AU-large
 
+      glfw
+      openal
+      libglvnd
+      mesa
+
       inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
   };
 
-  programs.niri.enable = true;
+  programs = {
+    noctalia-greeter.enable = true;
+    niri.enable = true;
+  };
 
   xdg.portal = {
     enable = true;
