@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
+    nixpkgs-apple-silicon.follows = "apple-silicon/nixpkgs";
 
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid";
@@ -62,11 +63,17 @@
       url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     gallery-dl-latest = {
       url = "git+https://codeberg.org/mikf/gallery-dl?ref=refs/tags/v1.32.7";
       flake = false;
     };
+
+    apple-silicon.url = "github:nix-community/nixos-apple-silicon";
 
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
     nixpkgs-patch-qbittorrent = {
@@ -83,8 +90,14 @@
     };
   };
 
+  nixConfig = {
+    extra-substituters = [ "https://nix-community.cachix.org" ];
+    extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
+  };
+
   outputs = {
     agenix,
+    apple-silicon,
     gallery-dl-latest,
     home-manager,
     kosync,
@@ -92,9 +105,11 @@
     niri,
     nix-on-droid,
     nixpkgs,
+    nixpkgs-apple-silicon,
     nixpkgs-master,
     nixpkgs-patcher,
     nixarr,
+    noctalia-greeter,
     ...
   } @ inputs:
     let
@@ -174,14 +189,21 @@
       eden = let
         catalog = catalog-gen "eden";
       in nixpkgs-patcher.lib.nixosSystem {
-        nixpkgsPatcher.inputs = inputs;
+        nixpkgsPatcher = {
+          inherit inputs;
+          nixpkgs = nixpkgs-apple-silicon;
+        };
 
-        system = "x86_64-linux";
+        system = "aarch64-linux";
 
 	      modules = [
+	        apple-silicon.nixosModules.apple-silicon-support
 	        niri.nixosModules.niri
           { nixpkgs.overlays = [ niri.overlays.niri ]; }
+          noctalia-greeter.nixosModules.default
         ] ++ (default-modules "eden" catalog);
+
+	      specialArgs = { inherit inputs catalog; };
       };
     };
 

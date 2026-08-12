@@ -13,12 +13,15 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsnE6XhdssoCsALupx4icoKIdwEWqbK7nAZo9PEST6y" #comp
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPsLqXr/dETjYP3ZlWFTn9yZ1euzbl6hFTj9CwXKYlXY" #last-defence-academy
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsUITUNFkh7hkAuaveCIUfLuFTIasNPLQv3N768eFHq" #revachol
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDy3F+Jlmmceb4aw9mbaaarB+W3+jIBiVX7v8mG8+VBF" #eden
     ];
   };
 
   time.timeZone = "Australia/Hobart";
 
   boot.loader.systemd-boot.configurationLimit = 10;
+
+  nixpkgs.config.allowUnfree = true;
 
   nix = {
     gc = {
