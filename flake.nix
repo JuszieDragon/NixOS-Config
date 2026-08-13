@@ -122,7 +122,6 @@
       catalog-gen = host: import ./catalog.nix { inherit (nixpkgs) lib; inherit host; };
       default-modules = system: catalog: [
         agenix.nixosModules.default
-        nixarr.nixosModules.default
 
         home-manager.nixosModules.home-manager
         {
@@ -156,6 +155,7 @@
 
         modules = [
           kosync.nixosModules.${system}.default
+          nixarr.nixosModules.default
         ] ++ default-modules "soul-matrix" catalog;
 
         specialArgs = { inherit inputs catalog; };

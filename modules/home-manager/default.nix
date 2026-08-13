@@ -18,14 +18,16 @@
       deadnix
       gh
       git
-      inputs.agenix.packages."${stdenv.hostPlatform.system}".default
+      inputs.agenix.packages.${stdenv.hostPlatform.system}.default
       jq
       lazygit
       nixd
       nerd-fonts.jetbrains-mono
       nurl
       pciutils
-      sqlit-tui
+      (sqlit-tui.overridePythonAttrs (old: {
+        propagatedBuildInputs = (old.propagatedBuildInputs or []) ++ [ python3Packages.pytz ];
+      }))
       statix
       tmux
       tree
