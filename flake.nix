@@ -128,7 +128,7 @@
           home-manager = {
             useGlobalPkgs = true;
             users."justin" = ./hosts/${system}/home.nix;
-            extraSpecialArgs = { inherit inputs catalog pkgs-master; };
+            extraSpecialArgs = { inherit inputs catalog pkgs-master; hostname = system; };
           };
         }
 

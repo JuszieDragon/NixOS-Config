@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, hostname, ... }: {
   programs.niri.settings.binds = with config.lib.niri.actions; {
     "Mod+Shift+Slash".action = show-hotkey-overlay;
 
@@ -63,7 +63,9 @@
       action.spawn = [ "noctalia" "msg" "brightness-down" ];
       allow-when-locked = true;
     };
-    "XF86PowerOff".action.spawn = [ "shutdown" "now" ];
+    "XF86PowerOff".action.spawn = if hostname == "eden"
+      then [ "systemctl" "suspend" ]
+      else [ "shutdown" "now" ];
 
     "Mod+O" = {
       action = toggle-overview;
