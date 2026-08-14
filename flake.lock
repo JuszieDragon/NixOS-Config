@@ -29,15 +29,16 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1786367009,
-        "narHash": "sha256-5Hm7sY6Kjw0lZmISOmv0+Kzt7mqJhEyb+g+I5tVStzM=",
+        "lastModified": 1786635020,
+        "narHash": "sha256-AdJ4iJTzmIMbA3YzDCmv/fhSFgLRx/ccSgBjJJ2Ifnk=",
         "owner": "nix-community",
         "repo": "nixos-apple-silicon",
-        "rev": "3d2325a31f37221e276f721fabac363a65d0cf7d",
+        "rev": "9f2e874c8d1b4b2a307af7899eab1498e0755a29",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
+        "ref": "pull/529/head",
         "repo": "nixos-apple-silicon",
         "type": "github"
       }
@@ -709,6 +710,7 @@
         "noctalia": "noctalia",
         "noctalia-greeter": "noctalia-greeter",
         "quickshell": "quickshell",
+        "steam-asahi": "steam-asahi",
         "steam-config-nix": "steam-config-nix"
       }
     },
@@ -726,6 +728,26 @@
         "owner": "andreymatin",
         "repo": "scss-reset",
         "type": "github"
+      }
+    },
+    "steam-asahi": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-apple-silicon"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785063414,
+        "narHash": "sha256-t8IxhX6NeMuwxVBGmDPcF/CmD+LUbZapHLfHhMKqum0=",
+        "ref": "refs/heads/main",
+        "rev": "a40d2aee762004eac0f14acd6135069787a4b718",
+        "revCount": 20,
+        "type": "git",
+        "url": "https://codeberg.org/ooonea/steam-asahi"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/ooonea/steam-asahi"
       }
     },
     "steam-config-nix": {

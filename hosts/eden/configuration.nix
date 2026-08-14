@@ -94,6 +94,17 @@ in {
   programs = {
     noctalia-greeter.enable = true;
     niri.enable = true;
+    steam-asahi.enable = true;
+  };
+
+  users = {
+    # cleanup logs for steam-asahi
+    groups.plugdev = {};
+    users.justin.extraGroups = [
+      "kvm"
+      "video"
+      "render"
+    ];
   };
 
   xdg.portal = {
@@ -134,6 +145,11 @@ in {
     libinput.enable = true;
     upower.enable = true;
     power-profiles-daemon.enable = true;
+    # To build crosspoint
+    udev.packages = with pkgs; [
+      platformio-core.udev
+      openocd
+    ];
   };
 
   system.stateVersion = "26.11"; # Did you read the comment?

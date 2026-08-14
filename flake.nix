@@ -73,7 +73,12 @@
       flake = false;
     };
 
-    apple-silicon.url = "github:nix-community/nixos-apple-silicon";
+    apple-silicon.url = "github:nix-community/nixos-apple-silicon/pull/529/head";
+
+    steam-asahi = {
+      url = "git+https://codeberg.org/ooonea/steam-asahi";
+      inputs.nixpkgs.follows = "nixpkgs-apple-silicon";
+    };
 
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
     nixpkgs-patch-qbittorrent = {
@@ -110,6 +115,7 @@
     nixpkgs-patcher,
     nixarr,
     noctalia-greeter,
+    steam-asahi,
     ...
   } @ inputs:
     let
@@ -183,6 +189,7 @@
           noctalia-greeter.nixosModules.default
 
           { nixpkgs.overlays = [ niri.overlays.niri ]; }
+          noctalia-greeter.nixosModules.default
         ] ++ (default-modules "revachol" catalog);
 
         specialArgs = { inherit inputs catalog; };
@@ -199,10 +206,12 @@
         system = "aarch64-linux";
 
 	      modules = [
-	        apple-silicon.nixosModules.apple-silicon-support
+          apple-silicon.nixosModules.apple-silicon-support
+          steam-asahi.nixosModules.default
 	        niri.nixosModules.niri
-          { nixpkgs.overlays = [ niri.overlays.niri ]; }
           noctalia-greeter.nixosModules.default
+
+          { nixpkgs.overlays = [ niri.overlays.niri ]; }
         ] ++ (default-modules "eden" catalog);
 
 	      specialArgs = { inherit inputs catalog; };
