@@ -43,21 +43,8 @@
         vim.opt.shell = "zsh"
         vim.opt.shellcmdflag = "-l -i -c"
 
-        -- Force Neovim to use the system clipboard for yanks and deletes
-        vim.opt.clipboard = "unnamedplus"
-
-        -- Configure the built-in OSC 52 clipboard provider
-        vim.g.clipboard = {
-          name = 'OSC 52',
-          copy = {
-            ['+'] = require('vim.ui.clipboard.osc52').copy,
-            ['*'] = require('vim.ui.clipboard.osc52').copy,
-          },
-          paste = {
-            ['+'] = require('vim.ui.clipboard.osc52').paste,
-            ['*'] = require('vim.ui.clipboard.osc52').paste,
-          },
-        }
+        vim.g.clipboard = 'osc52'
+        vim.opt.clipboard = 'unnamedplus'
       '';
 
       keymaps = /*lua*/ ''

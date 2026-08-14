@@ -62,8 +62,10 @@
             style = "Regular";
           };
         };
-        terminal.shell = "${pkgs.zsh}/bin/zsh";
-        osc52 = "CopyPaste";
+        terminal = {
+          shell = "${pkgs.zsh}/bin/zsh";
+          osc52 = "CopyPaste";
+        };
       };
     };
   };
