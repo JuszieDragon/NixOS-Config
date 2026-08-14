@@ -180,6 +180,8 @@
 
         modules = [
           niri.nixosModules.niri
+          noctalia-greeter.nixosModules.default
+
           { nixpkgs.overlays = [ niri.overlays.niri ]; }
         ] ++ (default-modules "revachol" catalog);
 

@@ -61,7 +61,19 @@ in {
       nssmdns4 = true;
       openFirewall = true;
     };
-    getty.autologinUser = "justin";
+    greetd = {
+      enable = true;
+      settings = {
+        initial_session = {
+          command = "niri-session"; # or your specific compositor command
+          user = "justin";
+        };
+        default_session = {
+          command = "${pkgs.noctalia-greeter}/bin/noctalia-greeter"; 
+          user = "greeter";
+        };
+      };
+    };
     openssh.enable = true;
     pipewire = {
       enable = true;
@@ -140,9 +152,9 @@ in {
     enable = true;
     wlr.enable = false;
 
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gnome
-      pkgs.xdg-desktop-portal-gtk
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gnome
+      xdg-desktop-portal-gtk
     ];
 
     config = {
