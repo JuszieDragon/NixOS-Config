@@ -63,6 +63,7 @@
           };
         };
         terminal.shell = "${pkgs.zsh}/bin/zsh";
+        osc52 = "CopyPaste";
       };
     };
   };
