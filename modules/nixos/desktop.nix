@@ -1,4 +1,6 @@
 { inputs, pkgs, ... }: {
+  hardware.sane.enable = true;
+
   xdg.portal = {
     enable = true;
     wlr.enable = false;
@@ -22,6 +24,8 @@
       };
     };
   };
+  # sets high scheduling priority for pipewire audio threads
+  security.rtkit.enable = true;
 
   environment = {
     # https://discourse.nixos.org/t/hyprland-dolphin-file-manager-trying-to-open-an-image-asks-for-a-program-to-use-for-open-it/69824/3

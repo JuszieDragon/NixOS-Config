@@ -57,10 +57,7 @@ in {
         rocblas
       ];
     };
-    sane.enable = true;
   };
-
-  security.rtkit.enable = true;
 
   services = {
     greetd = {
