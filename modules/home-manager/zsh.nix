@@ -52,6 +52,8 @@ in {
       #zip each folder in current folder
       fzip = "for i in */; do zip -r \"\${i%/}.zip\" \"$i\"; done";
       nix-dev = "nix develop -c \"$SHELL\"";
+
+      aider-local = "OLLAMA_API_BASE=http://localhost:11434 aider --model ollama/qwen3-coder:30b-a3b-q4_K_M";
     } // hostSSHAliases // hostRemoteBuildAliases;
 
     plugins = [

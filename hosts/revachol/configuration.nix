@@ -4,6 +4,7 @@ let
   modulesRoot = ../../modules/nixos;
 
   modulesImports = map (module: modulesRoot + module) [
+    /desktop.nix
     /feishin.nix
     /gaming.nix
     /webhook.nix
@@ -49,6 +50,12 @@ in {
     graphics = {
       enable = true;
       enable32Bit = true;
+      extraPackages = with pkgs.rocmPackages; [
+        clr
+        clr.icd
+        hipblas
+        rocblas
+      ];
     };
     sane.enable = true;
   };
@@ -56,11 +63,6 @@ in {
   security.rtkit.enable = true;
 
   services = {
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
-    };
     greetd = {
       enable = true;
       settings = {
@@ -74,7 +76,6 @@ in {
         };
       };
     };
-    openssh.enable = true;
     pipewire = {
       enable = true;
       alsa = {
@@ -84,94 +85,26 @@ in {
       pulse.enable = true;
       jack.enable = true;
     };
-    printing = {
-      enable = true;
-      drivers = with pkgs; [
-        cups-filters
-        cups-browsed
-      ];
-    };
-    udisks2.enable = true;
-    # To build crosspoint
-    udev.packages = with pkgs; [
-      platformio-core.udev
-      openocd
-    ];
     xserver.videoDrivers = [ "amdgpu" ];
+    ollama = {
+      enable = true;
+      package = pkgs.ollama-rocm; # Uses the ROCm build of Ollama
+      # Force RDNA3 architecture identification for the 7900 XTX
+      environmentVariables = {
+        HSA_OVERRIDE_GFX_VERSION = "11.0.0";
+      };
+      rocmOverrideGfx = "11.0.0";
+    };
   };
 
   programs.niri.enable = true;
 
-  environment = {
-    # https://discourse.nixos.org/t/hyprland-dolphin-file-manager-trying-to-open-an-image-asks-for-a-program-to-use-for-open-it/69824/3
-    etc."xdg/menus/applications.menu".source =
-      "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
-    systemPackages = with pkgs; [
-      faugus-launcher
-      foliate
-      git
-      gnome-disk-utility
-      hydrus
-      localsend
-      usbutils
-      mpv
-      neovim
-      orca-slicer
-      pulseaudio
-      qimgv
-      restic
-      restic-browser
-      simple-scan
-      swaybg
-      swaylock
-      unrar
-      wget
-      wiremix
-      vesktop
-      xwayland-satellite
+  environment.systemPackages = with pkgs; [
+    faugus-launcher
+    hydrus
 
-      kdePackages.ark
-      kdePackages.dolphin
-      kdePackages.dolphin-plugins
-      kdePackages.qtsvg
-      kdePackages.baloo-widgets
-      kdePackages.baloo
-      kdePackages.kio
-      kdePackages.kio-extras
-      kdePackages.kservice
-
-      libreoffice-qt
-      hunspell
-      hunspellDicts.en_AU-large
-
-      inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
-    ];
-  };
-
-  xdg.portal = {
-    enable = true;
-    wlr.enable = false;
-
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gnome
-      xdg-desktop-portal-gtk
-    ];
-
-    config = {
-      common = {
-        default = [ "gnome" "gtk" ];
-      };
-      niri = {
-        default = [ "gnome" "gtk" ];
-        "org.freedesktop.impl.portal.FileChooser" = "gtk";
-
-        #fix discord screensharing with niri
-        "org.freedesktop.portal.ScreenCast" = "gnome";
-        "org.freedesktop.portal.Screenshot" = "gnome";
-      };
-    };
-  };
+    aider-chat
+  ];
 
   system.stateVersion = "25.11"; # Did you read the comment?
 }
-
