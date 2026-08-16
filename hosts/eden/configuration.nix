@@ -14,9 +14,17 @@ in {
     ../default.nix
   ] ++ modulesImports;
 
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = false;
+  boot = {
+    kernel.sysctl = {
+      "vm.swappiness" = 100;
+      "vm.page-cluster" = 0;
+      "vm.watermark_scale_factor" = 125; # reclaim earlier, avoid latency cliffs
+      "vm.max_map_count" = 1048576; # Proton/DXVK requirement (Fedora/Arch default)
+    };
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = false;
+    };
   };
 
   hardware = {
@@ -77,6 +85,14 @@ in {
       pulse.enable = true;
     };
     libinput.enable = true;
+    logind = {
+      enable = true;
+      settings.Login = {
+        HandlePowerKey = "ignore";
+        HandlePowerKeyLongPress = "ignore";
+        PowerKeyIgnoreInhibited = "yes";
+      };
+    };
     upower.enable = true;
     power-profiles-daemon.enable = true;
   };
