@@ -23,17 +23,10 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  nix = {
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-    settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "justin" ];
-      auto-optimise-store = true;
-    };
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    trusted-users = [ "root" "justin" ];
+    auto-optimise-store = true;
   };
 
   environment.systemPackages = with pkgs; [
@@ -49,7 +42,17 @@
 
   environment.enableAllTerminfo = true;
 
-  programs.zsh.enable = true;
+  programs = {
+    nh = {
+      enable = true;
+      clean = {
+        enable = true;
+        extraArgs = "--keep-since 4d --keep 3";
+      };
+      flake = "/home/justin/nixos-config";
+    };
+    zsh.enable = true;
+  };
 
   age.identityPaths = [ "/home/justin/.ssh/id_ed25519" ];
 }
