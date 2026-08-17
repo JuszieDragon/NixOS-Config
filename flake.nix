@@ -39,11 +39,6 @@
 
     nixarr.url = "github:rasmus-kirk/nixarr";
 
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     steam-config-nix = {
       url = "github:different-name/steam-config-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -73,7 +68,7 @@
       flake = false;
     };
 
-    apple-silicon.url = "github:nix-community/nixos-apple-silicon/pull/529/head";
+    apple-silicon.url = "github:nix-community/nixos-apple-silicon";
 
     steam-asahi = {
       url = "git+https://codeberg.org/ooonea/steam-asahi";
