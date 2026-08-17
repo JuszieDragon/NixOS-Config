@@ -99,6 +99,7 @@ in {
   environment.systemPackages = with pkgs; [
     faugus-launcher
     hydrus
+    prismlauncher
 
     aider-chat
   ];

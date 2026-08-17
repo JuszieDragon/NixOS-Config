@@ -7,7 +7,6 @@ let
     /ludusavi.nix
     /niri
     /noctalia
-    /quickshell
     /slumber.nix
     /steam.nix
     /yt-dlp.nix
