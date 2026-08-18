@@ -1,16 +1,21 @@
-{ catalog, config, inputs, lib, pkgs, ... }: 
+{
+  catalog,
+  config,
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 let
   wrapAlias = command: "f() { " + command + "; unset -f f; }; f";
-  hostSSHAliases = lib.mapAttrs (_host: attrs:
-    "ssh ${attrs.ip}"
-  ) catalog.hostsBase;
-  hostRemoteBuildAliases = lib.mapAttrs' (host: attrs:
-    lib.nameValuePair
-      "rebuild-${host}"
-      "nixos-rebuild switch --sudo --ask-sudo-password --flake .#${host} --target-host justin@${attrs.ip}"
+  hostSSHAliases = lib.mapAttrs (_host: attrs: "ssh ${attrs.ip}") catalog.hostsBase;
+  hostRemoteBuildAliases = lib.mapAttrs' (
+    host: attrs:
+    lib.nameValuePair "rebuild-${host}" "nixos-rebuild switch --sudo --ask-sudo-password --flake .#${host} --target-host justin@${attrs.ip}"
   ) (lib.filterAttrs (_n: v: v.isNixos) catalog.hostsBase);
 
-in {
+in
+{
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -38,7 +43,7 @@ in {
       agee = wrapAlias "agenix -e $1 -i ~/.ssh/id_ed25519";
       szsh = "source ~/.config/zsh/.zshrc";
 
-      tnmoni = "tmux new -s monifactory 'cd /srv/minecraft/Monifactory && ./run.sh'";
+      tnmoni = "tmux new -s monifactory 'cd /srv/monifactory && ./run.sh'";
       tamoni = "tmux attach -t monifactory";
       tndepth = "tmux new -s depth 'cd /srv/minecraft/Beyond-Depth && ./run.sh'";
       tadepth = "tmux attach -t depth";
@@ -54,7 +59,9 @@ in {
       nix-dev = "nix develop -c \"$SHELL\"";
 
       aider-local = "OLLAMA_API_BASE=http://localhost:11434 aider --model ollama/qwen3-coder:30b-a3b-q4_K_M";
-    } // hostSSHAliases // hostRemoteBuildAliases;
+    }
+    // hostSSHAliases
+    // hostRemoteBuildAliases;
 
     plugins = [
       {
@@ -68,7 +75,7 @@ in {
       }
     ];
 
-    initContent = '' 
+    initContent = ''
       source ${inputs.dotfiles}/.p10k.zsh
 
       # Completion styling
@@ -97,4 +104,3 @@ in {
     enableZshIntegration = true;
   };
 }
-
