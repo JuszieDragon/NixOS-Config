@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }: {
   imports = [
     ./lazyvim.nix
-    ./zsh.nix
+    ./zsh
   ];
 
   home = {
@@ -49,8 +49,43 @@
     };
     tmux = {
       enable = true;
+      baseIndex = 1;
+      keyMode = "vi";
+      shortcut = "a";
+      terminal = "tmux-256color";
       extraConfig = ''
-        source-file ${inputs.dotfiles}/.config/tmux/tmux.conf
+        set -ga terminal-overrides ",*:RGB"
+        set -g mouse on
+        set -g set-clipboard on
+
+        # Split windows
+        unbind %
+        unbind '"'
+        bind | split-window -h -c "#{pane_current_path}"
+        bind - split-window -v -c "#{pane_current_path}"
+        bind v split-window -h -c "#{pane_current_path}"
+        bind s split-window -v -c "#{pane_current_path}"
+
+        # Shift+arrows to switch windows
+        bind -n S-Left previous-window
+        bind -n S-Right next-window
+
+        # Alt+number to select windows
+        bind -n M-1 select-window -t 1
+        bind -n M-2 select-window -t 2
+        bind -n M-3 select-window -t 3
+        bind -n M-4 select-window -t 4
+        bind -n M-5 select-window -t 5
+        bind -n M-6 select-window -t 6
+        bind -n M-7 select-window -t 7
+        bind -n M-8 select-window -t 8
+        bind -n M-9 select-window -t 9
+
+        # Statusline - current window
+        set -g window-status-current-format "#I: (✓) #(echo '#{pane_current_path}' | rev | cut -d'/' -f-2 | rev)"
+
+        # Statusline - other windows
+        set -g window-status-format "#I: #W"
       '';
     };
     alacritty = {

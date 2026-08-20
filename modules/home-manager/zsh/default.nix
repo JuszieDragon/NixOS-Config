@@ -1,21 +1,14 @@
-{
-  catalog,
-  config,
-  inputs,
-  lib,
-  pkgs,
-  ...
-}:
+{ catalog, config, lib, pkgs, ... }:
 let
   wrapAlias = command: "f() { " + command + "; unset -f f; }; f";
-  hostSSHAliases = lib.mapAttrs (_host: attrs: "ssh ${attrs.ip}") catalog.hostsBase;
-  hostRemoteBuildAliases = lib.mapAttrs' (
-    host: attrs:
-    lib.nameValuePair "rebuild-${host}" "nixos-rebuild switch --sudo --ask-sudo-password --flake .#${host} --target-host justin@${attrs.ip}"
+  hostSSHAliases = lib.mapAttrs ( _host: attrs: "ssh ${attrs.ip}" ) catalog.hostsBase;
+  hostRemoteBuildAliases = lib.mapAttrs' (host: attrs:
+    lib.nameValuePair
+      "rebuild-${host}"
+      "nixos-rebuild switch --sudo --ask-sudo-password --flake .#${host} --target-host justin@${attrs.ip}"
   ) (lib.filterAttrs (_n: v: v.isNixos) catalog.hostsBase);
 
-in
-{
+in {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -76,7 +69,7 @@ in
     ];
 
     initContent = ''
-      source ${inputs.dotfiles}/.p10k.zsh
+      source ${./.p10k.zsh}
 
       # Completion styling
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -104,3 +97,4 @@ in
     enableZshIntegration = true;
   };
 }
+

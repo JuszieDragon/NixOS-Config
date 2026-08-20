@@ -12,11 +12,6 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    dotfiles = {
-      url = "git+ssh://git@github.com/JuszieDragon/dotfiles.git";
-      flake = false;
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

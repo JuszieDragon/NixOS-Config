@@ -64,22 +64,6 @@
         "type": "github"
       }
     },
-    "dotfiles": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1783567096,
-        "narHash": "sha256-EsJM6VhgxrBPmY4TWK5CxSmnTSBt8m4bLhNFJdseVCc=",
-        "ref": "refs/heads/main",
-        "rev": "7723e18ff4af4748de46692dd40bf5ed21cd103a",
-        "revCount": 50,
-        "type": "git",
-        "url": "ssh://git@github.com/JuszieDragon/dotfiles.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/JuszieDragon/dotfiles.git"
-      }
-    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -667,7 +651,6 @@
       "inputs": {
         "agenix": "agenix",
         "apple-silicon": "apple-silicon",
-        "dotfiles": "dotfiles",
         "firefox-addons": "firefox-addons",
         "gallery-dl-latest": "gallery-dl-latest",
         "home-manager": "home-manager_2",
