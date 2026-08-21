@@ -28,7 +28,10 @@ in {
       systemd-boot.enable = true;
     };
     kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = [ "pcie_aspm=off" "r8125.aspm=0" "pcie_aspm=off" ];
   };
+
+  powerManagement.scsiLinkPolicy = "max_performance";
 
   networking = {
     firewall.enable = false;
