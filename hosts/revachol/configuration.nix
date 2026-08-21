@@ -8,6 +8,7 @@ let
     /feishin.nix
     /gaming.nix
     /webhook.nix
+    /wireguard.nix
   ];
 
 in {

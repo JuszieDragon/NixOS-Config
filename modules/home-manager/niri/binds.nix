@@ -71,6 +71,10 @@
       action = toggle-overview;
       repeat = false;
     };
+    "Mod+W" = {
+      action.spawn = [ "sudo" "systemctl" "restart" "wg-quick-wg0.service" ];
+      repeat = false;
+    };
 
     "Mod+Left".action.focus-column-left = [ ];
     "Mod+H".action.focus-column-left = [ ];

@@ -5,6 +5,7 @@ let
   modulesImports = map (module: modulesRoot + module) [
     /desktop.nix
     /feishin.nix
+    /wireguard.nix
   ];
 
 in {

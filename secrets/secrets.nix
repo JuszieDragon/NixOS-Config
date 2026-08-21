@@ -33,5 +33,6 @@ in
   "scrutiny-gotify.age".publicKeys = keys;
   "share.age".publicKeys = keys;
   "vpn.age".publicKeys = keys;
+  "wireguard.age".publicKeys = keys;
   "yarr.age".publicKeys = keys;
 }
