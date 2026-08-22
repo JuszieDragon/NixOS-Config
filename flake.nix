@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
-    nixpkgs-apple-silicon.follows = "apple-silicon/nixpkgs";
 
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid";
@@ -66,8 +65,8 @@
     apple-silicon.url = "github:nix-community/nixos-apple-silicon";
 
     steam-asahi = {
-      url = "git+https://codeberg.org/ooonea/steam-asahi";
-      inputs.nixpkgs.follows = "nixpkgs-apple-silicon";
+      url = "github:sm-idk/steam-asahi/feature/arm64-client";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
@@ -100,7 +99,6 @@
     niri,
     nix-on-droid,
     nixpkgs,
-    nixpkgs-apple-silicon,
     nixpkgs-master,
     nixpkgs-patcher,
     nixarr,
@@ -188,10 +186,7 @@
       eden = let
         catalog = catalog-gen "eden";
       in nixpkgs-patcher.lib.nixosSystem {
-        nixpkgsPatcher = {
-          inherit inputs;
-          nixpkgs = nixpkgs-apple-silicon;
-        };
+        nixpkgsPatcher.inputs = inputs;
 
         system = "aarch64-linux";
 
@@ -201,7 +196,19 @@
 	        niri.nixosModules.niri
           noctalia-greeter.nixosModules.default
 
-          { nixpkgs.overlays = [ niri.overlays.niri ]; }
+          {
+            nixpkgs.overlays = [
+              niri.overlays.niri
+              (final: prev: {
+                libappindicator-gtk2 = final.libappindicator-gtk3;
+              })
+              (final: prev: {
+                fex = prev.fex.override {
+                  fmt = final.fmt_11; # Forces FEX to use the older, working version of fmt
+                };
+              })
+            ];
+          }
         ] ++ (default-modules "eden" catalog);
 
 	      specialArgs = { inherit inputs catalog; };
