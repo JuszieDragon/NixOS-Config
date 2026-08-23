@@ -6,11 +6,13 @@ let
   last-defence-academy = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPsLqXr/dETjYP3ZlWFTn9yZ1euzbl6hFTj9CwXKYlXY";
   eden-old = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJR2UrdB3XxtNZVi5Ggz4h+tkvhMb/91VuOkO/O/GCqD";
   eden = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDy3F+Jlmmceb4aw9mbaaarB+W3+jIBiVX7v8mG8+VBF";
+  mementos = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBK9AIVTPw0c79m2JD7YlsGXvtCYoeMDB5nvaojQANiO";
 
   servers = [
     night-city
     soul-matrix
     last-defence-academy
+    mementos
   ];
   users = [
     revachol
