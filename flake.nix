@@ -69,6 +69,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
     nixpkgs-patch-qbittorrent = {
       url = "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:qbittorrent-categories.diff";
@@ -92,6 +97,7 @@
   outputs = {
     agenix,
     apple-silicon,
+    disko,
     gallery-dl-latest,
     home-manager,
     kosync,
@@ -130,7 +136,7 @@
       ];
     in {
     nixosConfigurations = {
-      night-city = let 
+      night-city = let
         catalog = catalog-gen "night-city"; 
       in nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -210,6 +216,21 @@
             ];
           }
         ] ++ (default-modules "eden" catalog);
+
+	      specialArgs = { inherit inputs catalog; };
+      };
+
+      mementos = let
+        name = "mementos";
+        catalog = catalog-gen name;
+      in nixpkgs-patcher.lib.nixosSystem {
+        nixpkgsPatcher.inputs = inputs;
+
+        system = "aarch64-linux";
+
+	      modules = [
+          disko.nixosModules.disko
+        ] ++ (default-modules name catalog);
 
 	      specialArgs = { inherit inputs catalog; };
       };
