@@ -245,11 +245,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780221376,
-        "narHash": "sha256-2DTyeVqGUha5T412HFml7PHMgnn5mI4u4x1xuLeNzXo=",
+        "lastModified": 1787478192,
+        "narHash": "sha256-ekxJs+Gf9tuT8u942s84jS38OHva6ui701mW5UH6npw=",
         "ref": "refs/heads/main",
-        "rev": "58ab315f81c455d8766394e6d34a828b5bb908af",
-        "revCount": 21,
+        "rev": "b0283480b79f6139e4171afad7b87709f9476554",
+        "revCount": 23,
         "type": "git",
         "url": "https://codeberg.org/cmooon/kosync"
       },
