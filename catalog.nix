@@ -51,6 +51,11 @@ rec {
       ip = "192.168.2.8";
     };
 
+    mementos = {
+      isNixos = true;
+      ip = "192.168.0.3";
+    };
+
     tracen = {
       isNixos = false;
       ip = "192.168.2.5";
@@ -120,7 +125,7 @@ rec {
     };
     scrutiny = {
       enable = true;
-      hosts = [ "soul-matrix" "last-defence-academy" ];
+      hosts = [ "soul-matrix" "last-defence-academy" "mementos" ];
       port = 8083;
       reverseProxy = "internal";
     };
@@ -188,7 +193,7 @@ rec {
     };
     librespeed = {
       enable = true;
-      hosts = [ "soul-matrix" "night-city" "last-defence-academy" ];
+      hosts = [ "soul-matrix" "night-city" "last-defence-academy" "mementos" ];
       frontendHost = "soul-matrix";
       port = 3002;
     };
