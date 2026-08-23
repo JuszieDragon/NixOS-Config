@@ -19,20 +19,12 @@ in {
       "console=ttyFIQ0,1500000n8"
       "console=tty0"
       "earlycon=uart8250,mmio32,0xfeb50000"
-      "nomodeset"
-      "video=HDMI-A-1:1920x1080@60"
-      "pcie_aspm=off"
-      "nvme_core.default_ps_max_latency_us=0"
     ];
 
     initrd = {
       includeDefaultModules = true;
       availableKernelModules = [
-        "usb_storage"
-        "uas"
-        "xhci_plat_hcd"
         "nvme"
-        "pcie_rockchip_host"
         "phy_rockchip_naneng_combphy"
       ];
     };
