@@ -156,7 +156,7 @@ rec {
     };
     caddy = {
       enable = true;
-      hosts = [ "soul-matrix" ];
+      hosts = [ "mementos" ];
     };
     immich = {
       enable = true;
