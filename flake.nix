@@ -202,19 +202,7 @@
 	        niri.nixosModules.niri
           noctalia-greeter.nixosModules.default
 
-          {
-            nixpkgs.overlays = [
-              niri.overlays.niri
-              (final: prev: {
-                libappindicator-gtk2 = final.libappindicator-gtk3;
-              })
-              (final: prev: {
-                fex = prev.fex.override {
-                  fmt = final.fmt_11; # Forces FEX to use the older, working version of fmt
-                };
-              })
-            ];
-          }
+          { nixpkgs.overlays = [ niri.overlays.niri ]; }
         ] ++ (default-modules "eden" catalog);
 
 	      specialArgs = { inherit inputs catalog; };
