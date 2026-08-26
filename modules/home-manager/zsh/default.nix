@@ -29,6 +29,7 @@ in {
       update = "nix flake update";
       update-dot = "nix flake update dotfiles";
       used-ports = wrapAlias "nix eval --file ~/nixos-config/catalog.nix portsUsed --arg lib 'import <nixpkgs/lib>' --argstr host $1 --json";
+      host-ip = wrapAlias "nix eval --file ~/nixos-config/catalog.nix hosts.$1.ip --arg lib 'import <nixpkgs/lib>' --argstr host $1 --json";
 
       lg = "lazygit";
       jctl = wrapAlias "sudo journalctl -u $1.service -b 0";
