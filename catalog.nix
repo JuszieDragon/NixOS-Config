@@ -208,35 +208,17 @@ rec {
       port = 8072;
       reverseProxy = "external";
     };
+    syncthing = {
+      enable = true;
+      hosts = [ "soul-matrix" "revachol" "eden" ];
+      port = 8384;
+      reverseProxy = "internal";
+    };
 
     restic-server = {
       enable = true;
       hosts = [ "last-defence-academy" ];
       port = 8000;
-    };
-
-    revachol-syncthing = {
-      enable = true;
-      hosts = [ "revachol" ];
-      port = 8384;
-      reverseProxy = "internal";
-      subdomain = "syncthing";
-    };
-
-    tracen-syncthing = {
-      enable = true;
-      hosts = [ "tracen" ];
-      port = 8082;
-      reverseProxy = "internal";
-      subdomain = "syncthing";
-    };
-
-    cabin-syncthing = {
-      enable = true;
-      hosts = [ "cabin" ];
-      port = 8384;
-      reverseProxy = "internal";
-      subdomain = "syncthing";
     };
   };
 

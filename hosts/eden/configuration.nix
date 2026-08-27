@@ -1,4 +1,4 @@
-{ config, inputs, lib, pkgs, ... }:
+{ catalog, config, inputs, lib, pkgs, ... }:
 let
   modulesRoot = ../../modules/nixos;
 
@@ -8,12 +8,14 @@ let
     /wireguard.nix
   ];
 
+  serviceImports = catalog.servicePathsForHost;
+
 in {
   imports = [
     ./hardware-configuration.nix
     ./shares.nix
     ../default.nix
-  ] ++ modulesImports;
+  ] ++ modulesImports ++ serviceImports;
 
   boot = {
     kernel.sysctl = {

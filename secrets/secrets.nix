@@ -1,4 +1,6 @@
 let
+  genAttrs = names: name-f: value-f: builtins.listToAttrs (map (name: { name = name-f name; value = value-f name; }) names);
+
   revachol = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHn3vUHi5t6k5W/1P5VdFZtlvZmWbnk/S6qKMXVtBkar";
   #remember agenix uses ~/.ssh by default, not /etc/ssh
   night-city = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGtlt9IOh+D0TKdQNhD2Gjlvkf4zdgguDuYzAj34Vg9g";
@@ -22,19 +24,34 @@ let
 
   keys = users ++ servers;
 
+  list = files: builtins.listToAttrs (map (
+    name: {
+      name = "${name}.age";
+      value = { publicKeys = keys; }; 
+    }
+  ) files);
+
+  generator = files: genAttrs files ( file: {
+    publicKeys = keys;
+  });
+
 in
-{
-  "caddy.age".publicKeys = keys;
-  "forgejo-admin-password.age".publicKeys = keys;
-  "grafana-key".publicKeys = keys;
-  "kavita.age".publicKeys = keys;
-  "restic-server-password.age".publicKeys = keys;
-  "restic-repository-url.age".publicKeys = keys;
-  "romm.age".publicKeys = keys;
-  "romm-db.age".publicKeys = keys;
-  "scrutiny-gotify.age".publicKeys = keys;
-  "share.age".publicKeys = keys;
-  "vpn.age".publicKeys = keys;
-  "wireguard.age".publicKeys = keys;
-  "yarr.age".publicKeys = keys;
-}
+  list [
+    "caddy"
+    "forgejo-admin-password"
+    "grafana-key"
+    "kavita"
+    "restic-server-password"
+    "restic-repository-url"
+    "romm"
+    "romm-db"
+    "scrutiny-gotify"
+    "share"
+    "vpn"
+    "wireguard"
+    "yarr"
+    
+    "syncthing-gui-password"
+    "eden-syncthing-key"
+    "eden-syncthing-cert"
+  ]
