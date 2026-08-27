@@ -2,7 +2,6 @@
 
 let
   moduleImports = map (module: ../../modules/nixos + module) [
-    #/git.nix
     /cage.nix
     /podman.nix
     /restic.nix
@@ -15,8 +14,9 @@ let
   containerImports = catalog.containerPathsForHost;
 
 in {
-  imports = [ 
+  imports = [
     ./hardware-configuration.nix
+    ./syncthing.nix
     ../default.nix
   ] ++ moduleImports ++ serviceImports ++ containerImports;
 

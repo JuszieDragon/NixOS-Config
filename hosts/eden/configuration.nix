@@ -14,6 +14,7 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./shares.nix
+    ./syncthing.nix
     ../default.nix
   ] ++ modulesImports ++ serviceImports;
 
