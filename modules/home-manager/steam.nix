@@ -34,23 +34,23 @@ in {
     onSteamRunning = "close";
 
     apps = {
-      Satisfactory = {
-        id = 526870;
+      "526870" = {
+        name = "Satisfactory";
         compatTool = customProtonGEVersion "GE-Proton11-3" "sha256-RiCmnUKeZRhPUCgm7fsROKFkAl37+/tYkA47tQtkIF4=";
         rawLaunchOptions = "LD_PRELOAD=\"\" gamescope -f -w 3440 -h 1440 -W 3440 -H 1440 --force-grab-cursor -- %command%";
       };
       #Fix audio with native linux build
-      Scarlet-Hollow = {
-        id = 1609230;
+      "1609230" = {
+        name = "Scarlet Hollow";
         rawLaunchOptions = "SDL_AUDIODRIVER=pulse %command%";
       };
       # Native linux version doesn't detect mouse, might be niri related
-      Tabletop-Simulator = {
-        id = 286160;
+      "286160" = {
+        name = "Tabletop-Simulator";
         compatTool = "proton_experimental";
       };
-      Umamusume-Pretty-Derby = {
-        id = 3224770;
+      "3224770"= {
+        name = "Umamusume-Pretty-Derby ";
         compatTool = customProtonGEVersion "GE-Proton10-3" "sha256-V4znOni53KMZ0rs7O7TuBst5kDSaEOyWUGgL7EESVAU=";
       };
     };
