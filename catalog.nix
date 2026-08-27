@@ -10,6 +10,7 @@ rec {
       host:
         isNixos: is the host nixos or not? not used atm
         ip: IP address to the host
+        syncthingId: syncthing identifier
       services:
         enable: if the service is enabled or not
         host: Which host to run the service on
@@ -29,6 +30,7 @@ rec {
     soul-matrix = {
       isNixos = true;
       ip = "192.168.1.1";
+      syncthingId = "7WFVTVY-RL74QRT-34DFXU7-G25ZSNU-2GSP3OM-E3UCZ6I-JQC7KM3-OHNNWAB";
     };
  
     home-assistant = {
@@ -44,11 +46,13 @@ rec {
     revachol = {
       isNixos = false;
       ip = "192.168.2.1";
+      syncthingId = "6XH43I5-OWVOWSB-7K3YP5H-5KRNBZA-QRFBT5E-6AU5FI7-R5FKVVZ-24DAKAX";
     };
 
     eden = {
       isNixos = true;
       ip = "192.168.2.8";
+      syncthingId = "OGL6S3Y-MVSWBMH-RNGQJ5J-RQ3GY3F-MHYDESZ-CHOHYZO-V65CJKZ-RAQCEAJ";
     };
 
     mementos = {

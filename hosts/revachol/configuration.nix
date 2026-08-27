@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, ... }:
+{ catalog, config, inputs, pkgs, ... }:
 
 let
   modulesRoot = ../../modules/nixos;
@@ -11,12 +11,14 @@ let
     /wireguard.nix
   ];
 
+  serviceImports = catalog.servicePathsForHost;
+
 in {
   imports = [
     ./hardware-configuration.nix
     ./shares.nix
     ../default.nix
-  ] ++ modulesImports;
+  ] ++ modulesImports ++ serviceImports;
 
   boot = {
     #Related to USB PD, should be fine to disable to remove error in logs on boot

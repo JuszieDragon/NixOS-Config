@@ -56,4 +56,6 @@ in
     "eden-syncthing-cert"
     "soul-matrix-syncthing-key"
     "soul-matrix-syncthing-cert"
+    "revachol-syncthing-key"
+    "revachol-syncthing-cert"
   ]
