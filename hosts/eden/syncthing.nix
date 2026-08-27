@@ -8,7 +8,7 @@
       folders = {
         "prism-launcher-instances" = {
           path = "/home/justin/.local/share/PrismLauncher/instances";
-          devices = [ "eden" "revachol" ];
+          devices = [ "soul-matrix" "revachol" ];
         };
       };
     };
