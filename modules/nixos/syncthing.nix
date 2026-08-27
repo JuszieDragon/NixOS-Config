@@ -24,11 +24,11 @@ in lib.mkIf cfg.isEnabled {
     user = "justin";
     group = "users";
     dataDir = "/home/justin";
+    guiAddress = "0.0.0.0:${cfg.portString}";
     guiPasswordFile = secrets.gui-password.path;
     key = secrets.syncthing-key.path;
     cert = secrets.syncthing-cert.path;
     settings = {
-      guiAddress = "0.0.0.0:${cfg.portString}";
       gui.user = "justin";
     };
   };

@@ -15,6 +15,9 @@ in {
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     dotDir = "${config.xdg.configHome}/zsh";
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
 
     shellAliases = {
       cpk = "cat /etc/current-system-packages";

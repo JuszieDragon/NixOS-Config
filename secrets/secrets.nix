@@ -50,8 +50,10 @@ in
     "vpn"
     "wireguard"
     "yarr"
-    
+
     "syncthing-gui-password"
     "eden-syncthing-key"
     "eden-syncthing-cert"
+    "soul-matrix-syncthing-key"
+    "soul-matrix-syncthing-cert"
   ]
