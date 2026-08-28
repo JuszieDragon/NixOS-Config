@@ -58,7 +58,7 @@ in {
       "Goddess of Victory: NIKKE" = {
         target = "/home/justin/Games/Lutris/Nikke/drive_c/NIKKE/Launcher/nikke_launcher.exe";
         startIn = "/home/justin/Games/Lutris/Nikke";
-        compatTool = customDWProtonVersion "dwproton-11.0-5" "sha256-2x4xotJ2aJYbg+G2TDPqyU7uuoc/hZQon9CA6SFGin0=";
+        compatTool = customDWProtonVersion "dwproton-11.0-12" "sha256-NGyrXQcA+k87SnowFd41uq49luI32fZENTwFTma7NpI=";
         allowOverlay = false;
         artwork = buildArtwork "Nikke" {
           cover = "sha256-eXLkEqwvQPcSmexQWfAomYRJhL4dHNas0dygk07PIXY=";
