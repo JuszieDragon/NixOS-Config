@@ -39,6 +39,13 @@ _: {
         open-fullscreen = true;
       }
       {
+        matches = [
+          { app-id = "Minecraft.+"; }
+        ];
+        open-on-output = "DP-1";
+        open-maximized = true;
+      }
+      {
         # Make steam notification toast appear in the bottom right
         #TODO fix match
         matches = [
