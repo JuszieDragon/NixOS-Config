@@ -202,7 +202,16 @@
 	        niri.nixosModules.niri
           noctalia-greeter.nixosModules.default
 
-          { nixpkgs.overlays = [ niri.overlays.niri ]; }
+          { nixpkgs.overlays = [
+            niri.overlays.niri
+            (final: prev: {
+              aapt = prev.aapt.overrideAttrs (oldAttrs: {
+                meta = (oldAttrs.meta or {}) // {
+                  platforms = (oldAttrs.meta.platforms or []) ++ [ "aarch64-linux" ];
+                };
+              });
+            })
+          ]; }
         ] ++ (default-modules "eden" catalog);
 
 	      specialArgs = { inherit inputs catalog; };
