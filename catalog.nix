@@ -275,7 +275,7 @@ rec {
   };
 
   populate = servicesToPop: mapAttrs (_service: attrs:
-    attrs // { 
+    attrs // {
       portString = if attrs ? port
         then builtins.toString attrs.port
         else "";
@@ -295,7 +295,7 @@ rec {
       filterAttrs (_service: attrs: attrs ? port && builtins.elem "${host}" attrs.hosts) containers
     );
 
-  getModuleName = module: attrs: 
+  getModuleName = module: attrs:
     if attrs ? module
       then "${attrs.module}"
       else "${module}";

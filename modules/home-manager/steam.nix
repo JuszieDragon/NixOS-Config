@@ -1,13 +1,16 @@
-{ inputs, lib, pkgs, ... }:
+{ catalog, inputs, lib, pkgs, ... }:
 let
-  customProtonGEVersion = pVersion: pHash:
-    ( pkgs.proton-ge-bin.overrideAttrs rec {
+  customProtonGEVersion = pVersion: pHash: (
+    pkgs.proton-ge-bin.overrideAttrs rec {
       version = pVersion;
       src = pkgs.fetchzip {
         url = "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${version}/${version}.tar.gz";
         hash = pHash;
       };
-    }).override { steamDisplayName = pVersion; };
+      toolName = pVersion;
+      steamDisplayName = pVersion;
+    }
+  );
 
   customDWProtonVersion = pVersion: pHash: (
     pkgs.dwproton-bin.overrideAttrs rec {
@@ -16,11 +19,16 @@ let
         url = "https://dawn.wine/dawn-winery/dwproton/releases/download/${version}/${version}-x86_64.tar.xz";
         hash = pHash;
       };
-  }).override { steamDisplayName = pVersion; };
+      toolName = pVersion;
+      steamDisplayName = pVersion;
+    }
+  );
+
+  swsHost = builtins.elemAt catalog.services.sws.hosts 0;
 
   fetchFromNas = filename: hash:
     pkgs.fetchurl {
-      url = "http://192.168.1.1:8085/SteamGridDB/${filename}";
+      url = "http://${catalog.hosts.${swsHost}.ip}:${catalog.services.sws.portString}/SteamGridDB/${filename}";
       inherit hash;
     };
 
@@ -56,8 +64,7 @@ in {
     };
     nonSteamApps = {
       "Goddess of Victory: NIKKE" = {
-        target = "/home/justin/Games/Lutris/Nikke/drive_c/NIKKE/Launcher/nikke_launcher.exe";
-        startIn = "/home/justin/Games/Lutris/Nikke";
+        target = "/home/justin/.steam/root/steamapps/compatdata/2202195447/pfx/drive_c/NIKKE/Launcher/nikke_launcher.exe";
         compatTool = customDWProtonVersion "dwproton-11.0-12" "sha256-NGyrXQcA+k87SnowFd41uq49luI32fZENTwFTma7NpI=";
         allowOverlay = false;
         artwork = buildArtwork "Nikke" {
