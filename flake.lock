@@ -291,11 +291,11 @@
         "xwayland-satellite-unstable": "xwayland-satellite-unstable"
       },
       "locked": {
-        "lastModified": 1788468814,
-        "narHash": "sha256-/1DCfu5U+ECCGfgkRrhxi1MUEYGQ2Gt3Pswgm5PPa2g=",
+        "lastModified": 1788543279,
+        "narHash": "sha256-AFdGnXdCo852KLTkiD7IreRsCfYal97qsGF5fgXKGdQ=",
         "owner": "epireyn",
         "repo": "niri-flake",
-        "rev": "1fe735d6be3dc97eb0e93df83b63c7cc1411db0b",
+        "rev": "7657bc06d7f8be5ce323d0e4602726f9dd82b875",
         "type": "github"
       },
       "original": {
@@ -482,11 +482,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1788503371,
-        "narHash": "sha256-rK6Biec0L/+rt0zLO+IJYf1iboOsmDVu+aQn/GbUTUo=",
+        "lastModified": 1788574892,
+        "narHash": "sha256-FHtYaTf24EP1nv3g/D8FtDH2CDXMg/IFoEYLzFEytJ0=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "7f59d45827a4b1ca15f48db6802a8276043c8701",
+        "rev": "606489b2fc7b92a34402cd66f06425489a59969a",
         "type": "github"
       },
       "original": {
@@ -581,11 +581,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1788316716,
-        "narHash": "sha256-bc7rSpXIdn9QWGNqfWcPZWOhEVF8NoeAZkWq0XWnf/k=",
+        "lastModified": 1788404924,
+        "narHash": "sha256-lhEhY8X5EgkQ/eg6IFz4cc8jRuSYSvnxx1al7d1dvZ0=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "3ed67ec0a4d3c7ab4ae1f04f8ee8df07bfa506a2",
+        "rev": "0968519e14f7aa7d3e9b389682bd74d2b51c8ce8",
         "type": "github"
       },
       "original": {
@@ -593,6 +593,32 @@
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1787900134,
+        "narHash": "sha256-5GWj0FI2uOwKNpXkmpWrSFDe1rCaNBCUQ8d+HDtFQPI=",
+        "rev": "83199d0d373dd3ac2b9a1996b1d0263f76ab7a4c",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1063296.83199d0d373d/nixexprs.tar.zst"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst"
+      }
+    },
+    "nixpkgs_5": {
+      "locked": {
+        "lastModified": 1788404924,
+        "narHash": "sha256-gxryTzdoDQLrvPdYp8cSbxXpB/LDhaQhiJFCmkqVugw=",
+        "rev": "0968519e14f7aa7d3e9b389682bd74d2b51c8ce8",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1066703.0968519e14f7/nixexprs.tar.zst"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst"
       }
     },
     "nmd": {
@@ -635,36 +661,33 @@
     },
     "noctalia": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1788493909,
-        "narHash": "sha256-/cKoKjxWl1TPbVQ0WNwFlFWrNnGW3xGQGkwsp9agXE0=",
+        "lastModified": 1788573613,
+        "narHash": "sha256-vwtwiwj/cihQDNIPoBUYsbPOknEh7YrfK5XG/D+YmtY=",
         "owner": "noctalia-dev",
         "repo": "noctalia",
-        "rev": "55e7b45827aa9664d24216bf4c9d5554cd108cf0",
+        "rev": "21af8b9e000b54b804cbc29f41c73af869424e18",
         "type": "github"
       },
       "original": {
         "owner": "noctalia-dev",
+        "ref": "cachix",
         "repo": "noctalia",
         "type": "github"
       }
     },
     "noctalia-greeter": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1788444534,
-        "narHash": "sha256-+XX/PgbfcwixUlF/+ETcKzLzUxDQgiRRvBpUBDUDF5M=",
+        "lastModified": 1788554618,
+        "narHash": "sha256-yMCZXEalh0uWMDrOY6UKA8YXyxyaYB/DZkPfm8G5F6k=",
         "owner": "noctalia-dev",
         "repo": "noctalia-greeter",
-        "rev": "4cba567531878ae3cc64bc95d8dc498fd454e13d",
+        "rev": "b80f98e95c442f7abde96a00cd715e5429f2bc42",
         "type": "github"
       },
       "original": {
@@ -721,11 +744,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787659694,
-        "narHash": "sha256-kETikG/KceXRaYsnpC+VqjVfHiHIw6pv0RDYjEm1EZs=",
+        "lastModified": 1788522921,
+        "narHash": "sha256-NMtwuYJMAefkuMip/NqE159WIvwLdBbWdmnD+ceEsmQ=",
         "owner": "sm-idk",
         "repo": "steam-asahi",
-        "rev": "a9f90c719e7742e81ff8cf71c47df3e680adb8ab",
+        "rev": "1d770cd4178c3e2272d758f456846cec83089c5d",
         "type": "github"
       },
       "original": {
