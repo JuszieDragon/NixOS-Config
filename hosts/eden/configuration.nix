@@ -69,16 +69,6 @@ in {
       enable = true;
       backend = "arm64";
     };
-    nix-ld = {
-      enable = true;
-      libraries = with pkgs; [
-        python3
-        zlib                  # Fixes your current libz.so.1 error
-        stdenv.cc.cc.lib      # Provides libstdc++.so for C++ applications
-        glib                  # Common dependency for desktop app integrations
-        xorg.libX11           # Useful if graphical helpers fail
-      ];
-    };
   };
 
   users = {
@@ -91,8 +81,12 @@ in {
     ];
   };
 
+  security.pam.services.greetd.enableGnomeKeyring = true;
+
   services = {
     getty.autologinUser = "justin";
+    gnome.gnome-keyring.enable = true;
+    dbus.packages = with pkgs; [ gnome-keyring gcr ];
     pipewire = {
       enable = true;
       alsa = {
