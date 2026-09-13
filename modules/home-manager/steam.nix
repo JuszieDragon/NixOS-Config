@@ -57,9 +57,13 @@ in {
         name = "Tabletop-Simulator";
         compatTool = "proton_experimental";
       };
-      "3224770"= {
+      "3224770" = {
         name = "Umamusume-Pretty-Derby ";
         compatTool = customProtonGEVersion "GE-Proton10-3" "sha256-V4znOni53KMZ0rs7O7TuBst5kDSaEOyWUGgL7EESVAU=";
+      };
+      "4001890" = {
+        name = "How To Fish";
+        compatTool = pkgs.proton-ge-bin;
       };
     };
     nonSteamApps = {

@@ -33,7 +33,7 @@ _: {
       }
       {
         matches = [
-          { title = "NIKKE"; }
+          { app-id = "steam_app_2202195447"; }
         ];
         open-on-workspace = "Nikke";
         open-fullscreen = true;
