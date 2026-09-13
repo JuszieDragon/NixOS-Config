@@ -4,22 +4,25 @@
   programs.lazyvim = {
     enable = true;
 
-    extras.lang = {
-      nix.enable = true;
-      python = {
-        enable = true;
-        installDependencies = true;
-        installRuntimeDependencies = true;
-      };
-      rust = {
-        enable = true;
-        installDependencies = true;
-        installRuntimeDependencies = true;
-      };
-      typescript = {
-        enable = true;
-        installDependencies = true;
-        installRuntimeDependencies = true;
+    extras = {
+      dap.core.enable = true;
+      lang = {
+        nix.enable = true;
+        python = {
+          enable = true;
+          installDependencies = true;
+          installRuntimeDependencies = true;
+        };
+        rust = {
+          enable = true;
+          installDependencies = true;
+          installRuntimeDependencies = true;
+        };
+        typescript = {
+          enable = true;
+          installDependencies = true;
+          installRuntimeDependencies = true;
+        };
       };
     };
     extraPackages = with pkgs; [
@@ -30,6 +33,7 @@
       ripgrep
       pkg-config
       openssl
+      lldb
     ];
     treesitterParsers = with pkgs.vimPlugins.nvim-treesitter-parsers; [
       caddy

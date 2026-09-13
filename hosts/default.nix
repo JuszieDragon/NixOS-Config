@@ -27,6 +27,7 @@
     experimental-features = [ "nix-command" "flakes" ];
     trusted-users = [ "root" "justin" ];
     auto-optimise-store = true;
+    accept-flake-config = true;
   };
 
   environment.systemPackages = with pkgs; [
