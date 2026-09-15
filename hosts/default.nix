@@ -31,6 +31,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+    iperf3
+    ethtool
     unar
   ];
 
