@@ -7,10 +7,10 @@ let
       "credentials=${config.age.secrets.share.path}"
       "uid=1000"
       "gid=100"
-      "auto"
       "nofail"
       "user"
       "_netdev"
+      "x-systemd.automount"
       "vers=3.0"
     ];
   };
