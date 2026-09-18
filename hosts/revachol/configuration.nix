@@ -66,12 +66,30 @@ in {
     };
   };
 
+  systemd.services.fix-ethernet-speeds = {
+    description = "Fix ethernet throttling by disabling EEE and Tx Flow Control";
+    wantedBy = [ "network-pre.target" ];
+    before = [ "network.target" ];
+    bindsTo = [ "sys-subsystem-net-devices-eth10s0.device" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+      ExecStart = [
+        "${pkgs.ethtool}/bin/ethtool -A enp10s0 rx on tx off"
+        "${pkgs.ethtool}/bin/ethtool -A enp19s0f4u1 rx on tx off"
+        "${pkgs.ethtool}/bin/ethtool --set-eee enp10s0 eee off"
+        "${pkgs.ethtool}/bin/ethtool --set-eee enp19s0f4u1 eee off"
+      ];
+    };
+  };
+
   services = {
     greetd = {
       enable = true;
       settings = {
         initial_session = {
-          command = "niri-session"; # or your specific compositor command
+          command = "niri-session";
           user = "justin";
         };
         default_session = {
@@ -92,7 +110,7 @@ in {
     xserver.videoDrivers = [ "amdgpu" ];
     ollama = {
       enable = true;
-      package = pkgs.ollama-rocm; # Uses the ROCm build of Ollama
+      package = pkgs.ollama-rocm;
       # Force RDNA3 architecture identification for the 7900 XTX
       environmentVariables = {
         HSA_OVERRIDE_GFX_VERSION = "11.0.0";
