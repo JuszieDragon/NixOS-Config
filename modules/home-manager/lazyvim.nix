@@ -23,6 +23,7 @@
           installDependencies = true;
           installRuntimeDependencies = true;
         };
+        gleam.enable = true;
       };
     };
     extraPackages = with pkgs; [

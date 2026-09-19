@@ -27,12 +27,6 @@ in {
   ];
 
   programs = {
-    direnv = {
-      enable = true;
-      enableZshIntegration = true; # see note on other shells below
-      nix-direnv.enable = true;
-    };
-
     zsh.loginExtra = /*bash*/ ''
       if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
         exec dbus-run-session niri --session

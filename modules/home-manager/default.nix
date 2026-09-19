@@ -103,6 +103,15 @@
         };
       };
     };
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      config = {
+        global = {
+          log_filter = "^$";
+        };
+      };
+    };
   };
 }
 
