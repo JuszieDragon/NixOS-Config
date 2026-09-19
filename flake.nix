@@ -188,9 +188,7 @@
 
       eden = let
         catalog = catalog-gen "eden";
-      in nixpkgs-patcher.lib.nixosSystem {
-        nixpkgsPatcher.inputs = inputs;
-
+      in nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
 
 	      modules = [
@@ -217,9 +215,7 @@
       mementos = let
         name = "mementos";
         catalog = catalog-gen name;
-      in nixpkgs-patcher.lib.nixosSystem {
-        nixpkgsPatcher.inputs = inputs;
-
+      in nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
 
 	      modules = [
