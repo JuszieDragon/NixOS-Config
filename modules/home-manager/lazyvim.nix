@@ -80,6 +80,26 @@
           }
         }
       '';
+      snacks = /*lua*/ ''
+        return {
+          {
+            "folke/snacks.nvim",
+            opts = {
+              picker = {
+                sources = {
+                  files = {
+                    ignored = true,
+                    hidden = true,
+                  },
+                  explorer = {
+                    ignored = true,
+                  },
+                },
+              },
+            },
+          },
+        }
+      '';
     };
   };
 }
