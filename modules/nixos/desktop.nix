@@ -61,7 +61,6 @@
       kdePackages.kio-extras
       kdePackages.kservice
 
-      libreoffice-qt
       hunspell
       hunspellDicts.en_AU-large
 

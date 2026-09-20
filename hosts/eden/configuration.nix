@@ -86,7 +86,7 @@ in {
   services = {
     getty.autologinUser = "justin";
     gnome.gnome-keyring.enable = true;
-    dbus.packages = with pkgs; [ gnome-keyring gcr ];
+    dbus.packages = with pkgs; [ gnome-keyring gcr_4 ];
     pipewire = {
       enable = true;
       alsa = {

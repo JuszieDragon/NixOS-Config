@@ -124,6 +124,7 @@ in {
   environment.systemPackages = with pkgs; [
     faugus-launcher
     hydrus
+    libreoffice-qt
     prismlauncher
 
     aider-chat
