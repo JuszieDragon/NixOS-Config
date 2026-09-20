@@ -24,6 +24,7 @@ in {
   boot = {
     #Related to USB PD, should be fine to disable to remove error in logs on boot
     blacklistedKernelModules = [ "ucsi_acpi" "r8169" ];
+    initrd.kernelModules = [ "r8125" ];
     extraModulePackages = [ config.boot.kernelPackages.r8125 ];
     kernelModules = [ "r8125" ];
     loader = {
@@ -31,7 +32,9 @@ in {
       systemd-boot.enable = true;
     };
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelParams = [ "pcie_aspm=off" "r8125.aspm=0" "pcie_aspm=off" ];
+    extraModprobeConfig = ''
+      options r8125 aspm=0 eee_enable=0 s5wol=0
+    '';
   };
 
   powerManagement.scsiLinkPolicy = "max_performance";
@@ -66,6 +69,8 @@ in {
     };
   };
 
+  security.pam.services.greetd.enableGnomeKeyring = true;
+
   systemd.services.fix-ethernet-speeds = {
     description = "Fix ethernet throttling by disabling EEE and Tx Flow Control";
     wantedBy = [ "network-pre.target" ];
@@ -98,6 +103,8 @@ in {
         };
       };
     };
+    gnome.gnome-keyring.enable = true;
+    dbus.packages = with pkgs; [ gnome-keyring gcr_4 ];
     pipewire = {
       enable = true;
       alsa = {
