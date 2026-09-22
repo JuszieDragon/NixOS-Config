@@ -7,6 +7,7 @@ let
     /desktop.nix
     /feishin.nix
     /gaming.nix
+    /scrcpy.nix
     /webhook.nix
     /wireguard.nix
   ];

@@ -65,11 +65,15 @@ in {
         name = "How To Fish";
         compatTool = pkgs.proton-ge-bin;
       };
+      "4512570" = {
+        name = "A Game About Chopping Trees";
+        compatTool = pkgs.proton-ge-bin;
+      };
     };
     nonSteamApps = {
       "Goddess of Victory: NIKKE" = {
         target = "/home/justin/.steam/root/steamapps/compatdata/2202195447/pfx/drive_c/NIKKE/Launcher/nikke_launcher.exe";
-        compatTool = customDWProtonVersion "dwproton-11.0-12" "sha256-NGyrXQcA+k87SnowFd41uq49luI32fZENTwFTma7NpI=";
+        compatTool = customDWProtonVersion "dwproton-11.0-13" "sha256-INbvpKk01gMyt72Z2jlJvov5k4LZztpFuiYgVkGBc1I=";
         allowOverlay = false;
         artwork = buildArtwork "Nikke" {
           cover = "sha256-eXLkEqwvQPcSmexQWfAomYRJhL4dHNas0dygk07PIXY=";
@@ -78,6 +82,12 @@ in {
           logo = "sha256-DDXSVmjPI9tE4cPL9G3MOQ3158tg/6I8oxPQZQjd9bg=";
           icon = "sha256-VIRL00ZrMMq4dRWdTAQQn6Khik6Z8cJ797/wugWhCVI=";
         };
+      };
+      "Goddess of Victory: NIKKE Launcher Update" = {
+        target = "/home/justin/Downloads/nikkeminiloader_oG7STxbESBb.wg.intl.exe";
+        startIn = "/home/justin/.steam/root/steamapps/compatdata/2202195447/pfx/drive_c/NIKKE/Launcher";
+        compatTool = customDWProtonVersion "dwproton-11.0-13" "sha256-INbvpKk01gMyt72Z2jlJvov5k4LZztpFuiYgVkGBc1I=";
+        allowOverlay = false;
       };
       "Katawa Shoujo: Re-Engineered" = {
         target = pkgs.katawa-shoujo-re-engineered;
