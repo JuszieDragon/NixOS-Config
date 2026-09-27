@@ -218,6 +218,12 @@ rec {
       port = 8384;
       reverseProxy = "internal";
     };
+    radicale = {
+      enable = true;
+      hosts = [ "soul-matrix" ];
+      port = 5232;
+      reverseProxy = "external";
+    };
 
     restic-server = {
       enable = true;

@@ -7,7 +7,7 @@ let
 
   stateDir = "/state/forgejo";
 
-in lib.mkIf cfg.isEnabled {
+in mkIf cfg.isEnabled {
   age.secrets.forgejo-admin-password = {
     file = inputs.self + /secrets/forgejo-admin-password.age;
     owner = "forgejo";

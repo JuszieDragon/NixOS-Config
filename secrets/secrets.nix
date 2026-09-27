@@ -41,6 +41,7 @@ in
     "forgejo-admin-password"
     "grafana-key"
     "kavita"
+    "radicale"
     "restic-server-password"
     "restic-repository-url"
     "romm"
