@@ -18,6 +18,10 @@
       hotkey-overlay.title = "Vesktop";
       action.spawn = "vesktop";
     };
+    "Mod+G" = {
+      hotkey-overlay.title = "Steam";
+      action.spawn = "steam";
+    };
 
     "Mod+Space" = {
       hotkey-overlay.title = "Noctalia launcher";
