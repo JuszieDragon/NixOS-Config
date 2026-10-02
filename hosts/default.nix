@@ -31,6 +31,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    alacritty.terminfo
     iperf3
     ethtool
     unar
@@ -42,8 +43,6 @@
       settings.PermitRootLogin = "yes";
     };
   };
-
-  environment.enableAllTerminfo = true;
 
   programs = {
     nh = {

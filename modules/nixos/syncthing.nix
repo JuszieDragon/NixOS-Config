@@ -32,4 +32,9 @@ in lib.mkIf cfg.isEnabled {
       gui.user = "justin";
     };
   };
+
+  systemd.services.syncthing = {
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+  };
 }

@@ -49,7 +49,6 @@
     };
 
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
-    noctalia-greeter.url = "github:noctalia-dev/noctalia-greeter";
 
     gallery-dl-latest = {
       url = "git+https://codeberg.org/mikf/gallery-dl?ref=refs/tags/v1.32.7";
@@ -105,7 +104,6 @@
     nixpkgs-master,
     nixpkgs-patcher,
     nixarr,
-    noctalia-greeter,
     steam-asahi,
     ...
   } @ inputs:
@@ -177,10 +175,8 @@
 
         modules = [
           niri.nixosModules.niri
-          noctalia-greeter.nixosModules.default
 
           { nixpkgs.overlays = [ niri.overlays.niri ]; }
-          noctalia-greeter.nixosModules.default
         ] ++ (default-modules "revachol" catalog);
 
         specialArgs = { inherit inputs catalog; };
@@ -195,7 +191,6 @@
           apple-silicon.nixosModules.apple-silicon-support
           steam-asahi.nixosModules.default
 	        niri.nixosModules.niri
-          noctalia-greeter.nixosModules.default
 
           { nixpkgs.overlays = [
             niri.overlays.niri
