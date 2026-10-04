@@ -9,14 +9,17 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1791097130,
-        "narHash": "sha256-tA+N3vcR+FPmqmqw2adSmxIH4ceOx4TcDvwlB9duNRc=",
-        "path": "/home/justin/Repos/personal/A2O4/A2O4-Server-RS",
-        "type": "path"
+        "lastModified": 1791106357,
+        "narHash": "sha256-Dd7jqLUXxmLjp8XNwqm+9r7xymiV9nBSDbnp19TpGQE=",
+        "owner": "JuszieDragon",
+        "repo": "A2O4-Server-RS",
+        "rev": "8ede385d346c788d1f55602533777d4f54ef2abe",
+        "type": "github"
       },
       "original": {
-        "path": "/home/justin/Repos/personal/A2O4/A2O4-Server-RS",
-        "type": "path"
+        "owner": "JuszieDragon",
+        "repo": "A2O4-Server-RS",
+        "type": "github"
       }
     },
     "agenix": {

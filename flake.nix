@@ -68,7 +68,8 @@
     };
 
     a2o4-server = {
-      url = "path:/home/justin/Repos/personal/A2O4/A2O4-Server-RS";
+      # url = "path:/home/justin/Repos/personal/A2O4/A2O4-Server-RS";
+      url = "github:JuszieDragon/A2O4-Server-RS";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -155,6 +156,7 @@
         system = "x86_64-linux";
 
         modules = [
+          a2o4-server.nixosModules.default
           kosync.nixosModules.${system}.default
           nixarr.nixosModules.default
         ] ++ default-modules "soul-matrix" catalog;

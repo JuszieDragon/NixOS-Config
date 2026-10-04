@@ -230,6 +230,12 @@ rec {
       port = 9797;
       reverseProxy = "internal";
     };
+    paperless = {
+      enable = true;
+      hosts = [ "soul-matrix" ];
+      port = 28981;
+      reverseProxy = "internal";
+    };
 
     restic-server = {
       enable = true;
