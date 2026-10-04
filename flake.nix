@@ -67,6 +67,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    a2o4-server = {
+      url = "path:/home/justin/Repos/personal/A2O4/A2O4-Server-RS";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
     nixpkgs-patch-qbittorrent = {
       url = "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:qbittorrent-categories.diff";
@@ -93,6 +98,7 @@
   outputs = {
     agenix,
     apple-silicon,
+    a2o4-server,
     disko,
     gallery-dl-latest,
     home-manager,
@@ -175,6 +181,7 @@
 
         modules = [
           niri.nixosModules.niri
+          a2o4-server.nixosModules.default
 
           { nixpkgs.overlays = [ niri.overlays.niri ]; }
         ] ++ (default-modules "revachol" catalog);

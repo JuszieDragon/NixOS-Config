@@ -224,6 +224,12 @@ rec {
       port = 5232;
       reverseProxy = "external";
     };
+    a2o4 = {
+      enable = true;
+      hosts = [ "soul-matrix" ];
+      port = 9797;
+      reverseProxy = "internal";
+    };
 
     restic-server = {
       enable = true;

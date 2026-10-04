@@ -37,6 +37,7 @@ let
 
 in
   list [
+    "a2o4"
     "caddy"
     "forgejo-admin-password"
     "grafana-key"

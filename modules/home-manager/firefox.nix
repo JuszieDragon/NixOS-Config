@@ -1,84 +1,82 @@
-{ config, lib, pkgs, pkgs-master, ... }: {
-  options.firefox.enable = lib.mkEnableOption "Enable Firefox";
+{ config, pkgs-master, ... }: {
+  programs.firefox = {
+    enable = true;
+    package = pkgs-master.firefox-devedition;
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
 
-  config = {
-    programs.firefox = {
-      enable = true;
-      package = pkgs-master.firefox-devedition;
-      configPath = "${config.xdg.configHome}/mozilla/firefox";
-
-      policies = {
-        GenerativeAI = {
-          Enabled = false;
-          Locked = true;
-        };
+    policies = {
+      GenerativeAI = {
+        Enabled = false;
+        Locked = true;
       };
+    };
 
-      profiles = {
-        dev-edition-default = {
-          id = 0;
-          name = "dev-edition-default";
-          isDefault = true;
-          settings = {
-            "browser.toolbars.bookmarks.visibility" = "always";
-            "extensions.langpacks.signatures.required" = false;
-            "media.hardwaremediakeys.enabled" = false;
-            "signon.rememberSignons" = false;
-            "signon.showAutoCompleteFooter" = false;
-            "signon.autofillForms.autocompleteOff" = false;
-            "xpinstall.signatures.required" = false;
-          };
+    profiles = {
+      dev-edition-default = {
+        id = 0;
+        name = "dev-edition-default";
+        isDefault = true;
+        settings = {
+          "browser.toolbars.bookmarks.visibility" = "always";
+          "browser.nova.enabled" = false;
+          "extensions.langpacks.signatures.required" = false;
+          "media.hardwaremediakeys.enabled" = false;
+          "signon.rememberSignons" = false;
+          "signon.showAutoCompleteFooter" = false;
+          "signon.autofillForms.autocompleteOff" = false;
+          "xpinstall.signatures.required" = false;
+          "extensions.autoDisableScopes" = 0;
+        };
 
-          search = {
-            force = true;
-            engines = {
-              "Nix Packages" = {
-                urls = [
-                  {
-                    template = "https://search.nixos.org/packages";
-                    params = [
-                      {
-                        name = "query";
-                        value = "{searchTerms}";
-                      }
-                    ];
-                  }
-                ];
+        search = {
+          force = true;
+          engines = {
+            "Nix Packages" = {
+              urls = [
+                {
+                  template = "https://search.nixos.org/packages";
+                  params = [
+                    {
+                      name = "query";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
 
-                icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-                definedAliases = ["@np"];
-              };
-              "Nix Options" = {
-                urls = [
-                  {
-                    template = "https://search.nixos.org/options";
-                    params = [
-                      {
-                        name = "query";
-                        value = "{searchTerms}";
-                      }
-                    ];
-                  }
-                ];
+              icon = "${pkgs-master.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              definedAliases = ["@np"];
+            };
+            "Nix Options" = {
+              urls = [
+                {
+                  template = "https://search.nixos.org/options";
+                  params = [
+                    {
+                      name = "query";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
 
-                icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-                definedAliases = ["@no"];
-              };
-              "ProtonDB" = {
-                urls = [
-                  {
-                    template = "https://www.protondb.com/search";
-                    params = [
-                      {
-                        name = "q";
-                        value = "{searchTerms}";
-                      }
-                    ];
-                  }
-                ];
+              icon = "${pkgs-master.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              definedAliases = ["@no"];
+            };
+            "ProtonDB" = {
+              urls = [
+                {
+                  template = "https://www.protondb.com/search";
+                  params = [
+                    {
+                      name = "q";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
 
-                definedAliases = ["@pdb"];
-              };
+              definedAliases = ["@pdb"];
             };
           };
         };

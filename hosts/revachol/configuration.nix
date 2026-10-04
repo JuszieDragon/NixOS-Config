@@ -135,7 +135,7 @@ in {
     libreoffice-qt
     prismlauncher
 
-    aider-chat
+    # aider-chat
   ];
 
   system.stateVersion = "25.11"; # Did you read the comment?
