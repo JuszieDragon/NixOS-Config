@@ -34,36 +34,76 @@ let
     done
   '';
 
-  main-mode = pkgs.writeShellScriptBin "main-mode" ''
-    ${env-vars}
-
-    if [ -z "$NIRI_SOCKET" ]; then
-      ${pkgs.niri}/bin/niri-session
-    else
-      ${pkgs.niri}/bin/niri msg output HDMI-A-1 off
-      ${pkgs.niri}/bin/niri msg output DP-1 on
-      ${pkgs.niri}/bin/niri msg output DP-2 on
-      ${pkgs.niri}/bin/niri msg output DP-3 on
-    fi
-
-    ${pkgs.pulseaudio}/bin/pactl set-default-sink alsa_output.usb-SteelSeries_Arctis_Pro_Wireless-00.stereo-game
-  '';
   lounge-gamescope-mode = pkgs.writeShellScriptBin "lounge-gamescope-mode" ''
     ${pkgs.playerctl}/bin/playerctl pause
 
     /run/wrappers/bin/sudo ${pkgs.kbd}/bin/chvt 3
   '';
+
+  gamescope-runner = pkgs.writeShellScriptBin "gamescope-runner" ''
+    if [ -f /etc/profile ]; then
+      source /etc/profile
+    fi
+
+    export PATH="/run/current-system/sw/bin:/run/user/${my-uid}/bin:$PATH"
+    export XDG_RUNTIME_DIR="/run/user/${my-uid}"
+    export XDG_SESSION_TYPE="wayland"
+    export GAMESCOPE_COLOR_SPACE="bt2020"
+    export AMD_DEBUG="force_10bit"
+    export SDL_VIDEODRIVER="wayland"
+
+    sleep 1
+
+    ${pkgs.pulseaudio}/bin/pactl set-default-sink alsa_output.pci-0000_03_00.1.hdmi-surround-extra3
+
+    sleep 1
+
+    exec ${pkgs.gamescope}/bin/gamescope --hdr-enabled -O HDMI-A-1 -w 3840 -h 2160 -e -- ${pkgs.steam}/bin/steam -steamdeck -steamos3
+  '';
+
+  desktop-mode = pkgs.writeShellScriptBin "desktop-mode" ''
+    ${env-vars}
+
+    /run/wrappers/bin/sudo ${pkgs.kbd}/bin/chvt 1
+
+    ${pkgs.niri}/bin/niri msg output HDMI-A-1 off
+    ${pkgs.niri}/bin/niri msg output DP-1 on
+    ${pkgs.niri}/bin/niri msg output DP-2 on
+    ${pkgs.niri}/bin/niri msg output DP-3 on
+  '';
+
+  steamos-session-select = pkgs.writeShellScriptBin "steamos-session-select" ''
+    # Catch Steam's desktop invocation hooks
+    if [ "$1" = "plasma" ] || [ "$1" = "desktop" ] || [ -z "$1" ]; then
+      ${pkgs.curl}/bin/curl -s "http://127.0.0.1:9000/hooks/desktop-mode" &
+
+      exec ${pkgs.steam}/bin/steam -shutdown >/dev/null 2>&1
+    fi
+  '';
 in
 {
   programs.gamescope.enable = true;
 
+  # Make steamdeck mode to use this script when the switch to desktop option in the power menu is selected
+  environment.systemPackages = [ steamos-session-select ];
+
   home-manager.users.justin = _: {
     programs.zsh.loginExtra = /*bash*/ ''
-      if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty3" ]; then
-        pactl set-default-sink alsa_output.pci-0000_03_00.1.hdmi-surround-extra3
-        GAMESCOPE_COLOR_SPACE=bt2020 AMD_DEBUG=force_10bit gamescope --hdr-enabled -O HDMI-A-1 -w 3840 -h 2160 -e -- steam -steamdeck -steamos3
+      if [ "$(tty)" = "/dev/tty3" ]; then
+        exec ${gamescope-runner}/bin/gamescope-runner
       fi
     '';
+  };
+
+  systemd.services."getty@tty3" = {
+    overrideStrategy = "asDropin";
+    serviceConfig = {
+      ExecStart = [
+        ""
+        "@${pkgs.util-linux}/sbin/agetty agetty --autologin justin --noclear %I $TERM"
+      ];
+      Restart = "no";
+    };
   };
 
   services.webhook = {
@@ -73,8 +113,8 @@ in
     openFirewall = true;
     hooks = {
       ${lounge-mode.name}.execute-command = "${lounge-mode}/bin/${lounge-mode.name}";
-      ${main-mode.name}.execute-command = "${main-mode}/bin/${main-mode.name}";
       ${lounge-gamescope-mode.name}.execute-command = "${lounge-gamescope-mode}/bin/${lounge-gamescope-mode.name}";
+      ${desktop-mode.name}.execute-command = "${desktop-mode}/bin/${desktop-mode.name}";
     };
   };
 

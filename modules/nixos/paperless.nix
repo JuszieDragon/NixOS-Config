@@ -7,10 +7,10 @@ in {
   services.paperless = {
     enable = true;
     address = "0.0.0.0";
+    inherit (cfg) port;
     domain = "paperless.${catalog.domain}";
     dataDir = stateDir;
     consumptionDir = mediaDir + "/inbox";
     mediaDir = mediaDir + "/imported";
-    inherit (cfg) port;
   };
 }
