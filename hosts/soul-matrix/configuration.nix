@@ -22,12 +22,25 @@ in {
 
   # Use the systemd-boot EFI boot loader.
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_12;
+    kernelPackages = pkgs.linuxPackages_6_18;
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
     supportedFilesystems = [ "zfs" ];
+  };
+
+  hardware = {
+    cpu.intel.updateMicrocode = true;
+    enableRedistributableFirmware = true;
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs; [
+        intel-media-driver
+        vpl-gpu-rt
+        intel-compute-runtime
+      ];
+    };
   };
 
   networking = {
@@ -41,12 +54,15 @@ in {
     extraGroups = [ "wheel" "media" "file_share" "seat" "video" ];
   };
 
-  environment.systemPackages = with pkgs; [
-    cage
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      cage
+    ];
+    sessionVariables.LIBVA_DRIVER_NAME = "iHD";
+  };
 
   services.seatd.enable = true;
-  
+
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
   ];
