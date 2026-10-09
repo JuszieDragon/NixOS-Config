@@ -728,11 +728,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790877300,
-        "narHash": "sha256-LZ3iq4/ZuALDzND4xVS/XgFuBp9yNctU7lfJWO8Pm98=",
+        "lastModified": 1791549600,
+        "narHash": "sha256-0W8sFDRFSvmT9Qz65F6r1wQGuh/aMiBpHFCow2zdzQ8=",
         "owner": "sm-idk",
         "repo": "steam-asahi",
-        "rev": "fb5782ab69b7a0d57068d0b0bd224c37777d6ed6",
+        "rev": "59d295f1b4d928bebe914963c90942cc7aa83f87",
         "type": "github"
       },
       "original": {
