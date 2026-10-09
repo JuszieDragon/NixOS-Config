@@ -63,21 +63,6 @@ in {
   ];
 
   programs = {
-    niri = {
-      enable = true;
-      package = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
-    };
-    uwsm = {
-      enable = true;
-      waylandCompositors = {
-        niri = {
-          prettyName = "Niri";
-          comment = "Niri compositor managed cleanly by UWSM";
-          binPath = "/run/current-system/sw/bin/niri";
-          extraArgs = [ "--session" ];
-        };
-      };
-    };
     steam-asahi = {
       enable = true;
       backend = "arm64";
@@ -103,21 +88,6 @@ in {
   security.pam.services.greetd.enableGnomeKeyring = true;
 
   services = {
-    displayManager = {
-      noctalia-greeter.enable = true;
-      # Stop the non-uwsm version of Niri from showing in the greeter
-      sessionPackages = lib.mkForce [ ];
-    };
-    gnome.gnome-keyring.enable = true;
-    dbus.packages = with pkgs; [ gnome-keyring gcr_4 ];
-    pipewire = {
-      enable = true;
-      alsa = {
-        enable = true;
-        support32Bit = true;
-      };
-      pulse.enable = true;
-    };
     libinput.enable = true;
     logind = {
       enable = true;

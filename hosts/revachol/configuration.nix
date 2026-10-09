@@ -70,8 +70,6 @@ in {
     };
   };
 
-  security.pam.services.greetd.enableGnomeKeyring = true;
-
   systemd.services.fix-ethernet-speeds = {
     description = "Fix ethernet throttling by disabling EEE and Tx Flow Control";
     wantedBy = [ "network-pre.target" ];
@@ -91,30 +89,6 @@ in {
   };
 
   services = {
-    greetd = {
-      enable = true;
-      settings = {
-        initial_session = {
-          command = "niri-session";
-          user = "justin";
-        };
-        default_session = {
-          command = "${pkgs.noctalia-greeter}/bin/noctalia-greeter"; 
-          user = "greeter";
-        };
-      };
-    };
-    gnome.gnome-keyring.enable = true;
-    dbus.packages = with pkgs; [ gnome-keyring gcr_4 ];
-    pipewire = {
-      enable = true;
-      alsa = {
-        enable = true;
-        support32Bit = true;
-      };
-      pulse.enable = true;
-      jack.enable = true;
-    };
     xserver.videoDrivers = [ "amdgpu" ];
     ollama = {
       enable = true;
@@ -126,8 +100,6 @@ in {
       rocmOverrideGfx = "11.0.0";
     };
   };
-
-  programs.niri.enable = true;
 
   environment.systemPackages = with pkgs; [
     faugus-launcher

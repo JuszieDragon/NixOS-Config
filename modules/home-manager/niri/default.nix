@@ -1,4 +1,4 @@
-{ config, hostname, inputs, lib, pkgs, ... }: with builtins; {
+{ config, inputs, lib, pkgs, ... }: with builtins; {
   imports = [
     ./binds.nix
     ./cursor.nix
@@ -40,16 +40,8 @@
         path = lib.getExe pkgs.xwayland-satellite;
       };
       spawn-at-startup = [
-        {
-          sh = if hostname == "eden"
-            then "${pkgs.uwsm}/bin/uwsm app -- noctalia"
-            else "noctalia";
-        }
-        {
-          sh = if hostname == "eden"
-            then "${pkgs.uwsm}/bin/uwsm app -- workspace-backgrounds"
-            else "workspace-backgrounds";
-        }
+        { sh = "${pkgs.uwsm}/bin/uwsm app -- noctalia"; }
+        { sh = "${pkgs.uwsm}/bin/uwsm app -- workspace-backgrounds"; }
         { sh = "niri msg action focus-workspace ${toString (length (attrNames config.programs.niri.settings.workspaces) + 1)}"; }
       ];
     };

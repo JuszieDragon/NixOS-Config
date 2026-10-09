@@ -43,6 +43,7 @@ in
     "grafana-key"
     "kavita"
     "radicale"
+    "radicale-password"
     "restic-server-password"
     "restic-repository-url"
     "romm"

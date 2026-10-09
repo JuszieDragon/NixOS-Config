@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }: {
+{ inputs, lib, pkgs, ... }: {
   hardware.sane.enable = true;
 
   xdg.portal = {
@@ -68,11 +68,52 @@
     ];
   };
 
+  programs = {
+    niri = {
+      enable = true;
+      package = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
+    };
+    uwsm = {
+      enable = true;
+      waylandCompositors = {
+        niri = {
+          prettyName = "Niri";
+          comment = "Niri compositor managed cleanly by UWSM";
+          binPath = "/run/current-system/sw/bin/niri";
+          extraArgs = [ "--session" ];
+        };
+      };
+    };
+  };
+
   services = {
     avahi = {
       enable = true;
       nssmdns4 = true;
       openFirewall = true;
+    };
+    displayManager = {
+      noctalia-greeter = {
+        enable = true;
+        settings = {
+          output = {
+            scale = 1.0;  # Prevent fractional scaling blur
+          };
+        };
+      };
+      # Stop the non-uwsm version of Niri from showing in the greeter
+      sessionPackages = lib.mkForce [ ];
+    };
+    gnome.gnome-keyring.enable = true;
+    dbus.packages = with pkgs; [ gnome-keyring gcr_4 ];
+    pipewire = {
+      enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+      pulse.enable = true;
+      jack.enable = true;
     };
     printing = {
       enable = true;

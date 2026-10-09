@@ -1,5 +1,21 @@
+config_version = 14
+
 [bar.default]
 capsule = true
+end = [
+    "media",
+    "bar",
+    "tray",
+    "notifications",
+    "clipboard",
+    "network",
+    "bluetooth",
+    "volume",
+    "brightness",
+    "battery",
+    "control-center",
+    "session"
+]
 margin_edge = 0
 margin_ends = 0
 radius = 0
@@ -34,6 +50,7 @@ address = "Glenorchy"
 enabled = false
 schema_version = 2
 widget_order = [
+    "lockscreen-login-box@HDMI-A-1",
     "lockscreen-login-box@winit",
     "lockscreen-login-box@DP-3",
     "lockscreen-login-box@DP-2",
@@ -46,11 +63,13 @@ widget_order = [
     visible = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@DP-1"]
-    box_height = 0.0
-    box_width = 0.0
+    box_height = 196.0
+    box_width = 720.0
     cx = 1720.0
     cy = 1317.0
     output = "DP-1"
+    placement_height = 1440.0
+    placement_width = 3440.0
     rotation = 0.0
     type = "login_box"
 
@@ -58,16 +77,26 @@ widget_order = [
         background_color = "surface_variant"
         background_opacity = 0.88
         background_radius = 12.0
+        center_password_text = false
         input_opacity = 1.0
         input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
         show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@DP-2"]
-    box_height = 0.0
-    box_width = 0.0
+    box_height = 196.0
+    box_width = 720.0
     cx = 720.0
     cy = 2437.0
     output = "DP-2"
+    placement_height = 2560.0
+    placement_width = 1440.0
     rotation = 0.0
     type = "login_box"
 
@@ -75,16 +104,26 @@ widget_order = [
         background_color = "surface_variant"
         background_opacity = 0.88
         background_radius = 12.0
+        center_password_text = false
         input_opacity = 1.0
         input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
         show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@DP-3"]
-    box_height = 0.0
-    box_width = 0.0
+    box_height = 196.0
+    box_width = 720.0
     cx = 1280.0
     cy = 1317.0
     output = "DP-3"
+    placement_height = 1440.0
+    placement_width = 2560.0
     rotation = 0.0
     type = "login_box"
 
@@ -92,16 +131,53 @@ widget_order = [
         background_color = "surface_variant"
         background_opacity = 0.88
         background_radius = 12.0
+        center_password_text = false
         input_opacity = 1.0
         input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
         show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
+    box_height = 196.0
+    box_width = 720.0
+    cx = 1920.0
+    cy = 2041.0
+    output = "HDMI-A-1"
+    placement_height = 2160.0
+    placement_width = 3840.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@winit"]
-    box_height = 0.0
-    box_width = 0.0
+    box_height = 196.0
+    box_width = 720.0
     cx = 356.0
     cy = 2393.0
     output = "winit"
+    placement_height = 0.0
+    placement_width = 0.0
     rotation = 0.0
     type = "login_box"
 
@@ -109,45 +185,65 @@ widget_order = [
         background_color = "surface_variant"
         background_opacity = 0.88
         background_radius = 12.0
+        center_password_text = false
         input_opacity = 1.0
         input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
         show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+[plugins]
+enabled = [ "rylos/syncthing" ]
 
 [shell]
+polkit_agent = true
 telemetry_enabled = true
+
+    [shell.greeter_sync]
+    auto_sync = true
 
     [shell.panel]
     open_near_click_control_center = true
 
     [[shell.session.actions]]
     action = "lock"
+    countdown_seconds = 0.0
     enabled = true
     shortcut = "1"
     variant = "default"
 
     [[shell.session.actions]]
+    action = "lock_and_suspend"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "3"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "logout"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "2"
+    variant = "default"
+
+    [[shell.session.actions]]
     action = "reboot"
+    countdown_seconds = 0.0
     enabled = true
     shortcut = "4"
     variant = "default"
 
     [[shell.session.actions]]
     action = "shutdown"
+    countdown_seconds = 0.0
     enabled = true
     shortcut = "5"
     variant = "destructive"
-
-    [[shell.session.actions]]
-    action = "logout"
-    enabled = false
-    shortcut = "2"
-    variant = "default"
-
-    [[shell.session.actions]]
-    action = "lock_and_suspend"
-    enabled = false
-    shortcut = "3"
-    variant = "default"
 
 [wallpaper]
 directory = "/home/justin/Pictures/Wallpapers"
@@ -170,8 +266,14 @@ transition_on_startup = true
     [wallpaper.monitors.DP-3]
     path = "/home/justin/Pictures/Wallpapers/Disco.png"
 
+    [wallpaper.monitors.HDMI-A-1]
+    path = "/home/justin/Pictures/Wallpapers/Disco.png"
+
 [weather]
 refresh_minutes = 5
+
+[widget.bar]
+type = "rylos/syncthing:bar"
 
 [widget.clock]
 format = "{:%-I:%M %p} {:%d-%m-%Y}"
