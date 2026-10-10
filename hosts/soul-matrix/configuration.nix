@@ -1,4 +1,4 @@
-{ catalog, pkgs, ... }:
+{ catalog, config, pkgs, ... }:
 
 let
   moduleImports = map (module: ../../modules/nixos + module) [
@@ -28,6 +28,16 @@ in {
       efi.canTouchEfiVariables = true;
     };
     supportedFilesystems = [ "zfs" ];
+
+    blacklistedKernelModules = [ "r8169" ];
+    extraModulePackages = [
+      config.boot.kernelPackages.r8125
+    ];
+    kernelModules = [ "r8125" ];
+    kernelParams = [ "pcie_aspm=off" ];
+    extraModprobeConfig = ''
+      options r8125 eee_enable=0 aspm=0
+    '';
   };
 
   hardware = {
