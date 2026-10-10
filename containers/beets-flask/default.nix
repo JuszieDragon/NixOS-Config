@@ -62,6 +62,25 @@ in lib.mkIf cfg.isEnabled {
       fi
       sudo chown -R beets-flask:media "$DIR";
     '')
+    (pkgs.writeShellScriptBin "khi-download" /*bash*/ ''
+      if [[ "$EUID" -ne 0 ]]; then
+        echo "Please run this script with sudo or as root"
+        exit 1
+      fi
+      if [[ -z "$1" ]]; then
+        echo "Need to pass a url to download";
+        exit 1;
+      fi
+      URL=$1
+      TITLE="''${URL##*/}"
+      TITLE="''${TITLE%.*}"
+      EXTENSION="''${url##*.}"
+      printf -v DECODED_TITLE '%b' "''${TITLE//%/\\x}"
+      DIR=${musicDir}/inbox/$DECODED_TITLE;
+      mkdir "$DIR";
+      ${pkgs.curl}/bin/curl -sSL $URL | ${pkgs.libarchive}/bin/bsdtar -xvf- -C "$DIR";
+      sudo chown -R beets-flask:media "$DIR";
+    '')
   ];
 
   systemd = {
