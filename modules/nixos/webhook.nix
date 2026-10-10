@@ -52,7 +52,7 @@ let
     export AMD_DEBUG="force_10bit"
     export SDL_VIDEODRIVER="wayland"
 
-    sleep 1
+    ${pkgs.procps}/bin/pkill steam || true
 
     ${pkgs.pulseaudio}/bin/pactl set-default-sink alsa_output.pci-0000_03_00.1.hdmi-surround-extra3
 

@@ -95,6 +95,7 @@
     displayManager = {
       noctalia-greeter = {
         enable = true;
+        passwordlessSyncUsers = [ "justin" ];
         settings = {
           output = {
             scale = 1.0;  # Prevent fractional scaling blur

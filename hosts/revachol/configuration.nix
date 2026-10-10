@@ -99,6 +99,10 @@ in {
       };
       rocmOverrideGfx = "11.0.0";
     };
+    open-webui = {
+      enable = true;
+      port = 8912;
+    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -106,9 +110,12 @@ in {
     hydrus
     libreoffice-qt
     prismlauncher
-
-    # aider-chat
   ];
+
+  programs.gamescope = {
+    enable = true;
+    capSysNice = true;
+  };
 
   system.stateVersion = "25.11"; # Did you read the comment?
 }
