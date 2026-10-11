@@ -26,6 +26,7 @@
           "signon.autofillForms.autocompleteOff" = false;
           "xpinstall.signatures.required" = false;
           "extensions.autoDisableScopes" = 0;
+          "gfx.webrender.all" = true;
         };
 
         search = {
