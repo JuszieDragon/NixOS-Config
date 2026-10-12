@@ -73,6 +73,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    systems.url = "github:nix-systems/default";
+
     nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
     nixpkgs-patch-qbittorrent = {
       url = "https://github.com/NixOS/nixpkgs/compare/master...JuszieDragon:nixpkgs:qbittorrent-categories.diff";
@@ -89,156 +92,205 @@
   };
 
   nixConfig = {
-    extra-substituters = [ "https://nix-community.cachix.org" "https://noctalia.cachix.org" ];
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+      "https://noctalia.cachix.org"
+    ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
     ];
   };
 
-  outputs = {
-    agenix,
-    apple-silicon,
-    a2o4-server,
-    disko,
-    gallery-dl-latest,
-    home-manager,
-    kosync,
-    lazyvim,
-    niri,
-    nix-on-droid,
-    nixpkgs,
-    nixpkgs-master,
-    nixpkgs-patcher,
-    nixarr,
-    steam-asahi,
-    ...
-  } @ inputs:
+  outputs =
+    {
+      self,
+      agenix,
+      apple-silicon,
+      a2o4-server,
+      disko,
+      home-manager,
+      kosync,
+      niri,
+      nix-on-droid,
+      nixpkgs,
+      nixpkgs-master,
+      nixpkgs-patcher,
+      nixarr,
+      steam-asahi,
+      treefmt-nix,
+      ...
+    }@inputs:
     let
+      eachSystem = nixpkgs.lib.genAttrs [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+
+      # Eval the treefmt modules from ./treefmt.nix
+      treefmtEval = eachSystem (
+        system: treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} ./treefmt.nix
+      );
+
       # for firefox-devedition as mozilla only keeps the latest binary and unstable can lag behind a bit on updating to latest
       pkgs-master = import nixpkgs-master {
         system = "x86_64-linux";
         config.allowUnfree = true;
       };
 
-      catalog-gen = host: import ./catalog.nix { inherit (nixpkgs) lib; inherit host; };
-      default-modules = system: catalog: [
+      catalog-gen =
+        host:
+        import ./catalog.nix {
+          inherit (nixpkgs) lib;
+          inherit host;
+        };
+      default-modules = hostname: catalog: [
         agenix.nixosModules.default
 
         home-manager.nixosModules.home-manager
         {
           home-manager = {
             useGlobalPkgs = true;
-            users."justin" = ./hosts/${system}/home.nix;
-            extraSpecialArgs = { inherit inputs catalog pkgs-master; hostname = system; };
+            users."justin" = ./hosts/${hostname}/home.nix;
+            extraSpecialArgs = {
+              inherit
+                inputs
+                catalog
+                pkgs-master
+                hostname
+                ;
+            };
           };
         }
 
-        ./hosts/${system}/configuration.nix
+        ./hosts/${hostname}/configuration.nix
       ];
-    in {
-    nixosConfigurations = {
-      night-city = let
-        catalog = catalog-gen "night-city"; 
-      in nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+    in
+    {
+      formatter = eachSystem (system: treefmtEval.${system}.config.build.wrapper);
+      # for `nix flake check`
+      checks = eachSystem (system: {
+        formatting = treefmtEval.${system}.config.build.check self;
+      });
 
-        modules = default-modules "night-city" catalog;
+      nixosConfigurations = {
+        night-city =
+          let
+            catalog = catalog-gen "night-city";
+          in
+          nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
 
-        specialArgs = { inherit inputs catalog; };
+            modules = default-modules "night-city" catalog;
+
+            specialArgs = { inherit inputs catalog; };
+          };
+
+        soul-matrix =
+          let
+            catalog = catalog-gen "soul-matrix";
+          in
+          nixpkgs-patcher.lib.nixosSystem rec {
+            nixpkgsPatcher.inputs = inputs;
+
+            system = "x86_64-linux";
+
+            modules = [
+              a2o4-server.nixosModules.default
+              kosync.nixosModules.${system}.default
+              nixarr.nixosModules.default
+            ]
+            ++ default-modules "soul-matrix" catalog;
+
+            specialArgs = { inherit inputs catalog; };
+          };
+
+        last-defence-academy =
+          let
+            catalog = catalog-gen "last-defence-academy";
+          in
+          nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+
+            modules = default-modules "last-defence-academy" catalog;
+
+            specialArgs = { inherit inputs catalog; };
+          };
+
+        revachol =
+          let
+            catalog = catalog-gen "revachol";
+          in
+          nixpkgs-patcher.lib.nixosSystem {
+            nixpkgsPatcher.inputs = inputs;
+
+            system = "x86_64-linux";
+
+            modules = [
+              niri.nixosModules.niri
+              a2o4-server.nixosModules.default
+
+              { nixpkgs.overlays = [ niri.overlays.niri ]; }
+            ]
+            ++ (default-modules "revachol" catalog);
+
+            specialArgs = { inherit inputs catalog; };
+          };
+
+        eden =
+          let
+            catalog = catalog-gen "eden";
+          in
+          nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
+
+            modules = [
+              apple-silicon.nixosModules.apple-silicon-support
+              steam-asahi.nixosModules.default
+              niri.nixosModules.niri
+
+              {
+                nixpkgs.overlays = [
+                  niri.overlays.niri
+                  (_final: prev: {
+                    aapt = prev.aapt.overrideAttrs (oldAttrs: {
+                      meta = (oldAttrs.meta or { }) // {
+                        platforms = (oldAttrs.meta.platforms or [ ]) ++ [ "aarch64-linux" ];
+                      };
+                    });
+                  })
+                ];
+              }
+            ]
+            ++ (default-modules "eden" catalog);
+
+            specialArgs = { inherit inputs catalog; };
+          };
+
+        mementos =
+          let
+            name = "mementos";
+            catalog = catalog-gen name;
+          in
+          nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
+
+            modules = [ disko.nixosModules.disko ] ++ (default-modules name catalog);
+
+            specialArgs = { inherit inputs catalog; };
+          };
       };
 
-      soul-matrix = let
-        catalog = catalog-gen "soul-matrix";
-      in nixpkgs-patcher.lib.nixosSystem rec {
-        nixpkgsPatcher.inputs = inputs;
+      nixOnDroidConfigurations.default =
+        let
+          catalog = catalog-gen "yes";
+        in
+        nix-on-droid.lib.nixOnDroidConfiguration {
+          pkgs = import nixpkgs { system = "aarch64-linux"; };
 
-        system = "x86_64-linux";
+          modules = [ ./hosts/comp/configuration.nix ];
 
-        modules = [
-          a2o4-server.nixosModules.default
-          kosync.nixosModules.${system}.default
-          nixarr.nixosModules.default
-        ] ++ default-modules "soul-matrix" catalog;
-
-        specialArgs = { inherit inputs catalog; };
-      };
-
-      last-defence-academy = let 
-        catalog = catalog-gen "last-defence-academy"; 
-      in nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-
-        modules = default-modules "last-defence-academy" catalog;
-
-        specialArgs = { inherit inputs catalog; };
-      };
-
-      revachol = let
-        catalog = catalog-gen "revachol";
-      in nixpkgs-patcher.lib.nixosSystem {
-        nixpkgsPatcher.inputs = inputs;
-
-        system = "x86_64-linux";
-
-        modules = [
-          niri.nixosModules.niri
-          a2o4-server.nixosModules.default
-
-          { nixpkgs.overlays = [ niri.overlays.niri ]; }
-        ] ++ (default-modules "revachol" catalog);
-
-        specialArgs = { inherit inputs catalog; };
-      };
-
-      eden = let
-        catalog = catalog-gen "eden";
-      in nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-
-	      modules = [
-          apple-silicon.nixosModules.apple-silicon-support
-          steam-asahi.nixosModules.default
-	        niri.nixosModules.niri
-
-          { nixpkgs.overlays = [
-            niri.overlays.niri
-            (final: prev: {
-              aapt = prev.aapt.overrideAttrs (oldAttrs: {
-                meta = (oldAttrs.meta or {}) // {
-                  platforms = (oldAttrs.meta.platforms or []) ++ [ "aarch64-linux" ];
-                };
-              });
-            })
-          ]; }
-        ] ++ (default-modules "eden" catalog);
-
-	      specialArgs = { inherit inputs catalog; };
-      };
-
-      mementos = let
-        name = "mementos";
-        catalog = catalog-gen name;
-      in nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-
-	      modules = [
-          disko.nixosModules.disko
-        ] ++ (default-modules name catalog);
-
-	      specialArgs = { inherit inputs catalog; };
-      };
+          extraSpecialArgs = { inherit inputs catalog; };
+        };
     };
-
-    nixOnDroidConfigurations.default = let
-      catalog = catalog-gen "yes";
-    in nix-on-droid.lib.nixOnDroidConfiguration {
-      pkgs = import nixpkgs { system = "aarch64-linux"; };
-
-      modules = [ ./hosts/comp/configuration.nix ];
-
-      extraSpecialArgs = { inherit inputs catalog; };
-    };
-  };
 }
-

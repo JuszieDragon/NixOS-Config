@@ -26,7 +26,7 @@
       nurl
       pciutils
       (sqlit-tui.overridePythonAttrs (old: {
-        propagatedBuildInputs = (old.propagatedBuildInputs or []) ++ [ python3Packages.pytz ];
+        propagatedBuildInputs = (old.propagatedBuildInputs or [ ]) ++ [ python3Packages.pytz ];
       }))
       statix
       tmux
@@ -114,4 +114,3 @@
     };
   };
 }
-

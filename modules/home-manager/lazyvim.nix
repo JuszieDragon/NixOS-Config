@@ -41,7 +41,7 @@
       vrl
     ];
     config = {
-      options = /*lua*/ ''
+      options = /* lua */ ''
         vim.opt.relativenumber = false
 
         -- Fix terminal errors when in a nix develop shell
@@ -52,24 +52,24 @@
         vim.opt.clipboard = 'unnamedplus'
       '';
 
-      keymaps = /*lua*/ ''
+      keymaps = /* lua */ ''
         vim.keymap.set('n', '<leader>th', ':split | terminal<CR>', { desc = 'Terminal split horizontal' })
         vim.keymap.set('n', '<leader>tv', ':vsplit | terminal<CR>', { desc = 'Terminal split vertical' })
       '';
 
-      autocmds = /*lua*/ ''
-      -- Automatically enter insert mode when opening a new terminal
-        local term_group = vim.api.nvim_create_augroup("TerminalSettings", { clear = true })
+      autocmds = /* lua */ ''
+        -- Automatically enter insert mode when opening a new terminal
+          local term_group = vim.api.nvim_create_augroup("TerminalSettings", { clear = true })
 
-        vim.api.nvim_create_autocmd("TermOpen", {
-          group = term_group,
-          pattern = "*",
-          command = "startinsert",
-        })
+          vim.api.nvim_create_autocmd("TermOpen", {
+            group = term_group,
+            pattern = "*",
+            command = "startinsert",
+          })
       '';
     };
     plugins = {
-      colorscheme = /*lua*/ ''
+      colorscheme = /* lua */ ''
         return {
           { "ellisonleao/gruvbox.nvim" },
           {
@@ -80,7 +80,7 @@
           }
         }
       '';
-      snacks = /*lua*/ ''
+      snacks = /* lua */ ''
         return {
           {
             "folke/snacks.nvim",

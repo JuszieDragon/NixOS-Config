@@ -7,7 +7,7 @@
   #nixpkgs.overlays = [( self: super: {
   #  feishin = super.feishin.overrideAttrs (previousAttrs: rec {
   #    version = "1.2.0";
-  #          
+  #
   #    src = super.fetchFromGitHub {
   #      tag = "v${version}";
   #      owner = "jeffvli";

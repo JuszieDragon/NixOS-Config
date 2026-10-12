@@ -14,7 +14,7 @@ let
     POSTGRES_USER = "kaneo";
     POSTGRES_PASSWORD = "Qywter101";
 
-    CORS_ORIGINS="${KANEO_CLIENT_URL}";
+    CORS_ORIGINS = "${KANEO_CLIENT_URL}";
 
     #TODO at least pretend to care about security
     AUTH_SECRET = "d3353680-29a2-4e1b-b134-8eb1a421d74e";
@@ -23,7 +23,8 @@ let
   idStr = toString id;
   version = "2.1.6";
 
-in {
+in
+{
   users = {
     groups.kaneo.gid = id;
     users.kaneo = {
@@ -57,4 +58,3 @@ in {
     };
   };
 }
-

@@ -1,7 +1,7 @@
 { lib, pkgs, ... }: {
   options.waybar.enable = lib.mkEnableOption "Enable Waybar";
-  
-  config = {  
+
+  config = {
     programs.waybar = {
       enable = true;
       package = pkgs.waybar;
@@ -9,9 +9,9 @@
         mainBar = {
           height = 20;
           layer = "top";
-          modules-left = [];
-          modules-center = ["clock"];
-          modules-right = ["tray"];
+          modules-left = [ ];
+          modules-center = [ "clock" ];
+          modules-right = [ "tray" ];
         };
 
         "clock" = {
@@ -24,4 +24,3 @@
     };
   };
 }
-

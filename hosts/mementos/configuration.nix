@@ -2,17 +2,20 @@
 let
   modulesRoot = ../../modules/nixos;
 
-  modulesImports = map (module: modulesRoot + module) [
-  ];
+  modulesImports = map (module: modulesRoot + module) [ ];
 
   serviceImports = catalog.servicePathsForHost;
   containerImports = catalog.containerPathsForHost;
 
-in {
+in
+{
   imports = [
     ./disko.nix
     ../default.nix
-  ] ++ modulesImports ++ serviceImports ++ containerImports;
+  ]
+  ++ modulesImports
+  ++ serviceImports
+  ++ containerImports;
 
   boot = {
     kernelPackages = pkgs.linuxPackages_6_18;

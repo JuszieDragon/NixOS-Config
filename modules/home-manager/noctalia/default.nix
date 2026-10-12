@@ -1,7 +1,5 @@
-{ config, inputs, pkgs, ... }: {
-  imports = [
-    inputs.agenix.homeManagerModules.default
-  ];
+{ config, inputs, ... }: {
+  imports = [ inputs.agenix.homeManagerModules.default ];
 
   age.secrets.radicale-password.file = inputs.self + /secrets/radicale-password.age;
 

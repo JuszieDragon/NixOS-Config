@@ -5,7 +5,8 @@ let
   stateDir = "/state/kosync";
   id = 9362;
 
-in {
+in
+{
   users = lib.mkIf cfg.isEnabled {
     users.kosync.uid = id;
     groups.kosync.gid = id;

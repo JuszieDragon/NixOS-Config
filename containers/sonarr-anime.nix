@@ -1,12 +1,18 @@
-{ catalog, config, lib, ... }:
+{
+  catalog,
+  config,
+  lib,
+  ...
+}:
 
 with lib;
 
-let 
+let
   cfg = catalog.containers.sonarr-anime;
   inherit (config) util-nixarr;
 
-in {
+in
+{
   containers.sonarr-anime = mkIf cfg.isEnabled {
     autoStart = true;
     hostAddress = cfg.host.ip;
@@ -31,7 +37,7 @@ in {
           group = "media";
         };
       };
-        
+
       services.sonarr = {
         enable = true;
         user = "sonarr";
@@ -51,4 +57,3 @@ in {
     after = [ "network-online.target" ];
   };
 }
-

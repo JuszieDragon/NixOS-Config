@@ -32,7 +32,7 @@ rec {
       ip = "192.168.1.1";
       syncthingId = "7WFVTVY-RL74QRT-34DFXU7-G25ZSNU-2GSP3OM-E3UCZ6I-JQC7KM3-OHNNWAB";
     };
- 
+
     home-assistant = {
       isNixos = false;
       ip = "192.168.1.3";
@@ -76,9 +76,7 @@ rec {
     };
   };
 
-  hosts = mapAttrs (host: attrs:
-    attrs // { hostName = host; }
-  ) hostsBase;
+  hosts = mapAttrs (host: attrs: attrs // { hostName = host; }) hostsBase;
 
   servicesBase = {
     jellyfin = {
@@ -129,7 +127,11 @@ rec {
     };
     scrutiny = {
       enable = true;
-      hosts = [ "soul-matrix" "last-defence-academy" "mementos" ];
+      hosts = [
+        "soul-matrix"
+        "last-defence-academy"
+        "mementos"
+      ];
       port = 8083;
       reverseProxy = "internal";
     };
@@ -182,22 +184,39 @@ rec {
     };
     prometheus = {
       enable = true;
-      hosts = [ "soul-matrix" "night-city" "last-defence-academy" ];
+      hosts = [
+        "soul-matrix"
+        "night-city"
+        "last-defence-academy"
+      ];
       port = 3020;
     };
     loki = {
       enable = true;
-      hosts = [ "soul-matrix" "night-city" "last-defence-academy" ];
+      hosts = [
+        "soul-matrix"
+        "night-city"
+        "last-defence-academy"
+      ];
       port = 3100;
     };
     vector = {
       enable = true;
-      hosts = [ "soul-matrix" "night-city" "last-defence-academy" ];
+      hosts = [
+        "soul-matrix"
+        "night-city"
+        "last-defence-academy"
+      ];
       port = 9598;
     };
     librespeed = {
       enable = true;
-      hosts = [ "soul-matrix" "night-city" "last-defence-academy" "mementos" ];
+      hosts = [
+        "soul-matrix"
+        "night-city"
+        "last-defence-academy"
+        "mementos"
+      ];
       frontendHost = "soul-matrix";
       port = 3002;
     };
@@ -214,7 +233,11 @@ rec {
     };
     syncthing = {
       enable = true;
-      hosts = [ "soul-matrix" "revachol" "eden" ];
+      hosts = [
+        "soul-matrix"
+        "revachol"
+        "eden"
+      ];
       port = 8384;
       reverseProxy = "internal";
     };
@@ -257,26 +280,26 @@ rec {
       port = 8084;
       reverseProxy = "internal";
     };
-   # kaneo = {
-   #   enable = true;
-   #   hosts = [ "soul-matrix" ];
-   #   port = 5173;
-   #   reverseProxy = "internal";
-   # };
-   # #TODO maybe setup dependent services under kaneo object for DRY
-   # kaneo-api = {
-   #   enable = servicesBase.kaneo.enable;
-   #   hosts = servicesBase.kaneo.hosts;
-   #   port = 1337;
-   #   reverseProxy = "internal";
-   #   noModule = true;
-   # };
-   # kaneo-db = {
-   #   enable = servicesBase.kaneo.enable;
-   #   hosts = servicesBase.kaneo.hosts;
-   #   port = 5432;
-   #   noModule = true;
-   # };
+    # kaneo = {
+    #   enable = true;
+    #   hosts = [ "soul-matrix" ];
+    #   port = 5173;
+    #   reverseProxy = "internal";
+    # };
+    # #TODO maybe setup dependent services under kaneo object for DRY
+    # kaneo-api = {
+    #   enable = servicesBase.kaneo.enable;
+    #   hosts = servicesBase.kaneo.hosts;
+    #   port = 1337;
+    #   reverseProxy = "internal";
+    #   noModule = true;
+    # };
+    # kaneo-db = {
+    #   enable = servicesBase.kaneo.enable;
+    #   hosts = servicesBase.kaneo.hosts;
+    #   port = 5432;
+    #   noModule = true;
+    # };
     beets-flask = {
       enable = true;
       hosts = [ "soul-matrix" ];
@@ -292,39 +315,37 @@ rec {
     };
   };
 
-  populate = servicesToPop: mapAttrs (_service: attrs:
-    attrs // {
-      portString = if attrs ? port
-        then builtins.toString attrs.port
-        else "";
-      #TODO this might be able to directly grab the current hostname instead of having it passed in
-      isEnabled = attrs.enable && builtins.elem "${host}" attrs.hosts;
-      host = hosts.${host};
-    }
-  ) servicesToPop;
+  populate =
+    servicesToPop:
+    mapAttrs (
+      _service: attrs:
+      attrs
+      // {
+        portString = if attrs ? port then builtins.toString attrs.port else "";
+        #TODO this might be able to directly grab the current hostname instead of having it passed in
+        isEnabled = attrs.enable && builtins.elem "${host}" attrs.hosts;
+        host = hosts.${host};
+      }
+    ) servicesToPop;
 
   services = populate servicesBase;
   containers = populate containersBase;
 
-  portsUsed = concatMapAttrs (service: attrs: {
-    ${attrs.portString} = "${service}";
-  }) (
-      filterAttrs (_service: attrs: attrs ? port && builtins.elem "${host}" attrs.hosts) services //
-      filterAttrs (_service: attrs: attrs ? port && builtins.elem "${host}" attrs.hosts) containers
-    );
-
-  getModuleName = module: attrs:
-    if attrs ? module
-      then "${attrs.module}"
-      else "${module}";
-
-  modulePathsForHost = servicesToMap: path: lists.unique (
-    lib.attrsets.mapAttrsToList (module: attrs:
-      path + (/. + (getModuleName module attrs)) + ".nix"
-    ) (filterAttrs (_n: v: v.isEnabled && !(v ? noModule)) servicesToMap)
+  portsUsed = concatMapAttrs (service: attrs: { ${attrs.portString} = "${service}"; }) (
+    filterAttrs (_service: attrs: attrs ? port && builtins.elem "${host}" attrs.hosts) services
+    // filterAttrs (_service: attrs: attrs ? port && builtins.elem "${host}" attrs.hosts) containers
   );
+
+  getModuleName = module: attrs: if attrs ? module then "${attrs.module}" else "${module}";
+
+  modulePathsForHost =
+    servicesToMap: path:
+    lists.unique (
+      lib.attrsets.mapAttrsToList (module: attrs: path + (/. + (getModuleName module attrs)) + ".nix") (
+        filterAttrs (_n: v: v.isEnabled && !(v ? noModule)) servicesToMap
+      )
+    );
 
   servicePathsForHost = modulePathsForHost services ./modules/nixos;
   containerPathsForHost = modulePathsForHost containers ./containers;
 }
-

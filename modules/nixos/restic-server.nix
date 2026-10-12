@@ -1,10 +1,17 @@
-{ catalog, config, lib, inputs, ... }:
+{
+  catalog,
+  config,
+  lib,
+  inputs,
+  ...
+}:
 let
   cfg = catalog.services.restic-server;
 
   dataDir = "/mnt/backup/restic";
 
-in lib.mkIf cfg.enable {
+in
+lib.mkIf cfg.enable {
   age.secrets.restic-server = {
     file = inputs.self + /secrets/restic-server-password.age;
     owner = "restic";

@@ -1,9 +1,16 @@
-{ catalog, config, inputs, lib, ... }:
+{
+  catalog,
+  config,
+  inputs,
+  lib,
+  ...
+}:
 let
   hostname = config.networking.hostName;
   cfg = catalog.services.syncthing;
   secrets = config.age.secrets;
-in lib.mkIf cfg.isEnabled {
+in
+lib.mkIf cfg.isEnabled {
   age.secrets = {
     gui-password = {
       file = inputs.self + /secrets/syncthing-gui-password.age;

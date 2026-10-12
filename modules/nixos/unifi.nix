@@ -1,4 +1,1 @@
-_: { 
-  services.unifi.enable = true;
-}
-
+_: { services.unifi.enable = true; }

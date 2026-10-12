@@ -41,9 +41,7 @@ in
       };
 
       security = {
-        csrf_trusted_origins = [
-          "grafana.${catalog.domain}"
-        ];
+        csrf_trusted_origins = [ "grafana.${catalog.domain}" ];
         secret_key = config.age.secrets.grafana-key.path;
       };
     };

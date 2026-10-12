@@ -49,11 +49,10 @@ _: {
         userServices = true;
       };
     };
- 
+
     samba-wsdd = {
       enable = true;
       openFirewall = true;
     };
   };
 }
-

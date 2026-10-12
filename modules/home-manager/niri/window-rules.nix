@@ -1,9 +1,9 @@
 _: {
   /*
-  Kogan: DP-1
-  Philips: DP-2
-  Viewsonic: DP-3
-  LG C4: HDMI-A-1
+    Kogan: DP-1
+    Philips: DP-2
+    Viewsonic: DP-3
+    LG C4: HDMI-A-1
   */
 
   programs.niri.settings = {
@@ -32,16 +32,12 @@ _: {
         open-fullscreen = true;
       }
       {
-        matches = [
-          { app-id = "steam_app_2202195447"; }
-        ];
+        matches = [ { app-id = "steam_app_2202195447"; } ];
         open-on-workspace = "Nikke";
         open-fullscreen = true;
       }
       {
-        matches = [
-          { app-id = "Minecraft.+"; }
-        ];
+        matches = [ { app-id = "Minecraft.+"; } ];
         open-on-output = "DP-1";
         open-maximized = true;
       }

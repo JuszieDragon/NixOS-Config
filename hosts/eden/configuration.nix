@@ -1,4 +1,9 @@
-{ catalog, config, inputs, lib, pkgs, ... }:
+{
+  catalog,
+  inputs,
+  pkgs,
+  ...
+}:
 let
   modulesRoot = ../../modules/nixos;
 
@@ -10,13 +15,16 @@ let
 
   serviceImports = catalog.servicePathsForHost;
 
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
     ./shares.nix
     ./syncthing.nix
     ../default.nix
-  ] ++ modulesImports ++ serviceImports;
+  ]
+  ++ modulesImports
+  ++ serviceImports;
 
   boot = {
     kernel.sysctl = {
@@ -71,7 +79,7 @@ in {
 
   users = {
     # cleanup logs for steam-asahi
-    groups.plugdev = {};
+    groups.plugdev = { };
     users = {
       justin.extraGroups = [
         "kvm"
@@ -103,4 +111,3 @@ in {
 
   system.stateVersion = "26.11"; # Did you read the comment?
 }
-

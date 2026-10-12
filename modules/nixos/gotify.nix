@@ -1,9 +1,10 @@
-{ catalog, config, inputs, lib, pkgs, ... } :
+{ catalog, lib, ... }:
 let
   cfg = catalog.services.gotify;
   stateDir = "/state/gotify";
   id = 9802;
-in {
+in
+{
   users = lib.mkIf cfg.isEnabled {
     users.gotify = {
       uid = id;
@@ -26,7 +27,7 @@ in {
       WorkingDirectory = lib.mkForce stateDir;
       StateDirectory = lib.mkForce stateDir;
     };
-    tmpfiles.settings.gotify-server.${stateDir}.d =  {
+    tmpfiles.settings.gotify-server.${stateDir}.d = {
       user = "gotify";
       group = "gotify";
       mode = "0775";

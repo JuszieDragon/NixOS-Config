@@ -1,7 +1,5 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [
-    ludusavi
-  ];
+  home.packages = with pkgs; [ ludusavi ];
 
   # services.ludusavi = {
   #   enable = true;

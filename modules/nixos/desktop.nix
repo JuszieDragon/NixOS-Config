@@ -1,4 +1,10 @@
-{ inputs, lib, pkgs, ... }: {
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
+{
   hardware.sane.enable = true;
 
   xdg.portal = {
@@ -12,10 +18,16 @@
 
     config = {
       common = {
-        default = [ "gnome" "gtk" ];
+        default = [
+          "gnome"
+          "gtk"
+        ];
       };
       niri = {
-        default = [ "gnome" "gtk" ];
+        default = [
+          "gnome"
+          "gtk"
+        ];
         "org.freedesktop.impl.portal.FileChooser" = "gtk";
 
         #fix discord screensharing with niri
@@ -98,7 +110,7 @@
         passwordlessSyncUsers = [ "justin" ];
         settings = {
           output = {
-            scale = 1.0;  # Prevent fractional scaling blur
+            scale = 1.0; # Prevent fractional scaling blur
           };
         };
       };
@@ -106,7 +118,10 @@
       sessionPackages = lib.mkForce [ ];
     };
     gnome.gnome-keyring.enable = true;
-    dbus.packages = with pkgs; [ gnome-keyring gcr_4 ];
+    dbus.packages = with pkgs; [
+      gnome-keyring
+      gcr_4
+    ];
     pipewire = {
       enable = true;
       alsa = {

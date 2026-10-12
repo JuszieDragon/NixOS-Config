@@ -1,4 +1,10 @@
-{ config, inputs, lib, catalog, ... }:
+{
+  config,
+  inputs,
+  lib,
+  catalog,
+  ...
+}:
 
 with lib;
 
@@ -9,7 +15,8 @@ let
   dbName = "romm";
   dbUser = "romm-user";
 
-in {
+in
+{
   age.secrets = {
     romm.file = inputs.self + /secrets/romm.age;
     romm-db.file = inputs.self + /secrets/romm-db.age;
@@ -47,4 +54,3 @@ in {
     };
   };
 }
-

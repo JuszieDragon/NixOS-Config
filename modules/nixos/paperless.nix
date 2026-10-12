@@ -1,9 +1,10 @@
-{ catalog, config, inputs, lib, pkgs, ... }:
+{ catalog, ... }:
 let
   cfg = catalog.services.paperless;
   stateDir = "/state/paperless";
   mediaDir = "/mnt/media/paperless";
-in {
+in
+{
   services.paperless = {
     enable = true;
     address = "0.0.0.0";

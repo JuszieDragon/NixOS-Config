@@ -1,4 +1,4 @@
-{ catalog, lib, ... }: 
+{ catalog, lib, ... }:
 
 with lib;
 
@@ -8,7 +8,8 @@ let
   id = 1936;
   idStr = toString id;
 
-in {
+in
+{
   users = {
     groups.yamtrack.gid = id;
     users.yamtrack = {
@@ -17,7 +18,7 @@ in {
       group = "yamtrack";
     };
   };
-        
+
   virtualisation.oci-containers.containers = mkIf cfg.isEnabled {
     yamtrack = {
       image = "ghcr.io/fuzzygrim/yamtrack:0.24.9";
@@ -41,4 +42,3 @@ in {
     };
   };
 }
-

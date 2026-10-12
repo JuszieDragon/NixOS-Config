@@ -4,7 +4,8 @@ let
   cfg = catalog.services.navidrome;
   configDir = "/state/navidrome";
 
-in lib.mkIf cfg.isEnabled {
+in
+lib.mkIf cfg.isEnabled {
   users.users.navidrome = {
     uid = 2143;
   };
@@ -22,4 +23,3 @@ in lib.mkIf cfg.isEnabled {
     group = "media";
   };
 }
-

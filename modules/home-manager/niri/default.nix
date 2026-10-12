@@ -1,4 +1,12 @@
-{ config, inputs, lib, pkgs, ... }: with builtins; {
+{
+  config,
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
+with builtins;
+{
   imports = [
     ./binds.nix
     ./cursor.nix
@@ -42,7 +50,11 @@
       spawn-at-startup = [
         { sh = "${pkgs.uwsm}/bin/uwsm app -- noctalia"; }
         { sh = "${pkgs.uwsm}/bin/uwsm app -- workspace-backgrounds"; }
-        { sh = "niri msg action focus-workspace ${toString (length (attrNames config.programs.niri.settings.workspaces) + 1)}"; }
+        {
+          sh = "niri msg action focus-workspace ${
+            toString (length (attrNames config.programs.niri.settings.workspaces) + 1)
+          }";
+        }
       ];
     };
   };

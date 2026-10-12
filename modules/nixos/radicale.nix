@@ -1,8 +1,15 @@
-{ catalog, config, inputs, lib, ... }:
+{
+  catalog,
+  config,
+  inputs,
+  lib,
+  ...
+}:
 let
   cfg = catalog.services.radicale;
   stateDir = "/state/radicale";
-in lib.mkIf cfg.isEnabled {
+in
+lib.mkIf cfg.isEnabled {
   age.secrets.radicale = {
     file = inputs.self + /secrets/radicale.age;
     owner = "radicale";

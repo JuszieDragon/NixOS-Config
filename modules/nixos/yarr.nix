@@ -1,11 +1,18 @@
-{ catalog, config, lib, inputs, ... }: 
+{
+  catalog,
+  config,
+  lib,
+  inputs,
+  ...
+}:
 
 with lib;
 
 let
   cfg = catalog.services.yarr;
 
-in {
+in
+{
   age.secrets.yarr.file = inputs.self + /secrets/yarr.age;
 
   services.yarr = {
@@ -16,4 +23,3 @@ in {
     authFilePath = config.age.secrets.yarr.path;
   };
 }
-

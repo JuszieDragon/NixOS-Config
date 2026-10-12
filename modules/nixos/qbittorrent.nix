@@ -1,4 +1,4 @@
-{ lib, catalog, ... }: 
+{ lib, catalog, ... }:
 
 with lib;
 
@@ -8,7 +8,8 @@ let
   dataDir = "/mnt/media/torrents";
   stateDir = "/state";
 
-in rec {
+in
+rec {
   users.users.qbittorrent = mkIf services.qbittorrent.enable {
     isSystemUser = true;
     group = "media";
@@ -21,9 +22,7 @@ in rec {
     group = "media";
     profileDir = stateDir;
     webuiPort = cfg.port;
-    extraArgs = [
-      "--confirm-legal-notice"
-    ];
+    extraArgs = [ "--confirm-legal-notice" ];
     serverConfig = {
       AutoRun = {
         enabled = true;
@@ -91,4 +90,3 @@ in rec {
     };
   };
 }
-

@@ -61,7 +61,5 @@ in
     };
   };
 
-  systemd.services.vector.serviceConfig = mkIf isCaddyHost {
-    SupplementaryGroups = [ "caddy" ];
-  };
+  systemd.services.vector.serviceConfig = mkIf isCaddyHost { SupplementaryGroups = [ "caddy" ]; };
 }

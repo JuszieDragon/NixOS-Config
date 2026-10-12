@@ -10,11 +10,15 @@ let
   serviceImports = catalog.servicePathsForHost;
   containerImports = catalog.containerPathsForHost;
 
-in {
-  imports = [ 
+in
+{
+  imports = [
     ./hardware-configuration.nix
     ../default.nix
-  ] ++ moduleImports ++ serviceImports ++ containerImports;
+  ]
+  ++ moduleImports
+  ++ serviceImports
+  ++ containerImports;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -32,9 +36,17 @@ in {
   };
 
   users = {
-    groups = { home-lab = { }; };
+    groups = {
+      home-lab = { };
+    };
     users.justin = {
-      extraGroups = [ "wheel" "docker" "server" "home-lab" "media" ];
+      extraGroups = [
+        "wheel"
+        "docker"
+        "server"
+        "home-lab"
+        "media"
+      ];
     };
   };
 
@@ -47,4 +59,3 @@ in {
 
   system.stateVersion = "25.11"; # Did you read the comment?
 }
-

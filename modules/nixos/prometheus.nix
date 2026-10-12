@@ -24,13 +24,7 @@ in
         scrape_interval = "5s";
         scrape_timeout = "5s";
 
-        static_configs = [
-          {
-            targets = [
-              "0.0.0.0:9090"
-            ];
-          }
-        ];
+        static_configs = [ { targets = [ "0.0.0.0:9090" ]; } ];
       }
       {
         job_name = "nodes";
@@ -45,13 +39,7 @@ in
       }
       {
         job_name = "caddy";
-        static_configs = [
-          {
-            targets = [
-              "0.0.0.0:2019"
-            ];
-          }
-        ];
+        static_configs = [ { targets = [ "0.0.0.0:2019" ]; } ];
       }
     ];
   };

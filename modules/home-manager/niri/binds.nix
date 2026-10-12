@@ -25,58 +25,115 @@
 
     "Mod+Space" = {
       hotkey-overlay.title = "Noctalia launcher";
-      action.spawn = [ "noctalia" "msg" "panel-toggle" "launcher" ]; };
+      action.spawn = [
+        "noctalia"
+        "msg"
+        "panel-toggle"
+        "launcher"
+      ];
+    };
     "Mod+S" = {
       hotkey-overlay.title = "Noctalia control center";
-      action.spawn = [ "noctalia" "msg" "panel-toggle" "control-center" ];
+      action.spawn = [
+        "noctalia"
+        "msg"
+        "panel-toggle"
+        "control-center"
+      ];
     };
     "Mod+Comma" = {
       hotkey-overlay.title = "Noctalia settings";
-      action.spawn = [ "noctalia" "msg" "settings-toggle" ];
+      action.spawn = [
+        "noctalia"
+        "msg"
+        "settings-toggle"
+      ];
     };
 
     "XF86AudioPlay" = {
-      action.spawn = ["playerctl" "play-pause"];
+      action.spawn = [
+        "playerctl"
+        "play-pause"
+      ];
       allow-when-locked = true;
     };
     "XF86AudioNext" = {
-      action.spawn = ["playerctl" "next"];
+      action.spawn = [
+        "playerctl"
+        "next"
+      ];
       allow-when-locked = true;
     };
     "XF86AudioPrev" = {
-      action.spawn = ["playerctl" "previous"];
+      action.spawn = [
+        "playerctl"
+        "previous"
+      ];
       allow-when-locked = true;
     };
     "XF86AudioRaiseVolume" = {
-      action.spawn = [ "noctalia" "msg" "volume-up"];
+      action.spawn = [
+        "noctalia"
+        "msg"
+        "volume-up"
+      ];
       allow-when-locked = true;
     };
     "XF86AudioLowerVolume" = {
-      action.spawn = [ "noctalia" "msg" "volume-down" ];
+      action.spawn = [
+        "noctalia"
+        "msg"
+        "volume-down"
+      ];
       allow-when-locked = true;
     };
     "XF86AudioMute" = {
-      action.spawn = [ "noctalia" "msg" "volume-mute" ];
+      action.spawn = [
+        "noctalia"
+        "msg"
+        "volume-mute"
+      ];
       allow-when-locked = true;
     };
     "XF86MonBrightnessUp" = {
-      action.spawn = [ "noctalia" "msg" "brightness-up" ];
+      action.spawn = [
+        "noctalia"
+        "msg"
+        "brightness-up"
+      ];
       allow-when-locked = true;
     };
     "XF86MonBrightnessDown" = {
-      action.spawn = [ "noctalia" "msg" "brightness-down" ];
+      action.spawn = [
+        "noctalia"
+        "msg"
+        "brightness-down"
+      ];
       allow-when-locked = true;
     };
-    "XF86PowerOff".action.spawn = if hostname == "eden"
-      then [ "systemctl" "suspend" ]
-      else [ "shutdown" "now" ];
+    "XF86PowerOff".action.spawn =
+      if hostname == "eden" then
+        [
+          "systemctl"
+          "suspend"
+        ]
+      else
+        [
+          "shutdown"
+          "now"
+        ];
 
     "Mod+O" = {
       action = toggle-overview;
       repeat = false;
     };
     "Mod+W" = {
-      action.spawn = [ "sudo" "systemctl" "restart" "wg-quick-wg0.service" ];
+      action.spawn = [
+        "sudo"
+        "systemctl"
+        "restart"
+        "wg-quick-wg0.service"
+      ];
       repeat = false;
     };
 

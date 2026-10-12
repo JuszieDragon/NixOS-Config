@@ -1,7 +1,7 @@
 { lib, pkgs, ... }: {
   options.vscode.enable = lib.mkEnableOption "Enable VSCode";
-  
-  config = {  
+
+  config = {
     home.packages = with pkgs; [
       sqlite
       python312
@@ -34,4 +34,3 @@
     };
   };
 }
-

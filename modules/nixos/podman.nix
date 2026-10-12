@@ -12,9 +12,11 @@ with lib;
     autoPrune = {
       enable = true;
       dates = "weekly";
-      flags = [ "--filter=until=24h" "--filter=label!=important" ];
+      flags = [
+        "--filter=until=24h"
+        "--filter=label!=important"
+      ];
     };
     defaultNetwork.settings.dns_enabled = true;
   };
 }
-

@@ -1,9 +1,1 @@
-{
-  pkgs,
-  ...
-}: {
-  environment.systemPackages = with pkgs; [
-    web-ext
-  ];
-}
-
+{ pkgs, ... }: { environment.systemPackages = with pkgs; [ web-ext ]; }

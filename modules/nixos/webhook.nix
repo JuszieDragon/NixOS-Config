@@ -2,7 +2,7 @@
 let
   my-uid = toString config.users.users.justin.uid;
 
-  env-vars = /*bash*/ ''
+  env-vars = /* bash */ ''
     export WAYLAND_DISPLAY=wayland-0
     export XDG_RUNTIME_DIR=/run/user/${my-uid}
     export PULSE_RUNTIME_DIR=/run/user/${my-uid}
@@ -88,7 +88,7 @@ in
   environment.systemPackages = [ steamos-session-select ];
 
   home-manager.users.justin = _: {
-    programs.zsh.loginExtra = /*bash*/ ''
+    programs.zsh.loginExtra = /* bash */ ''
       if [ "$(tty)" = "/dev/tty3" ]; then
         exec ${gamescope-runner}/bin/gamescope-runner
       fi
@@ -113,12 +113,18 @@ in
     openFirewall = true;
     hooks = {
       ${lounge-mode.name}.execute-command = "${lounge-mode}/bin/${lounge-mode.name}";
-      ${lounge-gamescope-mode.name}.execute-command = "${lounge-gamescope-mode}/bin/${lounge-gamescope-mode.name}";
+      ${lounge-gamescope-mode.name}.execute-command =
+        "${lounge-gamescope-mode}/bin/${lounge-gamescope-mode.name}";
       ${desktop-mode.name}.execute-command = "${desktop-mode}/bin/${desktop-mode.name}";
     };
   };
 
-  users.users.justin.extraGroups = [ "tty" "video" "input" "render" ];
+  users.users.justin.extraGroups = [
+    "tty"
+    "video"
+    "input"
+    "render"
+  ];
 
   security.sudo.extraRules = [
     {
@@ -132,4 +138,3 @@ in
     }
   ];
 }
-

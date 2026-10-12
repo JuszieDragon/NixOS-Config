@@ -5,7 +5,10 @@ _:
     supportedFilesystems = [ "zfs" ];
     zfs = {
       forceImportRoot = false;
-      extraPools = [ "media" "files" ];
+      extraPools = [
+        "media"
+        "files"
+      ];
     };
   };
 
@@ -30,4 +33,3 @@ _:
   #  monthly = 3;
   #};
 }
-

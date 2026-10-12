@@ -1,9 +1,16 @@
-{ catalog, config, inputs, lib, ... }:
+{
+  catalog,
+  config,
+  inputs,
+  lib,
+  ...
+}:
 let
   cfg = catalog.services.kavita;
   configDir = "/state/kavita";
 
-in lib.mkIf cfg.isEnabled {
+in
+lib.mkIf cfg.isEnabled {
   users.users.kavita = {
     uid = 8367;
     group = lib.mkForce "media";

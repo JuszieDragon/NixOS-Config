@@ -1,8 +1,14 @@
-{ catalog, config, lib, ... }:
+{
+  catalog,
+  config,
+  lib,
+  ...
+}:
 let
   cfg = catalog.services.librespeed;
 
-in {
+in
+{
   services.librespeed = {
     enable = true;
     frontend = lib.mkIf (config.networking.hostName == cfg.frontendHost) {

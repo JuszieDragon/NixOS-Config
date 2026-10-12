@@ -1,7 +1,13 @@
-{ catalog, inputs, lib, pkgs, ... }:
+{
+  catalog,
+  inputs,
+  pkgs,
+  ...
+}:
 let
-  customProtonGEVersion = pVersion: pHash: (
-    pkgs.proton-ge-bin.overrideAttrs rec {
+  customProtonGEVersion =
+    pVersion: pHash:
+    (pkgs.proton-ge-bin.overrideAttrs rec {
       version = pVersion;
       src = pkgs.fetchzip {
         url = "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${version}/${version}.tar.gz";
@@ -9,11 +15,11 @@ let
       };
       toolName = pVersion;
       steamDisplayName = pVersion;
-    }
-  );
+    });
 
-  customDWProtonVersion = pVersion: pHash: (
-    pkgs.dwproton-bin.overrideAttrs rec {
+  customDWProtonVersion =
+    pVersion: pHash:
+    (pkgs.dwproton-bin.overrideAttrs rec {
       version = pVersion;
       src = pkgs.fetchzip {
         url = "https://dawn.wine/dawn-winery/dwproton/releases/download/${version}/${version}-x86_64.tar.xz";
@@ -21,20 +27,22 @@ let
       };
       toolName = pVersion;
       steamDisplayName = pVersion;
-    }
-  );
+    });
 
   swsHost = builtins.elemAt catalog.services.sws.hosts 0;
 
-  fetchFromNas = filename: hash:
+  fetchFromNas =
+    filename: hash:
     pkgs.fetchurl {
       url = "http://${catalog.hosts.${swsHost}.ip}:${catalog.services.sws.portString}/SteamGridDB/${filename}";
       inherit hash;
     };
 
-  buildArtwork = game: artworks:
-    builtins.mapAttrs (name: value: fetchFromNas "${game}/${name}.png" artworks.${name}) artworks;
-in {
+  buildArtwork =
+    game: artworks:
+    builtins.mapAttrs (name: _value: fetchFromNas "${game}/${name}.png" artworks.${name}) artworks;
+in
+{
   imports = [ inputs.steam-config-nix.homeModules.default ];
 
   programs.steam.config = {

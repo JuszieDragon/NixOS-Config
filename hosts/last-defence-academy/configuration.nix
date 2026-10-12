@@ -4,11 +4,14 @@ let
   serviceImports = catalog.servicePathsForHost;
   containerImports = catalog.containerPathsForHost;
 
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
     ../default.nix
-  ] ++ serviceImports ++ containerImports;
+  ]
+  ++ serviceImports
+  ++ containerImports;
 
   boot.loader = {
     systemd-boot.enable = true;
@@ -32,7 +35,6 @@ in {
     enable = true;
     settings.PermitRootLogin = "yes";
   };
-  
+
   system.stateVersion = "25.11"; # Did you read the comment?
 }
-

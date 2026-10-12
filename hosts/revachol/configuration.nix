@@ -1,4 +1,9 @@
-{ catalog, config, inputs, pkgs, ... }:
+{
+  catalog,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   modulesRoot = ../../modules/nixos;
@@ -14,17 +19,23 @@ let
 
   serviceImports = catalog.servicePathsForHost;
 
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
     ./shares.nix
     ./syncthing.nix
     ../default.nix
-  ] ++ modulesImports ++ serviceImports;
+  ]
+  ++ modulesImports
+  ++ serviceImports;
 
   boot = {
     #Related to USB PD, should be fine to disable to remove error in logs on boot
-    blacklistedKernelModules = [ "ucsi_acpi" "r8169" ];
+    blacklistedKernelModules = [
+      "ucsi_acpi"
+      "r8169"
+    ];
     initrd.kernelModules = [ "r8125" ];
     extraModulePackages = [ config.boot.kernelPackages.r8125 ];
     kernelModules = [ "r8125" ];

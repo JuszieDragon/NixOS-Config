@@ -1,4 +1,11 @@
-{ catalog, config, inputs, lib, pkgs, ... }:
+{
+  catalog,
+  config,
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = catalog.containers.beets-flask;
@@ -7,7 +14,8 @@ let
   uid = 3195;
   uidStr = toString uid;
 
-in lib.mkIf cfg.isEnabled {
+in
+lib.mkIf cfg.isEnabled {
   users.users.beets-flask = {
     isSystemUser = true;
     inherit uid;
@@ -62,7 +70,7 @@ in lib.mkIf cfg.isEnabled {
       fi
       sudo chown -R beets-flask:media "$DIR";
     '')
-    (pkgs.writeShellScriptBin "khi-download" /*bash*/ ''
+    (pkgs.writeShellScriptBin "khi-download" /* bash */ ''
       if [[ "$EUID" -ne 0 ]]; then
         echo "Please run this script with sudo or as root"
         exit 1

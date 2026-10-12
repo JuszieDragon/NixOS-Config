@@ -1,5 +1,1 @@
-{
-  imports = [
-    ../../modules/home-manager
-  ];
-}
+{ imports = [ ../../modules/home-manager ]; }

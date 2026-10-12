@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }: {
   programs.gallery-dl = {
     enable = true;
-    package = pkgs.gallery-dl.overrideAttrs (oldAttrs: {
+    package = pkgs.gallery-dl.overrideAttrs (_oldAttrs: {
       src = inputs.gallery-dl-latest;
     });
     settings = {
@@ -18,9 +18,22 @@
             "" = "p{page:>03}.{extension}";
           };
           directory = {
-            "subcategory == 'covers'" = ["{category}" "{manga}" "covers"];
-            volume = ["{category}" "{manga}" "v{volume}" "c{chapter:>03}_{title}"];
-            "" = ["{category}" "{manga}" "c{chapter:>03}"];
+            "subcategory == 'covers'" = [
+              "{category}"
+              "{manga}"
+              "covers"
+            ];
+            volume = [
+              "{category}"
+              "{manga}"
+              "v{volume}"
+              "c{chapter:>03}_{title}"
+            ];
+            "" = [
+              "{category}"
+              "{manga}"
+              "c{chapter:>03}"
+            ];
           };
           archive-format = "{manga} {volume:>03} {chapter:>03} {page:>03}.{extension}";
           postprocessors = [
@@ -35,4 +48,3 @@
     };
   };
 }
-

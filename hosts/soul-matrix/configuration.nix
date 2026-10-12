@@ -1,4 +1,9 @@
-{ catalog, config, pkgs, ... }:
+{
+  catalog,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   moduleImports = map (module: ../../modules/nixos + module) [
@@ -13,12 +18,16 @@ let
   serviceImports = catalog.servicePathsForHost;
   containerImports = catalog.containerPathsForHost;
 
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
     ./syncthing.nix
     ../default.nix
-  ] ++ moduleImports ++ serviceImports ++ containerImports;
+  ]
+  ++ moduleImports
+  ++ serviceImports
+  ++ containerImports;
 
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -30,9 +39,7 @@ in {
     supportedFilesystems = [ "zfs" ];
 
     blacklistedKernelModules = [ "r8169" ];
-    extraModulePackages = [
-      config.boot.kernelPackages.r8125
-    ];
+    extraModulePackages = [ config.boot.kernelPackages.r8125 ];
     kernelModules = [ "r8125" ];
     kernelParams = [ "pcie_aspm=off" ];
     extraModprobeConfig = ''
@@ -61,22 +68,23 @@ in {
   };
 
   users.users.justin = {
-    extraGroups = [ "wheel" "media" "file_share" "seat" "video" ];
+    extraGroups = [
+      "wheel"
+      "media"
+      "file_share"
+      "seat"
+      "video"
+    ];
   };
 
   environment = {
-    systemPackages = with pkgs; [
-      cage
-    ];
+    systemPackages = with pkgs; [ cage ];
     sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   };
 
   services.seatd.enable = true;
 
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-  ];
+  fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
 
   system.stateVersion = "25.05"; # Did you read the comment?
 }
-

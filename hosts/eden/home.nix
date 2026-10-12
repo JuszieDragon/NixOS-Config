@@ -12,22 +12,19 @@ let
     # /steam.nix
     /yt-dlp.nix
   ];
-in {
-  imports = [
-    homeManagerDir
-  ] ++ modules;
+in
+{
+  imports = [ homeManagerDir ] ++ modules;
 
   home.packages = with pkgs; [
     wlr-randr
-    (
-      pkgs.writers.writePython3Bin "workspace-backgrounds" {} (
-        builtins.readFile (homeManagerDir + /niri/workspace-backgrounds.py)
-      )
-    )
+    (pkgs.writers.writePython3Bin "workspace-backgrounds" { } (
+      builtins.readFile (homeManagerDir + /niri/workspace-backgrounds.py)
+    ))
   ];
 
   programs = {
-    zsh.loginExtra = /*bash*/ ''
+    zsh.loginExtra = /* bash */ ''
       if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
         exec dbus-run-session niri --session
       fi
@@ -45,7 +42,10 @@ in {
         comment = "Danbooru-like image tagging and searching system for the desktop";
         terminal = false;
         type = "Application";
-        categories = [ "FileTools" "Utility" ];
+        categories = [
+          "FileTools"
+          "Utility"
+        ];
       };
     };
   };

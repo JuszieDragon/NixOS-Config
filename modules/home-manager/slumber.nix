@@ -1,9 +1,7 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [
-    slumber
-  ];
+  home.packages = with pkgs; [ slumber ];
 
-  programs.lazyvim.plugins.slumber = /*lua*/ ''
+  programs.lazyvim.plugins.slumber = /* lua */ ''
     return {
       {
         "folke/which-key.nvim",

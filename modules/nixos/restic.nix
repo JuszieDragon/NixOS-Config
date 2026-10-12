@@ -1,8 +1,4 @@
-{ catalog, config, inputs, ... }:
-let
- resticSrvCfg = catalog.services.restic-server;
-
-in {
+{ config, inputs, ... }: {
   age.secrets = {
     resticRepo = {
       file = inputs.self + /secrets/restic-repository-url.age;

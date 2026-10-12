@@ -1,10 +1,19 @@
-{ config, inputs, pkgs, ... }: {
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
+{
   environment.systemPackages = [ pkgs.wireguard-tools ];
 
   age.secrets.nordlynx-private-key.file = inputs.self + /secrets/wireguard.age;
 
   networking = {
-    nameservers = [ "1.0.0.1" "8.8.8.8" ];
+    nameservers = [
+      "1.0.0.1"
+      "8.8.8.8"
+    ];
     wg-quick.interfaces = {
       wg0 = {
         autostart = false;
@@ -32,11 +41,15 @@
     };
   };
 
-  security.sudo.extraRules = [{
-    users = [ "justin" ];
-    commands = [{
-      command = "/run/current-system/sw/bin/systemctl restart wg-quick-wg0.service";
-      options = [ "NOPASSWD" ];
-    }];
-  }];
+  security.sudo.extraRules = [
+    {
+      users = [ "justin" ];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/systemctl restart wg-quick-wg0.service";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
 }

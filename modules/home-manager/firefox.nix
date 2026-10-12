@@ -46,7 +46,7 @@
               ];
 
               icon = "${pkgs-master.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-              definedAliases = ["@np"];
+              definedAliases = [ "@np" ];
             };
             "Nix Options" = {
               urls = [
@@ -62,7 +62,7 @@
               ];
 
               icon = "${pkgs-master.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-              definedAliases = ["@no"];
+              definedAliases = [ "@no" ];
             };
             "ProtonDB" = {
               urls = [
@@ -77,7 +77,7 @@
                 }
               ];
 
-              definedAliases = ["@pdb"];
+              definedAliases = [ "@pdb" ];
             };
           };
         };

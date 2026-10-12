@@ -1,10 +1,11 @@
-{ catalog, config, ... }: 
-let 
+{ catalog, ... }:
+let
   cfg = catalog.services.sws;
-in {
+in
+{
   services.static-web-server = {
     inherit (cfg) enable;
-    listen = "[::]:${cfg.portString}";            # Listens on port 8080 for both IPv4 and IPv6
+    listen = "[::]:${cfg.portString}"; # Listens on port 8080 for both IPv4 and IPv6
     root = "/state/sws";
     configuration = {
       general = {

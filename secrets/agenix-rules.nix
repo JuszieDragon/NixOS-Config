@@ -1,5 +1,4 @@
 let
-  genAttrs = names: name-f: value-f: builtins.listToAttrs (map (name: { name = name-f name; value = value-f name; }) names);
 
   revachol = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHn3vUHi5t6k5W/1P5VdFZtlvZmWbnk/S6qKMXVtBkar";
   #remember agenix uses ~/.ssh by default, not /etc/ssh
@@ -24,41 +23,41 @@ let
 
   keys = users ++ servers;
 
-  list = files: builtins.listToAttrs (map (
-    name: {
-      name = "${name}.age";
-      value = { publicKeys = keys; }; 
-    }
-  ) files);
-
-  generator = files: genAttrs files ( file: {
-    publicKeys = keys;
-  });
+  list =
+    files:
+    builtins.listToAttrs (
+      map (name: {
+        name = "${name}.age";
+        value = {
+          publicKeys = keys;
+        };
+      }) files
+    );
 
 in
-  list [
-    "a2o4"
-    "caddy"
-    "forgejo-admin-password"
-    "grafana-key"
-    "kavita"
-    "radicale"
-    "radicale-password"
-    "restic-server-password"
-    "restic-repository-url"
-    "romm"
-    "romm-db"
-    "scrutiny-gotify"
-    "share"
-    "vpn"
-    "wireguard"
-    "yarr"
+list [
+  "a2o4"
+  "caddy"
+  "forgejo-admin-password"
+  "grafana-key"
+  "kavita"
+  "radicale"
+  "radicale-password"
+  "restic-server-password"
+  "restic-repository-url"
+  "romm"
+  "romm-db"
+  "scrutiny-gotify"
+  "share"
+  "vpn"
+  "wireguard"
+  "yarr"
 
-    "syncthing-gui-password"
-    "eden-syncthing-key"
-    "eden-syncthing-cert"
-    "soul-matrix-syncthing-key"
-    "soul-matrix-syncthing-cert"
-    "revachol-syncthing-key"
-    "revachol-syncthing-cert"
-  ]
+  "syncthing-gui-password"
+  "eden-syncthing-key"
+  "eden-syncthing-cert"
+  "soul-matrix-syncthing-key"
+  "soul-matrix-syncthing-cert"
+  "revachol-syncthing-key"
+  "revachol-syncthing-cert"
+]

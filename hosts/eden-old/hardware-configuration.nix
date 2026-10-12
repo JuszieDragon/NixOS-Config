@@ -5,9 +5,7 @@
   ...
 }:
 {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot = {
     initrd = {
@@ -31,11 +29,7 @@
     fsType = "ext4";
   };
 
-  swapDevices = [
-    {
-      device = "/dev/disk/by-uuid/67078882-9c45-49a3-8ca6-e48cbd65bdf2";
-    }
-  ];
+  swapDevices = [ { device = "/dev/disk/by-uuid/67078882-9c45-49a3-8ca6-e48cbd65bdf2"; } ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

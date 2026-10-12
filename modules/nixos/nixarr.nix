@@ -1,11 +1,18 @@
-{ config, inputs, lib, catalog, ... }: 
+{
+  config,
+  inputs,
+  lib,
+  catalog,
+  ...
+}:
 
 with lib;
 
 let
   cfg = catalog.services;
 
-in {
+in
+{
   age.secrets.vpn.file = inputs.self + /secrets/vpn.age;
 
   nixarr = {
@@ -44,4 +51,3 @@ in {
     };
   };
 }
-

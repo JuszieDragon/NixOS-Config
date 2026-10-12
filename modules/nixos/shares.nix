@@ -1,7 +1,12 @@
-{ config, inputs, pkgs, ... }: 
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
 let
   sharedOptions = [
-    "credentials=${config.age.secrets.share.path}" 
+    "credentials=${config.age.secrets.share.path}"
     "rw"
     "x-systemd.automount"
     "noauto"
@@ -11,10 +16,14 @@ let
     "vers=3.0"
   ];
 
-in {
-  environment.systemPackages = with pkgs; [ cifs-utils samba ];
+in
+{
+  environment.systemPackages = with pkgs; [
+    cifs-utils
+    samba
+  ];
 
-  age.secrets.share.file = inputs.self + /secrets/share.age; 
+  age.secrets.share.file = inputs.self + /secrets/share.age;
 
   fileSystems = {
     "/mnt/Roms" = {
@@ -30,4 +39,3 @@ in {
     };
   };
 }
-

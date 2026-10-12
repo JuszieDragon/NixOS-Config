@@ -1,15 +1,19 @@
-{ catalog, lib, ... }: 
+{ catalog, lib, ... }:
 
 let
   cfg = catalog.services.immich;
   mediaLocation = "/mnt/media/immich";
   id = 4286;
 
-in {
+in
+{
   users = lib.mkIf cfg.isEnabled {
     users.immich = {
       uid = id;
-      extraGroups = [ "video" "render" ];
+      extraGroups = [
+        "video"
+        "render"
+      ];
     };
     groups.immich.gid = id;
   };

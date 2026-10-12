@@ -1,5 +1,11 @@
-
-{ catalog, config, inputs, lib, pkgs, ... }:
+{
+  catalog,
+  config,
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 let
   sharedOptions = {
     fsType = "cifs";
@@ -17,8 +23,12 @@ let
 
   nasIp = builtins.toString catalog.hosts.soul-matrix.ip;
 
-in {
-  environment.systemPackages = with pkgs; [ cifs-utils samba ];
+in
+{
+  environment.systemPackages = with pkgs; [
+    cifs-utils
+    samba
+  ];
 
   # Allow users to mount cifs shares
   security.wrappers."mount.cifs" = {
@@ -40,4 +50,3 @@ in {
     };
   };
 }
-
