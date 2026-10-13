@@ -1,11 +1,11 @@
-{ config, pkgs-master, ... }: {
+{ config, pkgs-master, ... }:
+let
+  isAarch64 = pkgs-master.stdenv.hostPlatform.isAarch64;
+in
+{
   programs.firefox = {
     enable = true;
-    package =
-      if pkgs-master.stdenv.hostPlatform.isAarch64 then
-        pkgs-master.firefox
-      else
-        pkgs-master.firefox-devedition;
+    package = if isAarch64 then pkgs-master.firefox else pkgs-master.firefox-devedition;
     configPath = "${config.xdg.configHome}/mozilla/firefox";
 
     policies = {
@@ -15,77 +15,81 @@
       };
     };
 
-    profiles = {
-      dev-edition-default = {
-        id = 0;
-        name = "dev-edition-default";
-        isDefault = true;
-        settings = {
-          "browser.toolbars.bookmarks.visibility" = "always";
-          "browser.nova.enabled" = false;
-          "extensions.langpacks.signatures.required" = false;
-          "media.hardwaremediakeys.enabled" = false;
-          "signon.rememberSignons" = false;
-          "signon.showAutoCompleteFooter" = false;
-          "signon.autofillForms.autocompleteOff" = false;
-          "xpinstall.signatures.required" = false;
-          "extensions.autoDisableScopes" = 0;
-          "gfx.webrender.all" = true;
-        };
+    profiles =
+      let
+        profileName = if isAarch64 then "default" else "dev-edition-default";
+      in
+      {
+        ${profileName} = {
+          id = 0;
+          name = profileName;
+          isDefault = true;
+          settings = {
+            "browser.toolbars.bookmarks.visibility" = "always";
+            "browser.nova.enabled" = false;
+            "extensions.langpacks.signatures.required" = false;
+            "media.hardwaremediakeys.enabled" = false;
+            "signon.rememberSignons" = false;
+            "signon.showAutoCompleteFooter" = false;
+            "signon.autofillForms.autocompleteOff" = false;
+            "xpinstall.signatures.required" = false;
+            "extensions.autoDisableScopes" = 0;
+            "gfx.webrender.all" = true;
+          };
 
-        search = {
-          force = true;
-          engines = {
-            "Nix Packages" = {
-              urls = [
-                {
-                  template = "https://search.nixos.org/packages";
-                  params = [
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
+          search = {
+            force = true;
+            engines = {
+              "Nix Packages" = {
+                urls = [
+                  {
+                    template = "https://search.nixos.org/packages";
+                    params = [
+                      {
+                        name = "query";
+                        value = "{searchTerms}";
+                      }
+                    ];
+                  }
+                ];
 
-              icon = "${pkgs-master.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-              definedAliases = [ "@np" ];
-            };
-            "Nix Options" = {
-              urls = [
-                {
-                  template = "https://search.nixos.org/options";
-                  params = [
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
+                icon = "${pkgs-master.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                definedAliases = [ "@np" ];
+              };
+              "Nix Options" = {
+                urls = [
+                  {
+                    template = "https://search.nixos.org/options";
+                    params = [
+                      {
+                        name = "query";
+                        value = "{searchTerms}";
+                      }
+                    ];
+                  }
+                ];
 
-              icon = "${pkgs-master.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-              definedAliases = [ "@no" ];
-            };
-            "ProtonDB" = {
-              urls = [
-                {
-                  template = "https://www.protondb.com/search";
-                  params = [
-                    {
-                      name = "q";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
+                icon = "${pkgs-master.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                definedAliases = [ "@no" ];
+              };
+              "ProtonDB" = {
+                urls = [
+                  {
+                    template = "https://www.protondb.com/search";
+                    params = [
+                      {
+                        name = "q";
+                        value = "{searchTerms}";
+                      }
+                    ];
+                  }
+                ];
 
-              definedAliases = [ "@pdb" ];
+                definedAliases = [ "@pdb" ];
+              };
             };
           };
         };
       };
-    };
   };
 }
