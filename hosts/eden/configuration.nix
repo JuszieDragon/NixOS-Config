@@ -59,7 +59,6 @@ in
 
   environment.systemPackages = with pkgs; [
     brightnessctl
-    chromium
     foliate
     prismlauncher
 

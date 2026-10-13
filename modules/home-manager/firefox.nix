@@ -1,7 +1,11 @@
 { config, pkgs-master, ... }: {
   programs.firefox = {
     enable = true;
-    package = pkgs-master.firefox-devedition;
+    package =
+      if pkgs-master.stdenv.hostPlatform.isAarch64 then
+        pkgs-master.firefox
+      else
+        pkgs-master.firefox-devedition;
     configPath = "${config.xdg.configHome}/mozilla/firefox";
 
     policies = {

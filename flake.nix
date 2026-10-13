@@ -131,39 +131,42 @@
         system: treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} ./treefmt.nix
       );
 
-      # for firefox-devedition as mozilla only keeps the latest binary and unstable can lag behind a bit on updating to latest
-      pkgs-master = import nixpkgs-master {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-      };
-
       catalog-gen =
         host:
         import ./catalog.nix {
           inherit (nixpkgs) lib;
           inherit host;
         };
-      default-modules = hostname: catalog: [
-        agenix.nixosModules.default
-
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            users."justin" = ./hosts/${hostname}/home.nix;
-            extraSpecialArgs = {
-              inherit
-                inputs
-                catalog
-                pkgs-master
-                hostname
-                ;
-            };
+      default-modules =
+        hostname: system: catalog:
+        let
+          # for firefox-devedition as mozilla only keeps the latest binary and unstable can lag behind a bit on updating to latest
+          pkgs-master = import nixpkgs-master {
+            inherit system;
+            confog.allowUnfree = true;
           };
-        }
+        in
+        [
+          agenix.nixosModules.default
 
-        ./hosts/${hostname}/configuration.nix
-      ];
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              users."justin" = ./hosts/${hostname}/home.nix;
+              extraSpecialArgs = {
+                inherit
+                  inputs
+                  catalog
+                  pkgs-master
+                  hostname
+                  ;
+              };
+            };
+          }
+
+          ./hosts/${hostname}/configuration.nix
+        ];
     in
     {
       formatter = eachSystem (system: treefmtEval.${system}.config.build.wrapper);
@@ -177,10 +180,10 @@
           let
             catalog = catalog-gen "night-city";
           in
-          nixpkgs.lib.nixosSystem {
+          nixpkgs.lib.nixosSystem rec {
             system = "x86_64-linux";
 
-            modules = default-modules "night-city" catalog;
+            modules = default-modules "night-city" system catalog;
 
             specialArgs = { inherit inputs catalog; };
           };
@@ -199,7 +202,7 @@
               kosync.nixosModules.${system}.default
               nixarr.nixosModules.default
             ]
-            ++ default-modules "soul-matrix" catalog;
+            ++ default-modules "soul-matrix" system catalog;
 
             specialArgs = { inherit inputs catalog; };
           };
@@ -208,10 +211,10 @@
           let
             catalog = catalog-gen "last-defence-academy";
           in
-          nixpkgs.lib.nixosSystem {
+          nixpkgs.lib.nixosSystem rec {
             system = "x86_64-linux";
 
-            modules = default-modules "last-defence-academy" catalog;
+            modules = default-modules "last-defence-academy" system catalog;
 
             specialArgs = { inherit inputs catalog; };
           };
@@ -220,7 +223,7 @@
           let
             catalog = catalog-gen "revachol";
           in
-          nixpkgs-patcher.lib.nixosSystem {
+          nixpkgs-patcher.lib.nixosSystem rec {
             nixpkgsPatcher.inputs = inputs;
 
             system = "x86_64-linux";
@@ -231,7 +234,7 @@
 
               { nixpkgs.overlays = [ niri.overlays.niri ]; }
             ]
-            ++ (default-modules "revachol" catalog);
+            ++ (default-modules "revachol" system catalog);
 
             specialArgs = { inherit inputs catalog; };
           };
@@ -240,7 +243,7 @@
           let
             catalog = catalog-gen "eden";
           in
-          nixpkgs.lib.nixosSystem {
+          nixpkgs.lib.nixosSystem rec {
             system = "aarch64-linux";
 
             modules = [
@@ -261,7 +264,7 @@
                 ];
               }
             ]
-            ++ (default-modules "eden" catalog);
+            ++ (default-modules "eden" system catalog);
 
             specialArgs = { inherit inputs catalog; };
           };
@@ -271,10 +274,10 @@
             name = "mementos";
             catalog = catalog-gen name;
           in
-          nixpkgs.lib.nixosSystem {
+          nixpkgs.lib.nixosSystem rec {
             system = "aarch64-linux";
 
-            modules = [ disko.nixosModules.disko ] ++ (default-modules name catalog);
+            modules = [ disko.nixosModules.disko ] ++ (default-modules name system catalog);
 
             specialArgs = { inherit inputs catalog; };
           };
