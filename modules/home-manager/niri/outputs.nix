@@ -23,6 +23,9 @@ _: {
       };
     };
     #LG C4
-    HDMI-A-1.enable = false;
+    HDMI-A-1 = {
+      enable = false;
+      scale = 2.0;
+    };
   };
 }
