@@ -81,7 +81,7 @@ in
     nonSteamApps = {
       "Goddess of Victory: NIKKE" = {
         target = "/home/justin/.steam/root/steamapps/compatdata/2202195447/pfx/drive_c/NIKKE/Launcher/nikke_launcher.exe";
-        compatTool = customDWProtonVersion "dwproton-11.0-14" "sha256-dXtOdfqIU0wWQ0OXDRbHuFTifGJ7ti+Ij4g+a/RV71Q=";
+        compatTool = customDWProtonVersion "dwproton-11.0-15" "sha256-vF5O5sR1/zr1+06SraznN4u8eRtp47bVYxj0ntCZIwQ=";
         allowOverlay = false;
         artwork = buildArtwork "Nikke" {
           cover = "sha256-eXLkEqwvQPcSmexQWfAomYRJhL4dHNas0dygk07PIXY=";
