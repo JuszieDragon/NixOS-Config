@@ -1,6 +1,7 @@
 {
   catalog,
   inputs,
+  lib,
   pkgs,
   ...
 }:
@@ -41,13 +42,16 @@ let
   buildArtwork =
     game: artworks:
     builtins.mapAttrs (name: _value: fetchFromNas "${game}/${name}.png" artworks.${name}) artworks;
+
+  nikkeDWProton = customDWProtonVersion "dwproton-11.0-16" "sha256-fNAT/PRoWE5WcjGmoZYjPXx+wF0rlKuUXWQk0+P7s7U=";
+  nikkeLauncherPath = "/home/justin/.steam/root/steamapps/compatdata/3280867713/pfx/drive_c/NIKKE/Launcher";
 in
 {
   imports = [ inputs.steam-config-nix.homeModules.default ];
 
   programs.steam.config = {
     enable = true;
-    onSteamRunning = "close";
+    onSteamRunning = "force-close";
 
     apps = {
       "526870" = {
@@ -77,12 +81,22 @@ in
         name = "A Game About Chopping Trees";
         compatTool = pkgs.proton-ge-bin;
       };
+      "1091500" = {
+        name = "Cyberpunk 2077";
+        env = {
+          PROTON_ENABLE_WAYLAND=1;
+          PROTON_ENABLE_HDR=1;
+        };
+        args = [ "--launcher-skip" ];
+      };
     };
     nonSteamApps = {
       "Goddess of Victory: NIKKE" = {
-        target = "/home/justin/.steam/root/steamapps/compatdata/2202195447/pfx/drive_c/NIKKE/Launcher/nikke_launcher.exe";
-        compatTool = customDWProtonVersion "dwproton-11.0-14" "sha256-dXtOdfqIU0wWQ0OXDRbHuFTifGJ7ti+Ij4g+a/RV71Q=";
+        target = nikkeLauncherPath + "/nikke_launcher.exe";
+        seed = "Nikke";
+        compatTool = nikkeDWProton;
         allowOverlay = false;
+        # rawLaunchOptions = "PATH=/run/current-system/sw/bin:$PATH PROTON_ENABLE_WAYLAND=1 PROTON_USE_NTSYNC=0 %command%";
         artwork = buildArtwork "Nikke" {
           cover = "sha256-eXLkEqwvQPcSmexQWfAomYRJhL4dHNas0dygk07PIXY=";
           header = "sha256-dMf4z/PYLV1jFt95VdcT9Ju10kdTmhXvF9ljnLlcoMA=";
@@ -93,10 +107,16 @@ in
       };
       "Goddess of Victory: NIKKE Launcher Update" = {
         target = "/home/justin/Downloads/nikkeminiloader_oG7STxbESBb.wg.intl.exe";
-        startIn = "/home/justin/.steam/root/steamapps/compatdata/2202195447/pfx/drive_c/NIKKE/Launcher";
-        compatTool = customDWProtonVersion "dwproton-11.0-13" "sha256-INbvpKk01gMyt72Z2jlJvov5k4LZztpFuiYgVkGBc1I=";
+        startIn = nikkeLauncherPath;
+        compatTool = nikkeDWProton;
         allowOverlay = false;
       };
+      # "Goddess of Victory: NIKKE Launcher Update 16" = {
+      #   target = "/home/justin/Downloads/nikkeminiloader_oG7STxbESBb.wg.intl.exe";
+      #   seed = "Nikke";
+      #   compatTool = nikkeDWProton;
+      #   allowOverlay = false;
+      # };
       "Katawa Shoujo: Re-Engineered" = {
         target = pkgs.katawa-shoujo-re-engineered;
         artwork = buildArtwork "Katawa_Shoujo_Re-Engineered" {

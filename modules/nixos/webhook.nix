@@ -48,9 +48,10 @@ let
     export PATH="/run/current-system/sw/bin:/run/user/${my-uid}/bin:$PATH"
     export XDG_RUNTIME_DIR="/run/user/${my-uid}"
     export XDG_SESSION_TYPE="wayland"
-    export GAMESCOPE_COLOR_SPACE="bt2020"
-    export AMD_DEBUG="force_10bit"
+    # export GAMESCOPE_COLOR_SPACE="bt2020"
+    # export AMD_DEBUG="force_10bit"
     export SDL_VIDEODRIVER="wayland"
+    export AMD_PRIVATE_COLOR=1
 
     ${pkgs.procps}/bin/pkill steam || true
 

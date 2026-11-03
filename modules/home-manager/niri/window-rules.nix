@@ -32,7 +32,7 @@ _: {
         open-fullscreen = true;
       }
       {
-        matches = [ { app-id = "steam_app_2202195447"; } ];
+        matches = [ { app-id = "steam_app_3280867713"; } ];
         open-on-workspace = "Nikke";
         open-fullscreen = true;
       }
