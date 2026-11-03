@@ -1,9 +1,4 @@
-{
-  catalog,
-  config,
-  pkgs,
-  ...
-}:
+{ catalog, pkgs, ... }:
 
 let
   moduleImports = map (module: ../../modules/nixos + module) [
@@ -38,13 +33,19 @@ in
     };
     supportedFilesystems = [ "zfs" ];
 
-    blacklistedKernelModules = [ "r8169" ];
-    extraModulePackages = [ config.boot.kernelPackages.r8125 ];
-    kernelModules = [ "r8125" ];
+    # blacklistedKernelModules = [ "r8169" ];
+    # extraModulePackages = [ config.boot.kernelPackages.r8125 ];
+    # kernelModules = [ "r8125" ];
+    # kernelParams = [
+    #   "pcie_aspm=off"
+    # ];
+    # extraModprobeConfig = ''
+    #   options r8125 eee_enable=0 aspm=0
+    # '';
+    kernelModules = [ "r8169" ]; # Explicitly load the native driver instead
+
+    # Disable Active State Power Management at the kernel level for network stability
     kernelParams = [ "pcie_aspm=off" ];
-    extraModprobeConfig = ''
-      options r8125 eee_enable=0 aspm=0
-    '';
   };
 
   hardware = {

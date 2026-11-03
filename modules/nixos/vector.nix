@@ -7,6 +7,14 @@ let
 
 in
 {
+  nixpkgs.overlays = [
+    (_self: super: {
+      vector = super.vector.overrideAttrs (_oldAttrs: {
+        RUSTFLAGS = "--cap-lints warn";
+      });
+    })
+  ];
+
   services.vector = {
     enable = true;
     journaldAccess = true;
