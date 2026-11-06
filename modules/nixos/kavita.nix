@@ -16,12 +16,21 @@ lib.mkIf cfg.isEnabled {
     group = lib.mkForce "media";
   };
 
-  age.secrets.kavita.file = inputs.self + /secrets/kavita.age;
+  age.secrets.kavita = {
+    file = inputs.self + /secrets/kavita.age;
+    owner = "kavita";
+    group = "media";
+    mode = "0400";
+  };
 
   services.kavita = {
     enable = true;
     dataDir = configDir;
-    tokenKeyFile = config.age.secrets.kavita.path;
-    settings.Port = cfg.port;
+    credentials = {
+      token_key = config.age.secrets.kavita.path;
+    };
+    settings = {
+      Port = cfg.port;
+    };
   };
 }

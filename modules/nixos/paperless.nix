@@ -13,5 +13,8 @@ in
     dataDir = stateDir;
     consumptionDir = mediaDir + "/inbox";
     mediaDir = mediaDir + "/imported";
+    settings = {
+      PAPERLESS_OCR_DESKEW = true;
+    };
   };
 }
