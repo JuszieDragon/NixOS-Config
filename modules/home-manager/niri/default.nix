@@ -42,7 +42,7 @@ with builtins;
       environment."NIXOS_OZONE_WL" = "1";
       hotkey-overlay.skip-at-startup = true;
       prefer-no-csd = true;
-      gestures.hot-corners.enable = false;
+      # gestures.hot-corners.enable = false;
       xwayland-satellite = {
         enable = true;
         path = lib.getExe pkgs.xwayland-satellite;
