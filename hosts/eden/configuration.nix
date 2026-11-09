@@ -94,6 +94,13 @@ in
 
   security.pam.services.greetd.enableGnomeKeyring = true;
 
+  # allow old gtk for steam-asahi
+  nixpkgs.config = {
+    problems.handlers = {
+      "gtk+".broken = "warn"; # or "ignore"
+    };
+  };
+
   services = {
     libinput.enable = true;
     logind = {

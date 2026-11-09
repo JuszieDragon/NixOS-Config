@@ -1,7 +1,6 @@
 {
   catalog,
   inputs,
-  lib,
   pkgs,
   ...
 }:
@@ -84,8 +83,8 @@ in
       "1091500" = {
         name = "Cyberpunk 2077";
         env = {
-          PROTON_ENABLE_WAYLAND=1;
-          PROTON_ENABLE_HDR=1;
+          PROTON_ENABLE_WAYLAND = 1;
+          PROTON_ENABLE_HDR = 1;
         };
         args = [ "--launcher-skip" ];
       };
