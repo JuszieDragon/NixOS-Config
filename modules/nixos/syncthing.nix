@@ -13,15 +13,15 @@ in
 lib.mkIf cfg.isEnabled {
   age.secrets = {
     gui-password = {
-      file = inputs.self + /secrets/syncthing-gui-password.age;
+      file = inputs.self + /secrets/syncthing/gui-password.age;
       owner = "justin";
     };
     syncthing-cert = {
-      file = inputs.self + /secrets/${hostname}-syncthing-cert.age;
+      file = inputs.self + /secrets/syncthing/${hostname}-cert.age;
       owner = "justin";
     };
     syncthing-key = {
-      file = inputs.self + /secrets/${hostname}-syncthing-key.age;
+      file = inputs.self + /secrets/syncthing/${hostname}-key.age;
       owner = "justin";
     };
   };
